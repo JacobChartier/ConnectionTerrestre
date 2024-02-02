@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 202431251}
   - component: {fileID: 202431250}
   - component: {fileID: 202431249}
+  - component: {fileID: 202431252}
   m_Layer: 5
   m_Name: option attaque magique
   m_TagString: Untagged
@@ -233,7 +234,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e328196b2a5ecbe40a59af5bd2dc23d5, type: 2}
+  - {fileID: 2100000, guid: 7464343de736ff64ea2337e1929693ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -278,6 +279,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 396299197}
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 90}
+--- !u!114 &202431252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202431247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe47f0ae58141f4aaacd3b1e28ba56d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &396299196
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe47f0ae58141f4aaacd3b1e28ba56d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookat: {fileID: 0}
 --- !u!23 &520324827
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -480,7 +492,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e328196b2a5ecbe40a59af5bd2dc23d5, type: 2}
+  - {fileID: 2100000, guid: 61a342574fb1d544e94908e9dcc00732, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -665,7 +677,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 11
+  m_Priority: 9
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1506973969}
@@ -697,7 +709,7 @@ Transform:
   m_GameObject: {fileID: 544622767}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0000000032538652, y: 0.9819564, z: -0.18910751, w: -0.000000016895962}
-  m_LocalPosition: {x: 5, y: 7, z: 9}
+  m_LocalPosition: {x: 4, y: 7, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -948,9 +960,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05bee80b4e736c4985ffca30fb510cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VITESSE_ROTATION_YAW: 0.5
+  VITESSE_ROTATION_YAW: 2
   MAGNITUDE_ROTATION_PITCH: 1
   VITESSE_ROTATION_PITCH: 0
+--- !u!1 &958909199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958909201}
+  - component: {fileID: 958909200}
+  m_Layer: 0
+  m_Name: BATTLE MANAGER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &958909200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958909199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a392be9ec4140944e9e732894361c114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera_option_joueur: {fileID: 544622768}
+  camera_generale: {fileID: 190915056}
+  choix_combat: {fileID: 396299198}
+--- !u!4 &958909201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958909199}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.875743, y: 7.1003814, z: 5.061812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1506973965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,7 +1164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: -5, y: 6, z: 9}
+  m_FollowOffset: {x: -6, y: 6, z: 12}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -1239,8 +1298,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589914945}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000032538652, y: 0.9819564, z: -0.18910751, w: -0.000000016895962}
-  m_LocalPosition: {x: 5, y: 7, z: 9}
+  m_LocalRotation: {x: 0.22975291, y: -0.000000018722702, z: 0.00000000441983, w: 0.973249}
+  m_LocalPosition: {x: 0, y: 10, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1311,7 +1370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe47f0ae58141f4aaacd3b1e28ba56d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookat: {fileID: 0}
 --- !u!23 &1614167025
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1332,7 +1390,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e328196b2a5ecbe40a59af5bd2dc23d5, type: 2}
+  - {fileID: 2100000, guid: fedecc68e1f274e478e3980359970881, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1388,6 +1446,7 @@ GameObject:
   - component: {fileID: 1937978077}
   - component: {fileID: 1937978079}
   - component: {fileID: 1937978078}
+  - component: {fileID: 1937978080}
   m_Layer: 5
   m_Name: option attaque physique
   m_TagString: Untagged
@@ -1460,6 +1519,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937978076}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1937978080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937978076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe47f0ae58141f4aaacd3b1e28ba56d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1473,3 +1544,4 @@ SceneRoots:
   - {fileID: 190915057}
   - {fileID: 544622769}
   - {fileID: 396299197}
+  - {fileID: 958909201}
