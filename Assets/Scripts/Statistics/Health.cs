@@ -9,7 +9,7 @@ public class Health : MonoBehaviour
 
     public void AddHealthPoint(float HP)
     {
-        EntityStats.currentHP += HP;
+        EntityStats.Add(StatType.HP, HP);
 
         onGainHealth.Invoke();
     }

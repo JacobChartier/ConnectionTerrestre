@@ -5,20 +5,81 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class EntityStats : MonoBehaviour
 {
-    public static float baseHP, currentHP;
-    public static float baseDEF, currentDEF;
-    public static float baseMP, currentMP;
-    public static float baseStrengh, currentStrengh;
-    public static float baseATKSpeed, currentATKSpeed;
+    public static float baseHP = 100, currentHP;
+    public static float baseDEF = 100, currentDEF;
+    public static float baseMP = 100, currentMP;
+    public static float baseStrength = 10, currentStrength;
+    public static float baseATKSpeed = 10, currentATKSpeed;
+
     public static int coins = 0;
 
-    public static void AddMP(float amount)
+    public static void Add(StatType type, float amount = 1)
     {
-        currentMP += amount;
+        switch (type)
+        {
+            case StatType.HP:
+                currentHP += amount;
+                break;
+
+            case StatType.DEF:
+                currentDEF += amount;
+                break;
+
+            case StatType.MP:
+                currentMP += amount;
+                break;
+
+            case StatType.STRENGTH:
+                currentStrength += amount;
+                break;
+
+            case StatType.ATK:
+                currentATKSpeed += amount;
+                break;
+
+            case StatType.COINS:
+                coins += (int)amount;
+                break;
+        }
     }
 
-    public static void RemoveMP(float amount)
+    public static void Remove(StatType type, float amount = 1)
     {
-        currentMP -= amount;
+        switch (type)
+        {
+            case StatType.HP:
+                currentHP -= amount;
+                break;
+
+            case StatType.DEF:
+                currentDEF -= amount;
+                break;
+
+            case StatType.MP:
+                currentMP -= amount;
+                break;
+
+            case StatType.STRENGTH:
+                currentStrength -= amount;
+                break;
+
+            case StatType.ATK:
+                currentATKSpeed -= amount;
+                break;
+
+            case StatType.COINS:
+                coins -= (int)amount;
+                break;
+        }
     }
+}
+
+public enum StatType
+{
+    HP, 
+    DEF, 
+    MP, 
+    STRENGTH, 
+    ATK, 
+    COINS
 }
