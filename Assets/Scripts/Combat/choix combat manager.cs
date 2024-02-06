@@ -22,13 +22,12 @@ public class choixcombatmanager : MonoBehaviour
             foreach (GameObject o in enfants)
             {
                 o.SetActive(value);
-                Debug.Log(value);
             }
         }
     }
     int timer = 0;
-    int option_selectionee = 2;
-    float angle = 0;
+    int option_selectionee = 0;
+    float angle = 2; // commence sur attaque
     const float MAGNITUDE = 6.0f;
     const float VITESSE_ROTATION = 10.0f; // plus petit = plus vite, doit être int
     const float SELECTION_TILT = -0.3f;
@@ -47,31 +46,38 @@ public class choixcombatmanager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public int CheckRotate()
     {
         if (timer != 0)
         {
             Rotate();
             timer += Math.Sign(timer) * -1;
-            return;
+            return -1;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow)) // todo: remplacer avec vrai input
         {
             timer = -(int)VITESSE_ROTATION;
             option_selectionee++;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow))// todo: remplacer avec vrai input
         {
             timer = (int)VITESSE_ROTATION;
             option_selectionee--;
         }
+        else if (Input.GetKey(KeyCode.J))//todo: remplacer avec vrai input
+        {
+            return MathMod(option_selectionee, enfants.Count); // le modulo évite un overflow
+        }
 
         if (timer != 0)
         {
+            angle = MathF.Round(angle);
             option_selectionee = MathMod(option_selectionee, enfants.Count);
             ChangerTailleEnfants();
         }
+
+        return -1;
     }
 
     void ChangerTailleEnfants()

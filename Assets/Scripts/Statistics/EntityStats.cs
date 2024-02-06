@@ -5,15 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class EntityStats : MonoBehaviour
 {
-    public static float baseHP = 100, currentHP;
-    public static float baseDEF = 100, currentDEF;
-    public static float baseMP = 100, currentMP;
-    public static float baseStrength = 10, currentStrength;
-    public static float baseATKSpeed = 10, currentATKSpeed;
+    public float baseHP = 100, currentHP;
+    public float baseDEF = 100, currentDEF;
+    public float baseMP = 100, currentMP;
+    public float baseStrength = 10, currentStrength;
+    public float baseATKSpeed = 10, currentATKSpeed;
 
-    public static int coins = 0;
+    public int coins = 0;
 
-    public static void Add(StatType type, float amount = 1)
+    public void Add(StatType type, float amount = 1)
     {
         switch (type)
         {
@@ -43,7 +43,7 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    public static void Remove(StatType type, float amount = 1)
+    public void Remove(StatType type, float amount = 1)
     {
         switch (type)
         {
