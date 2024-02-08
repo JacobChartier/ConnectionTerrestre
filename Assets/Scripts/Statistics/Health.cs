@@ -13,20 +13,20 @@ public class Health : MonoBehaviour
         stats = GetComponent<EntityStats>();
     }
 
-    public void AddHealthPoint(float HP)
+    public void AddHealthPoint(float amount)
     {
-        stats.Add(StatType.HP, HP);
+        stats.Health.Add(amount);
 
         onGainHealth.Invoke();
     }
 
-    public void RemoveHealthPoint(float HP)
+    public void RemoveHealthPoint(float amount)
     {
-        stats.currentHP -= HP;
+        stats.Health.Remove(amount);
 
         onLostHealth.Invoke();
 
-        if(stats.currentHP <= 0)
+        if(stats.Health.Current == 0)
         {
             onDeath.Invoke();
         }

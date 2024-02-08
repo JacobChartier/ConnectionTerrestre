@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -8,11 +9,14 @@ public class ShopUI : MonoBehaviour
 {
     public Item SelectedItem;
 
-    [SerializeField] private TMP_Text itemName;
-    [SerializeField] private TMP_Text itemCategory;
-    [SerializeField] private TMP_Text itemDescription;
-    [SerializeField] private TMP_Text stats;
-    [SerializeField] private TMP_Text itemPrice;
+    [SerializeField] private EntityStats playerStats;
+    [SerializeField] private TMP_Text _playerCoins;
+
+    [SerializeField] private TMP_Text _itemName;
+    [SerializeField] private TMP_Text _itemCategory;
+    [SerializeField] private TMP_Text _itemDescription;
+    [SerializeField] private TMP_Text _stats;
+    [SerializeField] private TMP_Text _itemPrice;
 
     void Start()
     {
@@ -21,15 +25,17 @@ public class ShopUI : MonoBehaviour
 
     public void ShowDescription(Item item)
     {
-        this.itemName.text = item.name;
-        this.itemCategory.text = item.category.ToString();
-        this.itemDescription.text = item.description;
-        this.itemPrice.text = $"<b>{item.price} <color=#FFD700>Coins</color></b>";
+        _playerCoins.text = $"{playerStats.Coins.Current.ToString()} <color=#FFD700>Coins</color>";
 
-        this.stats.text = "";
+        this._itemName.text = item.name;
+        this._itemCategory.text = item.category.ToString();
+        this._itemDescription.text = item.description;
+        this._itemPrice.text = $"<b>{item.price} <color=#FFD700>Coins</color></b>";
+
+        this._stats.text = "";
         for (int i = 0; i < item.stats.Count(); i++)
         {
-            this.stats.text += $"{item.stats.ElementAt(i)}\n";
+            this._stats.text += $"{item.stats.ElementAt(i)}\n";
         }
     }
 }

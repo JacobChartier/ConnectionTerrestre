@@ -79,9 +79,9 @@ public class BattleManager : MonoBehaviour
     {
         if (timer >= 200)
         {
-            if (stats_joueur.currentATKSpeed > stats_ennemi.currentATKSpeed ||
+            if (stats_joueur.AttackSpeed.Current > stats_ennemi.AttackSpeed.Current ||
                 true || //DEBUG!!!!!!!!!!
-                stats_joueur.currentATKSpeed == stats_ennemi.currentATKSpeed && UnityEngine.Random.Range(0, 2) == 0) // si vitesses égales, premier tour = hasard
+                stats_joueur.AttackSpeed.Current == stats_ennemi.AttackSpeed.Current && UnityEngine.Random.Range(0, 2) == 0) // si vitesses égales, premier tour = hasard
             {
                 evenement_actuel = Evenement.TOUR_JOUEUR;
                 camera_generale.Priority = 0;

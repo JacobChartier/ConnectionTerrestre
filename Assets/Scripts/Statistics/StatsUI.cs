@@ -14,10 +14,17 @@ public class StatsUI : MonoBehaviour
 
     private void Update()
     {
-        HPBar.value = player_stats.currentHP;
-        HPtext.text = $"{player_stats.currentHP} HP";
+        HPBar.maxValue = player_stats.Health.Max;
+        HPBar.minValue = player_stats.Health.Min;
 
-        MPBar.value = player_stats.currentMP;
-        MPtext.text = $"{player_stats.currentMP} MP";
+        HPBar.value = player_stats.Health.Current;
+        HPtext.text = $"{player_stats.Health.Current} HP";
+
+
+        MPBar.maxValue = player_stats.MagicPoint.Max;
+        MPBar.minValue = player_stats.MagicPoint.Min;
+
+        MPBar.value = player_stats.MagicPoint.Current;
+        MPtext.text = $"{player_stats.MagicPoint.Current} MP";
     }
 }

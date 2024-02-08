@@ -12,7 +12,6 @@ public class InputManager : MonoBehaviour
 
     public static bool isAimingInput = false;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         controls = new PlayersControls();
@@ -23,8 +22,6 @@ public class InputManager : MonoBehaviour
     {
         controls.Player.Movement.performed += Move;
         controls.Player.Movement.canceled += Move;
-
-
     }
 
     private void OnDisable()
