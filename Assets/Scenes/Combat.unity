@@ -339,7 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb0ce2d7dd18ac40a41a282b2b1c2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookat: {fileID: 544622769}
   origin: {fileID: 1506973969}
   enfants:
   - {fileID: 1937978076}
@@ -658,17 +657,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1feae75b375b2f04eb6a3130a91de666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHP: 100
-  currentHP: 0
-  baseDEF: 100
-  currentDEF: 0
-  baseMP: 100
-  currentMP: 0
-  baseStrength: 10
-  currentStrength: 0
-  baseATKSpeed: 10
-  currentATKSpeed: 0
-  coins: 0
+  Health:
+    _base: 80
+    _current: 0
+    _max: 100
+    _min: 0
+  Defense:
+    _base: 10
+    _current: 0
+    _max: 100
+    _min: 0
+  MagicPoint:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
+  Strength:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
+  AttackSpeed:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
+  Coins:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
 --- !u!114 &521000416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313006360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.063564114, y: 0.704244, z: -0.06356412, w: 0.704244}
+  m_LocalRotation: {x: 0.06356412, y: 0.70424396, z: -0.06356411, w: 0.7042441}
   m_LocalPosition: {x: 0, y: 2.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1348,17 +1366,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1feae75b375b2f04eb6a3130a91de666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHP: 100
-  currentHP: 0
-  baseDEF: 100
-  currentDEF: 0
-  baseMP: 100
-  currentMP: 0
-  baseStrength: 10
-  currentStrength: 0
-  baseATKSpeed: 10
-  currentATKSpeed: 0
-  coins: 0
+  Health:
+    _base: 80
+    _current: 0
+    _max: 100
+    _min: 0
+  Defense:
+    _base: 10
+    _current: 0
+    _max: 100
+    _min: 0
+  MagicPoint:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
+  Strength:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
+  AttackSpeed:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
+  Coins:
+    _base: 10
+    _current: 0
+    _max: 0
+    _min: 0
 --- !u!114 &1506973971
 MonoBehaviour:
   m_ObjectHideFlags: 0

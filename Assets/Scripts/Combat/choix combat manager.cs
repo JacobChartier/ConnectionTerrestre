@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class choixcombatmanager : MonoBehaviour
 {
-    [SerializeField] Transform lookat;
     [SerializeField] Transform origin;
     [SerializeField] List<GameObject> enfants;
     public bool Active

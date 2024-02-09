@@ -6,7 +6,7 @@ using UnityEngine;
 public class optionjoueurmouvement : MonoBehaviour
 {
     const float MIN_SIZE = 0.1f;
-    const float MAX_SIZE = 0.35f;
+    const float MAX_SIZE = 0.5f;
     Transform parent_transform;
     // Start is called before the first frame update
     void Start()
