@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 5;
@@ -9,9 +10,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //cache (caching)
         rb = GetComponent<Rigidbody>();
-
     }
 
     void FixedUpdate()
