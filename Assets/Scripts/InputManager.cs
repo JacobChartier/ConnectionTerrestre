@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -9,8 +10,7 @@ public class InputManager : MonoBehaviour
     PlayersControls controls;
 
     public static Vector2 mouvementInput;
-
-    public static bool isAimingInput = false;
+    public static Vector2 rotationInput;
 
     private void Awake()
     {
@@ -20,20 +20,10 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
-        controls.Player.Movement.performed += Move;
-        controls.Player.Movement.canceled += Move;
+        controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>();
+        controls.Player.Movement.canceled += ctx => mouvementInput = ctx.ReadValue<Vector2>();
+
+        controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
+        controls.Player.Rotation.canceled += ctx => rotationInput = ctx.ReadValue<Vector2>();
     }
-
-    private void OnDisable()
-    {
-        controls.Player.Movement.performed -= Move;
-    }
-
-    private void Move(InputAction.CallbackContext ctx)
-    {
-        mouvementInput = ctx.ReadValue<Vector2>();
-        Debug.Log(mouvementInput);
-    }
-
-
 }
