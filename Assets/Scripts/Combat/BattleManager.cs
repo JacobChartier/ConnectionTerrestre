@@ -1,6 +1,5 @@
 using Cinemachine;
 using System;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,6 +25,13 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Transform joueur_transform;
     [SerializeField] EntityStats stats_ennemi;
 
+    public static PlayersControls controls;
+    public static bool left_pressed = false;
+    public static bool right_pressed = false;
+    public static bool left_held = false;
+    public static bool right_held = false;
+    public static bool select_pressed = false;
+
     Evenement evenement_actuel
     {
         set
@@ -43,6 +49,24 @@ public class BattleManager : MonoBehaviour
     int timer = 0;
     bool fuir_fail = false;
     private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = true; // debug!!
+
+    private void Awake()
+    {
+        controls = new PlayersControls();
+        controls.Player.Enable();
+    }
+
+    private void OnEnable()
+    {
+        controls.Player.selectiongauche.performed += ctx => left_pressed = left_held = ctx.ReadValueAsButton();
+        controls.Player.selectiongauche.canceled += ctx => left_pressed = left_held = ctx.ReadValueAsButton();
+
+        controls.Player.selectiondroite.performed += ctx => right_pressed = right_held = ctx.ReadValueAsButton();
+        controls.Player.selectiondroite.canceled += ctx => right_pressed = right_held = ctx.ReadValueAsButton();
+
+        controls.Player.selectionenter.performed += ctx => select_pressed = ctx.ReadValueAsButton();
+        controls.Player.selectionenter.canceled += ctx => select_pressed = ctx.ReadValueAsButton();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -145,8 +169,9 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (select_pressed)
         {
+            select_pressed = false;
             timer = 200; // le joueur peut skip le cutscene avec J
         }
     }
@@ -196,7 +221,7 @@ public class BattleManager : MonoBehaviour
 
         if (timer == NB_FRAMES_JOUEUR_COURT + NB_FRAMES_AVANT_JOUEUR_TOURNE + NB_FRAMES_JOUEUR_TOURNE)
         {
-            SceneManager.LoadScene("World"); // à connecter plus tard
+            SceneManager.LoadScene("World");
         }
         else if (timer > NB_FRAMES_AVANT_JOUEUR_TOURNE + NB_FRAMES_JOUEUR_TOURNE)
         {
@@ -210,7 +235,8 @@ public class BattleManager : MonoBehaviour
 
             if (timer == NB_FRAMES_AVANT_JOUEUR_TOURNE + NB_FRAMES_JOUEUR_TOURNE)
             {
-                fuir_fail = UnityEngine.Random.Range(0, 100 / (100 - POURCENTAGE_CHANCE_FUITE)) == 0; // le joueur a 80% de chance de pouvoir fuire
+                // le joueur a 80% de chance de pouvoir fuire
+                fuir_fail = UnityEngine.Random.Range(0, 100 / (100 - POURCENTAGE_CHANCE_FUITE)) == 0;
 
                 if (fuir_fail)
                     timer = 2;

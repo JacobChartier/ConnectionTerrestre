@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.TerrainTools;
 
 [RequireComponent(typeof(Health))]
 public class EntityStats : MonoBehaviour

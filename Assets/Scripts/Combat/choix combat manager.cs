@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using static BattleManager;
 
 public class choixcombatmanager : MonoBehaviour
 {
@@ -31,7 +29,7 @@ public class choixcombatmanager : MonoBehaviour
     const float VITESSE_ROTATION = 10.0f; // plus petit = plus vite, doit être int
     const float SELECTION_TILT = -0.3f;
     float angle_entre_enfants; // const, ne pas assigner
-    //float timer_rotation_une; // const, ne pas assigner
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +37,6 @@ public class choixcombatmanager : MonoBehaviour
         Active = false;
         transform.position = origin.position;
         angle_entre_enfants = Mathf.PI * 2 / enfants.Count;
-        //timer_rotation_une = VITESSE_ROTATION * 2 * Mathf.PI / enfants.Count;
         Rotate();
         ChangerTailleEnfants();
     }
@@ -54,18 +51,19 @@ public class choixcombatmanager : MonoBehaviour
             return -1;
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow)) // todo: remplacer avec vrai input
+        if (left_held) // todo: remplacer avec vrai input
         {
             timer = -(int)VITESSE_ROTATION;
             option_selectionee++;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))// todo: remplacer avec vrai input
+        else if (right_held)// todo: remplacer avec vrai input
         {
             timer = (int)VITESSE_ROTATION;
             option_selectionee--;
         }
-        else if (Input.GetKey(KeyCode.J))//todo: remplacer avec vrai input
+        else if (select_pressed)//todo: remplacer avec vrai input
         {
+            select_pressed = false;
             return MathMod(option_selectionee, enfants.Count); // le modulo évite un overflow
         }
 

@@ -44,6 +44,33 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""selection gauche"",
+                    ""type"": ""Button"",
+                    ""id"": ""3971ae1a-913e-4d81-a005-c17fcf2b5535"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""selection droite"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c8cb963-925c-4af4-84b7-4ec0ffae4c52"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""selection enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb2fe07f-a27b-4bf9-96ca-f2d29ea62f35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -156,6 +183,61 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57196761-441c-43dc-b346-28eb27710b22"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection gauche"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""586da016-9a6e-4d34-841d-8a89049b300c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection gauche"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b99a6489-f01c-4f73-bf44-267fed33ad5e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection droite"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66e2a861-1e15-4c40-81aa-1f1cfa91cd1d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection droite"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0634661-6abb-42f5-949a-e871d8ac4103"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -166,6 +248,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Rotation = m_Player.FindAction("Rotation", throwIfNotFound: true);
+        m_Player_selectiongauche = m_Player.FindAction("selection gauche", throwIfNotFound: true);
+        m_Player_selectiondroite = m_Player.FindAction("selection droite", throwIfNotFound: true);
+        m_Player_selectionenter = m_Player.FindAction("selection enter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,12 +314,18 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Rotation;
+    private readonly InputAction m_Player_selectiongauche;
+    private readonly InputAction m_Player_selectiondroite;
+    private readonly InputAction m_Player_selectionenter;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
         public PlayerActions(@PlayersControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Rotation => m_Wrapper.m_Player_Rotation;
+        public InputAction @selectiongauche => m_Wrapper.m_Player_selectiongauche;
+        public InputAction @selectiondroite => m_Wrapper.m_Player_selectiondroite;
+        public InputAction @selectionenter => m_Wrapper.m_Player_selectionenter;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -250,6 +341,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @Rotation.started += instance.OnRotation;
             @Rotation.performed += instance.OnRotation;
             @Rotation.canceled += instance.OnRotation;
+            @selectiongauche.started += instance.OnSelectiongauche;
+            @selectiongauche.performed += instance.OnSelectiongauche;
+            @selectiongauche.canceled += instance.OnSelectiongauche;
+            @selectiondroite.started += instance.OnSelectiondroite;
+            @selectiondroite.performed += instance.OnSelectiondroite;
+            @selectiondroite.canceled += instance.OnSelectiondroite;
+            @selectionenter.started += instance.OnSelectionenter;
+            @selectionenter.performed += instance.OnSelectionenter;
+            @selectionenter.canceled += instance.OnSelectionenter;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -260,6 +360,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @Rotation.started -= instance.OnRotation;
             @Rotation.performed -= instance.OnRotation;
             @Rotation.canceled -= instance.OnRotation;
+            @selectiongauche.started -= instance.OnSelectiongauche;
+            @selectiongauche.performed -= instance.OnSelectiongauche;
+            @selectiongauche.canceled -= instance.OnSelectiongauche;
+            @selectiondroite.started -= instance.OnSelectiondroite;
+            @selectiondroite.performed -= instance.OnSelectiondroite;
+            @selectiondroite.canceled -= instance.OnSelectiondroite;
+            @selectionenter.started -= instance.OnSelectionenter;
+            @selectionenter.performed -= instance.OnSelectionenter;
+            @selectionenter.canceled -= instance.OnSelectionenter;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -281,5 +390,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
+        void OnSelectiongauche(InputAction.CallbackContext context);
+        void OnSelectiondroite(InputAction.CallbackContext context);
+        void OnSelectionenter(InputAction.CallbackContext context);
     }
 }
