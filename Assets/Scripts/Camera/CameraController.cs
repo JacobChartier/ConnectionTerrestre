@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Vector2 mouseInput;
+    //    [SerializeField] private float sensitivity = 1;
+    //    [SerializeField] private float yClamp = 10; 
 
-    [SerializeField] private float sensitivity = 10;
-    [SerializeField] private float yClamp = 60;
-
-    private float xRotation = 0;
+    //    private float xRotation = 0;
 
     private void Awake()
     {
@@ -17,22 +15,22 @@ public class CameraController : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
-    {
-        RotateCamera();
-    }
+    //void Update()
+    //{
+    //    RotateCamera();
+    //}
 
-    private void RotateCamera()
-    {
-        Vector2 input = InputManager.rotationInput;
+    //private void RotateCamera()
+    //{
+    //    Vector2 input = InputManager.rotationInput;
 
-        // Rotation autour de l'axe Y (gauche et droite)
-        transform.Rotate(Vector3.up * (input.x * sensitivity));
+    //    // Y rotation (left/right)
+    //    transform.Rotate(Vector3.up * (input.x * sensitivity));
 
-        // Rotation autour de l'axe X (haut et bas)
-        xRotation -= input.y;
-        //xRotation = Mathf.Clamp(xRotation, -yClamp, yClamp); // Clamp pour éviter une rotation trop grande
+    //    // X rotation (up/down)
+    //    xRotation -= input.y;
+    //    xRotation = Mathf.Clamp(xRotation, -yClamp, yClamp);
 
-        transform.localEulerAngles = new Vector3(xRotation, transform.localEulerAngles.y, 0);
-    }
+    //    transform.localEulerAngles = new Vector3(xRotation, transform.localEulerAngles.y, 0);
+    //}
 }
