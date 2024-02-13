@@ -23,9 +23,14 @@ public class ShopUI : MonoBehaviour
         ShowDescription(SelectedItem);
     }
 
+    private void Update()
+    {
+        ShowDescription(SelectedItem);
+    }
+
     public void ShowDescription(Item item)
     {
-        _playerCoins.text = $"{playerStats.Coins.Current.ToString()} <color=#FFD700>Coins</color>";
+        _playerCoins.text = $"{playerStats.Coins.Current.ToString()}";
 
         this._itemName.text = item.name;
         this._itemCategory.text = item.category.ToString();

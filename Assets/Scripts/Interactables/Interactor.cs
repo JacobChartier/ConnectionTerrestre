@@ -11,33 +11,44 @@ public class Interactor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("d");
             interactable?.Interact();
         }
+
+        RaycastDetection();
     }
 
     private void RaycastDetection()
     {
-        Ray ray = new Ray(this.transform.position, Camera.main.transform.position);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, detectionRange))
+        {
+            IInteractable i = hit.collider.GetComponent<IInteractable>();
+
+            if (i != null)
+            {
+                interactable = i;
+                interactable?.ShowContextLabel();
+            }
+            else
+            {
+                interactable?.HideContextLabel();
+                interactable = null;
+            }
+        }
+        else
+        {
+            interactable?.HideContextLabel();
+            interactable = null;
+        }
+        
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(this.transform.position, Camera.main.transform.position);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        IInteractable i = other.GetComponent<IInteractable>();
-
-        if (i != null)
-        {
-            interactable = i;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-
+        Gizmos.color = Color.red;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Gizmos.DrawRay(ray.origin, ray.direction * detectionRange);
     }
 }
