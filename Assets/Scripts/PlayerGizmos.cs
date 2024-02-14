@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PlayerGizmos : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class PlayerGizmos : MonoBehaviour
     [Tooltip("Draw a spere to see the area in which the player can interact with objects.")]
     [SerializeField] private bool InteractionRegion;
 
+    [Header("Debug Hacks")]
+    [Tooltip("Enter combat with basic enemy when key 'C' pressed")]
+    [SerializeField] private bool DEBUG_enter_battle_on_C;
+
     private void OnDrawGizmos()
     {
         if (LookAt)
@@ -30,6 +35,17 @@ public class PlayerGizmos : MonoBehaviour
         {
             Gizmos.color = colorInteraction;
             Gizmos.DrawWireSphere(this.transform.position, radius);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (DEBUG_enter_battle_on_C)
+        {
+            if (Input.GetKeyDown(KeyCode.C) && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("World"))
+            {
+                SceneManager.LoadScene("Combat");
+            }
         }
     }
 }

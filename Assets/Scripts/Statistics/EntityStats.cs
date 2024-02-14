@@ -7,6 +7,20 @@ using UnityEditor;
 [RequireComponent(typeof(Health))]
 public class EntityStats : MonoBehaviour
 {
+    public enum StatType
+    {
+        HP,
+        MP,
+        DEFENSE,
+        FORCE,
+        VITESSE,
+        MAX_HP,
+        MAX_MP,
+        MAX_DEFENSE,
+        MAX_FORCE,
+        MAX_VITESSE
+    }
+
     [Header("Combat Statistics")]
     public EntityStatistic Health = new EntityStatistic() { Base = 80, Min = 0, Max = 100 };
     public EntityStatistic Defense = new EntityStatistic() { Base = 10, Min = 0, Max = 100 };

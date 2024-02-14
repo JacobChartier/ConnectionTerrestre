@@ -1289,6 +1289,8 @@ GameObject:
   - component: {fileID: 1229728990}
   - component: {fileID: 1229728992}
   - component: {fileID: 1229728991}
+  - component: {fileID: 1229728993}
+  - component: {fileID: 1229728994}
   m_Layer: 5
   m_Name: Text HP joueur
   m_TagString: Untagged
@@ -1335,7 +1337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[HP] 0 / 100'
+  m_text: '[HP]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1398,7 +1400,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -447.07825, w: 0}
+  m_margin: {x: 0, y: 0, z: 1.2134094, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1412,6 +1414,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229728989}
   m_CullTransparentMesh: 1
+--- !u!114 &1229728993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229728989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85569f44cd2908840ae1a9d21430692a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current_stat: 0
+  stats_entite: {fileID: 1506973970}
+  montrer_current_et_max: 1
+  text_divisor: ' / '
+--- !u!114 &1229728994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229728989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca16e0f3362ec1d41946474b8286af9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PERCENTAGE_LOW_HEALTH: 20
+  INTERVALE_BATTEMENTS: 64
+  effect_type: 1
+  player_stats: {fileID: 1506973970}
 --- !u!1 &1313006360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,6 +1529,7 @@ GameObject:
   - component: {fileID: 1394511052}
   - component: {fileID: 1394511054}
   - component: {fileID: 1394511053}
+  - component: {fileID: 1394511055}
   m_Layer: 5
   m_Name: icone coeur hp
   m_TagString: Untagged
@@ -1559,6 +1594,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394511051}
   m_CullTransparentMesh: 1
+--- !u!114 &1394511055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394511051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca16e0f3362ec1d41946474b8286af9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PERCENTAGE_LOW_HEALTH: 20
+  INTERVALE_BATTEMENTS: 64
+  effect_type: 0
+  player_stats: {fileID: 1506973970}
 --- !u!1 &1506973965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,6 +2292,7 @@ GameObject:
   - component: {fileID: 1857371740}
   - component: {fileID: 1857371742}
   - component: {fileID: 1857371741}
+  - component: {fileID: 1857371743}
   m_Layer: 5
   m_Name: Text MP joueur
   m_TagString: Untagged
@@ -2287,7 +2339,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[MP] 0 / 100'
+  m_text: '[MP]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2350,7 +2402,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -604.79535, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.3720703, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2364,6 +2416,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857371739}
   m_CullTransparentMesh: 1
+--- !u!114 &1857371743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857371739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85569f44cd2908840ae1a9d21430692a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current_stat: 1
+  stats_entite: {fileID: 1506973970}
+  montrer_current_et_max: 1
+  text_divisor: ' / '
 --- !u!1 &1937978076
 GameObject:
   m_ObjectHideFlags: 0
