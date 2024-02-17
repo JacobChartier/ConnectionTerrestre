@@ -7,7 +7,17 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    PlayersControls controls;
+    public static InputManager Instance;
+
+    private void Start()
+    {
+        if (Instance != null)
+        {
+            Instance = this;
+        }
+    }
+
+    public static PlayersControls controls;
 
     public static Vector2 mouvementInput;
     public static Vector2 rotationInput;

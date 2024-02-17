@@ -196,6 +196,54 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Inventory"",
+            ""id"": ""bb7956ee-3856-4de0-83e9-a0e367dd4bd8"",
+            ""actions"": [
+                {
+                    ""name"": ""SplitStackInHalf"",
+                    ""type"": ""Button"",
+                    ""id"": ""fce46460-18cc-469e-92a0-ae899acdabc4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TakeOneItemFromStack"",
+                    ""type"": ""Button"",
+                    ""id"": ""e84dc22c-a199-4516-a00e-e894273ae697"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b8bc3073-245e-44dc-8859-7027b27982fe"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SplitStackInHalf"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85a31798-7aef-41fc-a66d-d94c69443cc2"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TakeOneItemFromStack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -207,6 +255,10 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_selectiongauche = m_Player.FindAction("selection gauche", throwIfNotFound: true);
         m_Player_selectiondroite = m_Player.FindAction("selection droite", throwIfNotFound: true);
         m_Player_selectionenter = m_Player.FindAction("selection enter", throwIfNotFound: true);
+        // Inventory
+        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
+        m_Inventory_SplitStackInHalf = m_Inventory.FindAction("SplitStackInHalf", throwIfNotFound: true);
+        m_Inventory_TakeOneItemFromStack = m_Inventory.FindAction("TakeOneItemFromStack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -342,6 +394,60 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Inventory
+    private readonly InputActionMap m_Inventory;
+    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
+    private readonly InputAction m_Inventory_SplitStackInHalf;
+    private readonly InputAction m_Inventory_TakeOneItemFromStack;
+    public struct InventoryActions
+    {
+        private @PlayersControls m_Wrapper;
+        public InventoryActions(@PlayersControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SplitStackInHalf => m_Wrapper.m_Inventory_SplitStackInHalf;
+        public InputAction @TakeOneItemFromStack => m_Wrapper.m_Inventory_TakeOneItemFromStack;
+        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
+        public void AddCallbacks(IInventoryActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
+            @SplitStackInHalf.started += instance.OnSplitStackInHalf;
+            @SplitStackInHalf.performed += instance.OnSplitStackInHalf;
+            @SplitStackInHalf.canceled += instance.OnSplitStackInHalf;
+            @TakeOneItemFromStack.started += instance.OnTakeOneItemFromStack;
+            @TakeOneItemFromStack.performed += instance.OnTakeOneItemFromStack;
+            @TakeOneItemFromStack.canceled += instance.OnTakeOneItemFromStack;
+        }
+
+        private void UnregisterCallbacks(IInventoryActions instance)
+        {
+            @SplitStackInHalf.started -= instance.OnSplitStackInHalf;
+            @SplitStackInHalf.performed -= instance.OnSplitStackInHalf;
+            @SplitStackInHalf.canceled -= instance.OnSplitStackInHalf;
+            @TakeOneItemFromStack.started -= instance.OnTakeOneItemFromStack;
+            @TakeOneItemFromStack.performed -= instance.OnTakeOneItemFromStack;
+            @TakeOneItemFromStack.canceled -= instance.OnTakeOneItemFromStack;
+        }
+
+        public void RemoveCallbacks(IInventoryActions instance)
+        {
+            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInventoryActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InventoryActions @Inventory => new InventoryActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -349,5 +455,10 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnSelectiongauche(InputAction.CallbackContext context);
         void OnSelectiondroite(InputAction.CallbackContext context);
         void OnSelectionenter(InputAction.CallbackContext context);
+    }
+    public interface IInventoryActions
+    {
+        void OnSplitStackInHalf(InputAction.CallbackContext context);
+        void OnTakeOneItemFromStack(InputAction.CallbackContext context);
     }
 }

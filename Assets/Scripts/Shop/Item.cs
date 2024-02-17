@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEditor;
 
 [CreateAssetMenu(menuName = "Scriptable object/Item")]
 public class Item : ScriptableObject
 {
     [Header("Description")]
-    public Sprite image;
+    public Sprite icon;
     
-    public string name;
+    public new string name;
     public string description;
+
     public ItemCategory category;
+    public Rarety rarety;
+
     public int price;
-    public string[] stats;
 
     [Header("Options")]
     public bool isStackable;
@@ -25,7 +25,16 @@ public class Item : ScriptableObject
 
 public enum ItemCategory
 {
-    potion,
-    essence,
-    shield
+    POTION,
+    ESSENCE,
+    SHIELD,
+    OTHER
+}
+
+public enum Rarety
+{
+    COMMON,
+    RARE,
+    EPIC,
+    LEGENDARY
 }

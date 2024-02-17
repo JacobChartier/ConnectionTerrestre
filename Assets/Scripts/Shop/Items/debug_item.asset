@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80954fc1f85087748a5006d793462f68, type: 3}
   m_Name: debug_item
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 5108118a58327ce4e9e7e43f0d832ad9, type: 3}
+  icon: {fileID: 21300000, guid: 83671e467585cc34c9805ca762930a8e, type: 3}
   name: DEBUG
   description: '*** This is a test item ***'
   category: 0
-  price: 1000000
-  stats: []
+  rarety: 3
+  price: 9999
   isStackable: 1
   stackSize: 0
   isBreakable: 1
