@@ -11082,7 +11082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5487998106283863161, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
       propertyPath: DEBUG_enter_battle_on_C
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8879051019664377978, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
       propertyPath: m_Constraints

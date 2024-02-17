@@ -71,6 +71,24 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""selection haut"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad2e550f-09d3-492c-809f-39099741041b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""selection bas"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3ad6599-3379-4d33-86ab-c2f30a101df0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +212,50 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""selection enter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2191627a-7668-45a1-81a9-2768a67b6d97"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection haut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a91d085-0433-454a-9ffd-087f9cb11f7f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection haut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ada8a5f-55a6-4b62-b586-2e86b5184b4d"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection bas"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c041464d-0710-41c7-8548-9b6f13a075d4"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""selection bas"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -255,6 +317,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_selectiongauche = m_Player.FindAction("selection gauche", throwIfNotFound: true);
         m_Player_selectiondroite = m_Player.FindAction("selection droite", throwIfNotFound: true);
         m_Player_selectionenter = m_Player.FindAction("selection enter", throwIfNotFound: true);
+        m_Player_selectionhaut = m_Player.FindAction("selection haut", throwIfNotFound: true);
+        m_Player_selectionbas = m_Player.FindAction("selection bas", throwIfNotFound: true);
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_SplitStackInHalf = m_Inventory.FindAction("SplitStackInHalf", throwIfNotFound: true);
@@ -325,6 +389,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_selectiongauche;
     private readonly InputAction m_Player_selectiondroite;
     private readonly InputAction m_Player_selectionenter;
+    private readonly InputAction m_Player_selectionhaut;
+    private readonly InputAction m_Player_selectionbas;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
@@ -334,6 +400,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @selectiongauche => m_Wrapper.m_Player_selectiongauche;
         public InputAction @selectiondroite => m_Wrapper.m_Player_selectiondroite;
         public InputAction @selectionenter => m_Wrapper.m_Player_selectionenter;
+        public InputAction @selectionhaut => m_Wrapper.m_Player_selectionhaut;
+        public InputAction @selectionbas => m_Wrapper.m_Player_selectionbas;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -358,6 +426,12 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @selectionenter.started += instance.OnSelectionenter;
             @selectionenter.performed += instance.OnSelectionenter;
             @selectionenter.canceled += instance.OnSelectionenter;
+            @selectionhaut.started += instance.OnSelectionhaut;
+            @selectionhaut.performed += instance.OnSelectionhaut;
+            @selectionhaut.canceled += instance.OnSelectionhaut;
+            @selectionbas.started += instance.OnSelectionbas;
+            @selectionbas.performed += instance.OnSelectionbas;
+            @selectionbas.canceled += instance.OnSelectionbas;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -377,6 +451,12 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @selectionenter.started -= instance.OnSelectionenter;
             @selectionenter.performed -= instance.OnSelectionenter;
             @selectionenter.canceled -= instance.OnSelectionenter;
+            @selectionhaut.started -= instance.OnSelectionhaut;
+            @selectionhaut.performed -= instance.OnSelectionhaut;
+            @selectionhaut.canceled -= instance.OnSelectionhaut;
+            @selectionbas.started -= instance.OnSelectionbas;
+            @selectionbas.performed -= instance.OnSelectionbas;
+            @selectionbas.canceled -= instance.OnSelectionbas;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -455,6 +535,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnSelectiongauche(InputAction.CallbackContext context);
         void OnSelectiondroite(InputAction.CallbackContext context);
         void OnSelectionenter(InputAction.CallbackContext context);
+        void OnSelectionhaut(InputAction.CallbackContext context);
+        void OnSelectionbas(InputAction.CallbackContext context);
     }
     public interface IInventoryActions
     {
