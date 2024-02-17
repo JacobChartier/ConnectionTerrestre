@@ -32,8 +32,8 @@ public class ShopUI : MonoBehaviour
     {
         _playerCoins.text = $"{playerStats.Coins.Current.ToString()}";
 
-        this._itemName.text = item.name;
-        this._itemCategory.text = item.category.ToString();
+        this._itemName.text = item.item_name;
+        this._itemCategory.text = item.type.ToString();
         this._itemDescription.text = item.description;
         this._itemPrice.text = $"<b>{item.price} <color=#FFD700>Coins</color></b>";
 

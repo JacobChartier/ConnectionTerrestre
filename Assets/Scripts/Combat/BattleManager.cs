@@ -1,7 +1,9 @@
+using Assets.Scripts.Combat;
 using Cinemachine;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -24,6 +26,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] EntityStats stats_joueur;
     [SerializeField] Transform joueur_transform;
     [SerializeField] EntityStats stats_ennemi;
+    [SerializeField] Image image_liste_atk;
 
     public static PlayersControls controls;
     public static bool left_pressed = false;
@@ -31,6 +34,8 @@ public class BattleManager : MonoBehaviour
     public static bool left_held = false;
     public static bool right_held = false;
     public static bool select_pressed = false;
+    public static bool up_pressed = false;
+    public static bool down_pressed = false;
 
     Evenement evenement_actuel
     {
@@ -45,9 +50,17 @@ public class BattleManager : MonoBehaviour
         }
     }
     private Evenement evenement;
+    private InfoAttaqueMonstre attaque_monstre;
+    private InfosMonstre monstre;
 
     int timer = 0;
     bool fuir_fail = false;
+    bool stunlock = false;
+    bool selection_atk = false;
+    bool selection_magie = false;
+    public bool essence_guerrier = false;
+    public bool essence_magicien = false;
+    public bool bouclier_temporaire = false;
     private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = true; // debug!!
 
     private void Awake()
@@ -66,6 +79,9 @@ public class BattleManager : MonoBehaviour
 
         controls.Player.selectionenter.performed += ctx => select_pressed = ctx.ReadValueAsButton();
         controls.Player.selectionenter.canceled += ctx => select_pressed = ctx.ReadValueAsButton();
+
+        controls.Player.selectionhaut.performed += ctx => up_pressed = ctx.ReadValueAsButton();
+        controls.Player.selectionhaut.canceled += ctx => up_pressed = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update
@@ -75,6 +91,7 @@ public class BattleManager : MonoBehaviour
         camera_generale.Priority = 1;
         camera_option_joueur.Priority = 0;
         choix_combat.Active = false;
+        monstre = GameObject.Find("Ennemi").GetComponent<InfosMonstre>();
     }
 
     // Update is called once per frame
@@ -104,6 +121,7 @@ public class BattleManager : MonoBehaviour
 
     private void CodeTourEnnemi()
     {
+        const int FRAMES_AVANT_MONSTRE_ATTAQUE = 80;
         if (timer <= 1)
         {
             camera_joueur_fuit.Priority = 0;
@@ -112,14 +130,58 @@ public class BattleManager : MonoBehaviour
             choix_combat.Active = false;
         }
 
-        if (timer > 100) //todo: monstre choisit attaque + anim attaque + bloc/parry
+        if (timer == FRAMES_AVANT_MONSTRE_ATTAQUE)
         {
+            attaque_monstre = monstre.attaques[UnityEngine.Random.Range(0, monstre.attaques.Length)];
+            //donner anim à objet monstre
+        }
+
+        if (timer > attaque_monstre.anim_len + FRAMES_AVANT_MONSTRE_ATTAQUE) //todo: monstre choisit attaque + anim attaque + bloc/parry
+        {
+            stunlock = false;
             evenement_actuel = Evenement.TOUR_JOUEUR;
+        }
+
+        if (select_pressed && !stunlock)
+        {
+            if (timer > attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE)
+            {
+                stunlock = true;
+                // todo (peut etre) animation stumble joueur
+            }
+            else if (timer == attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE)
+            {
+                // mettre l'anim joueur à attaque
+                float dommages = (attaque_monstre.damage + stats_ennemi.Strength.Current - stats_ennemi.Defense.Current) / 2.0f;
+                stats_ennemi.Health.Remove(MathF.Round(dommages, MidpointRounding.AwayFromZero));
+            }
+            else if (timer > attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE - attaque_monstre.block_window)
+            {
+                // mettre l'anim monstre à knockback
+                // mettre l'anim joueur à block
+                float dommages = (attaque_monstre.damage + stats_ennemi.Strength.Current - stats_joueur.Defense.Current) / 2.0f;
+                stats_joueur.Health.Remove(dommages);
+            }
+        }
+        else if (timer == attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE)
+        {
+            float dommages = attaque_monstre.damage + stats_ennemi.Strength.Current - stats_joueur.Defense.Current;
+
+            if (stats_joueur.Health.Remove(dommages))
+            {
+                // utiliser feuille vitale si en a une
+            }
         }
     }
 
     private void CodeTourJoueur()
     {
+        if (selection_atk)
+        {
+            CodeChoixAtk();
+            return;
+        }
+
         if (timer <= 1)
         {
             camera_generale.Priority = 0;
@@ -135,10 +197,12 @@ public class BattleManager : MonoBehaviour
         switch (choix_combat.CheckRotate())
         {
             case 0:
-                Debug.Log("atk");
+                selection_atk = true;
+                image_liste_atk.color = Color.red;
                 break;
             case 1:
-                Debug.Log("mag");
+                selection_magie = true;
+                image_liste_atk.color = Color.yellow;
                 break;
             case 2:
                 Debug.Log("itm");
@@ -151,6 +215,11 @@ public class BattleManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void CodeChoixAtk()
+    {
+
     }
 
     private void CodeIntro()
