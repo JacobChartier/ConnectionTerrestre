@@ -1,24 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public static InventoryManager instance;
+    public InventorySlot[] slots;
     public Item[] items;
 
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
-
-    public InventorySlot[] slots;
-    public GameObject prefab;
+    [SerializeField] private GameObject prefab;
 
     public void Add(Item item)
     {
@@ -59,9 +48,9 @@ public class InventoryManager : MonoBehaviour
         inventoryItem.InitialiseItem(item);
     }
 
-    public void GenerateRandomItem()
+    public Item GenerateRandomItem()
     {
         var num = UnityEngine.Random.Range(0, items.Length);
-        Add(items[num]);
+        return items[num];
     }
 }

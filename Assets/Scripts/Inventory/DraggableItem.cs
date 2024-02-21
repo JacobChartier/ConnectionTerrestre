@@ -10,11 +10,13 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     public Image image;
     public TMP_Text countText;
+    public Slider durability;
 
-    [HideInInspector] public Item item;
+    public Item item;
     [HideInInspector] public int count;
 
-    [HideInInspector] public Transform parentAfterDrag;
+    [HideInInspector] public Transform parentAfterDrag; 
+    InventorySlot originalSlot;
 
     private void Start()
     {
@@ -25,9 +27,19 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void InitialiseItem(Item item)
     {
         parentAfterDrag = transform.parent;
+        originalSlot = transform.parent.GetComponent<InventorySlot>();
 
         this.item = item;
         image.sprite = item.icon;
+
+        if (item.isBreakable)
+        {
+            durability.gameObject.SetActive(true);
+        }
+        else
+        {
+            durability.gameObject.SetActive(false);
+        }
     }
 
     public void RefreshCount()
@@ -40,7 +52,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (parentAfterDrag.GetComponent<InventorySlot>().isDraggable)
+        if (originalSlot.isEnable)
         {
             parentAfterDrag = transform.parent;
             transform.SetParent(transform.root);
@@ -52,7 +64,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (parentAfterDrag.GetComponent<InventorySlot>().isDraggable)
+        if (originalSlot.isEnable)
         {
             transform.position = Input.mousePosition;
         }
@@ -60,7 +72,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (parentAfterDrag.GetComponent<InventorySlot>().isDraggable)
+        if (originalSlot.isEnable)
         {
             transform.SetParent(parentAfterDrag);
 

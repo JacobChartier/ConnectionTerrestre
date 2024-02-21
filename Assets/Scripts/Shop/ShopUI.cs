@@ -7,7 +7,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private EntityStats playerStats;
     [SerializeField] private TMP_Text playerCoins;
 
-    [SerializeField] private TMP_Text name;
+    [SerializeField] private new TMP_Text name;
     [SerializeField] private TMP_Text category;
     [SerializeField] private TMP_Text rarety;
     [SerializeField] private TMP_Text description;
@@ -16,7 +16,6 @@ public class ShopUI : MonoBehaviour
     
     [SerializeField] public Item SelectedItem;
     [SerializeField] private InventorySlot[] ShopInventory;
-
 
     void Start()
     {
@@ -40,7 +39,6 @@ public class ShopUI : MonoBehaviour
         slot.GetComponent<Outline>().enabled = !slot.GetComponent<Outline>().enabled;
 
         ShowDescription(SelectedItem);
-
     }
 
     private void AddToInventory()
@@ -76,28 +74,44 @@ public class ShopUI : MonoBehaviour
 
         switch (item.category)
         {
-            case ItemCategory.POTION:
+            case Type.WEAK_HEALTH_POTION: case Type.NORMAL_HEALTH_POTION:  case Type.STRONG_HEALTH_POTION: case Type.ULTIMATE_HEALTH_POTION:
+            case Type.NORMAL_EXPERIENCE_POTION:
                 this.category.text = "<color=#F83BFF>Potion</color>";
                 break;
 
-            case ItemCategory.ESSENCE:
+            case Type.WEAK_MAGIC_ESSENCE: case Type.NORMAL_MAGIC_ESSENCE: case Type.STRONG_MAGIC_ESSENCE:case Type.ULTIMATE_MAGIC_ESSENCE:
+            case Type.NORMAL_WARRIOR_ESSENCE:
+            case Type.NORMAL_MAGICIAN_ESSENCE:
                 this.category.text = "<color=#4ADE2C>Essence</color>";
                 break;
 
-            case ItemCategory.SHIELD:
+            case Type.SHIELD:
                 this.category.text = "<color=#853815>Shield</color>";
                 break;
 
-            case ItemCategory.OTHER:
+            case Type.OTHER:
                 this.category.text = "<color=#FFFFFF>Other</color>";
                 break;
 
-
+            default:
+                this.category.text = $"<color=#FFFFFF>{item.category}</color>";
+                break;
         }
 
 
         this.description.text = item.description;
-        this.price.text = (item.price > playerStats.Coins.Current) ? $"<b><color=#FF0000>{item.price}</color></b>" : $"<b><color=#FFFFFF>{item.price}</color></b>";
+
+        switch (item.price)
+        {
+            case 0: 
+                this.price.text = $"<b><color=#17FF3E>FREE</color></b>";
+                break;
+
+            default:
+                this.price.text = (item.price > playerStats.Coins.Current) ? $"<b><color=#FF0000>{item.price}</color></b>" : $"<b><color=#FFFFFF>{item.price}</color></b>";
+                break;
+
+        }
     }
 
     private void ResetDescription()

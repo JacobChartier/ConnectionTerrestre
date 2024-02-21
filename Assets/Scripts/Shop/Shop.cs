@@ -11,10 +11,22 @@ public class Shop : InteractableObjectBase
     [SerializeField] private Sprite icon;
     [SerializeField] private string text;
 
+    public Inventory inventory;
+
     [Header("Shop")]
     [SerializeField] private GameObject shopMenu;
     [SerializeField] private CinemachineVirtualCamera playerVCAM;
     [SerializeField] private CinemachineVirtualCamera shopVCAM;
+
+    private void Start()
+    {
+        for (int i = 0; i < inventory.slots.Length; i++)
+        {
+            var generatedItem = inventory.GenerateRandomItem();
+
+            inventory.Add(generatedItem);
+        }
+    }
 
     public override void Interact()
     {
