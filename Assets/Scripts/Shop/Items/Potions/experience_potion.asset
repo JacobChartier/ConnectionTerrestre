@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   name: Experience potion
-  description: 
+  description: EXPERIENCE POTION
   tooltipName: <b>Experience potion</b>
-  tooltipDescription: 
+  tooltipDescription: <color=#384CFF>RARE POTION</color><br><br>+30% <color=#00D0FF>Experience</color>
   category: 4
   rarety: 1
   price: 0
   isStackable: 1
-  stackSize: 20
+  stackSize: 5
   isBreakable: 0
   durability: 0

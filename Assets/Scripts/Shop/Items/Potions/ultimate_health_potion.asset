@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 9e66e92fb87dc6a419d63d4101261126, type: 3}
   name: Health potion
-  description: "Cette potion remplit la vie du joueur \xE0 l\u2019int\xE9rieur et
-    hors combat."
+  description: ULTIMATE HEALTH POTION
   tooltipName: <b>Health potion (Ultimate)</b>
   tooltipDescription: <color=#FFD700>LEGENDARY POTION</color><br><br>+100%<color=#FF2E2E>
     Health Points</color>

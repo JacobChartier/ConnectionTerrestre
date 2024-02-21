@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: shield
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  name: 
-  description: 
-  tooltipName: 
-  tooltipDescription: 
-  category: 0
-  rarety: 0
+  name: Shield
+  description: SHIELD
+  tooltipName: <b>Shield</b>
+  tooltipDescription: <color=#F83BFF>EPIC SHIELD</color><br><br>+30% <color=#213BFF>Defense</color>
+  category: 13
+  rarety: 2
   price: 0
-  isStackable: 0
-  stackSize: 0
-  isBreakable: 0
-  durability: 0
+  isStackable: 1
+  stackSize: 1
+  isBreakable: 1
+  durability: 10
