@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -6,13 +7,21 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    PlayersControls controls;
+    public static InputManager Instance;
+
+    private void Start()
+    {
+        if (Instance != null)
+        {
+            Instance = this;
+        }
+    }
+
+    public static PlayersControls controls;
 
     public static Vector2 mouvementInput;
+    public static Vector2 rotationInput;
 
-    public static bool isAimingInput = false;
-
-    // Start is called before the first frame update
     private void Awake()
     {
         controls = new PlayersControls();
@@ -21,22 +30,10 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
-        controls.Player.Movement.performed += Move;
-        controls.Player.Movement.canceled += Move;
+        controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>();
+        controls.Player.Movement.canceled += ctx => mouvementInput = ctx.ReadValue<Vector2>();
 
-
+        controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
+        controls.Player.Rotation.canceled += ctx => rotationInput = ctx.ReadValue<Vector2>();
     }
-
-    private void OnDisable()
-    {
-        controls.Player.Movement.performed -= Move;
-    }
-
-    private void Move(InputAction.CallbackContext ctx)
-    {
-        mouvementInput = ctx.ReadValue<Vector2>();
-        Debug.Log(mouvementInput);
-    }
-
-
 }

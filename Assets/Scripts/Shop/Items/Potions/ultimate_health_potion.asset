@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80954fc1f85087748a5006d793462f68, type: 3}
+  m_Name: ultimate_health_potion
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 9e66e92fb87dc6a419d63d4101261126, type: 3}
+  name: Health potion
+  description: ULTIMATE HEALTH POTION
+  tooltipName: <b>Health potion (Ultimate)</b>
+  tooltipDescription: <color=#FFD700>LEGENDARY POTION</color><br><br>+100%<color=#FF2E2E>
+    Health Points</color>
+  category: 3
+  rarety: 3
+  price: 11
+  isStackable: 1
+  stackSize: 5
+  isBreakable: 0
+  durability: 0

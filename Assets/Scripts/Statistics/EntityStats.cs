@@ -1,85 +1,115 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [RequireComponent(typeof(Health))]
 public class EntityStats : MonoBehaviour
 {
-    public static float baseHP = 100, currentHP;
-    public static float baseDEF = 100, currentDEF;
-    public static float baseMP = 100, currentMP;
-    public static float baseStrength = 10, currentStrength;
-    public static float baseATKSpeed = 10, currentATKSpeed;
-
-    public static int coins = 0;
-
-    public static void Add(StatType type, float amount = 1)
+    public enum StatType
     {
-        switch (type)
-        {
-            case StatType.HP:
-                currentHP += amount;
-                break;
-
-            case StatType.DEF:
-                currentDEF += amount;
-                break;
-
-            case StatType.MP:
-                currentMP += amount;
-                break;
-
-            case StatType.STRENGTH:
-                currentStrength += amount;
-                break;
-
-            case StatType.ATK:
-                currentATKSpeed += amount;
-                break;
-
-            case StatType.COINS:
-                coins += (int)amount;
-                break;
-        }
+        HP,
+        MP,
+        DEFENSE,
+        FORCE,
+        VITESSE,
+        MAX_HP,
+        MAX_MP,
+        MAX_DEFENSE,
+        MAX_FORCE,
+        MAX_VITESSE
     }
 
-    public static void Remove(StatType type, float amount = 1)
+    [Header("Combat Statistics")]
+    public EntityStatistic Health = new EntityStatistic() { Base = 80, Min = 0, Max = 100 };
+    public EntityStatistic Defense = new EntityStatistic() { Base = 10, Min = 0, Max = 100 };
+    public EntityStatistic MagicPoint = new EntityStatistic() { Base = 10, Min = 0 };
+    public EntityStatistic Strength = new EntityStatistic() { Base = 10, Min = 0 };
+    public EntityStatistic AttackSpeed = new EntityStatistic() { Base = 10, Min = 0 };
+
+    [Header("Economy Statistics")]
+    public EntityStatistic Coins = new EntityStatistic() { Base = 10, Min = 0 };
+
+    private void OnEnable()
     {
-        switch (type)
-        {
-            case StatType.HP:
-                currentHP -= amount;
-                break;
-
-            case StatType.DEF:
-                currentDEF -= amount;
-                break;
-
-            case StatType.MP:
-                currentMP -= amount;
-                break;
-
-            case StatType.STRENGTH:
-                currentStrength -= amount;
-                break;
-
-            case StatType.ATK:
-                currentATKSpeed -= amount;
-                break;
-
-            case StatType.COINS:
-                coins -= (int)amount;
-                break;
-        }
+        Health.Reset();
+        Defense.Reset();
+        MagicPoint.Reset();
+        Strength.Reset();
+        AttackSpeed.Reset();
+        Coins.Reset();
     }
 }
 
-public enum StatType
+[Serializable]
+public struct EntityStatistic
 {
-    HP, 
-    DEF, 
-    MP, 
-    STRENGTH, 
-    ATK, 
-    COINS
+    [SerializeField] private float _base;
+    [HideInInspector] public float Base
+    {
+        get => _base;
+        set => _base = value;
+    }
+
+    [SerializeField] private float _current;
+    [HideInInspector] public float Current
+    {
+        get => _current;
+        private set
+        {
+            if (value > Max) _current = Max;
+            if (value < Min) _current = Min;
+
+            else _current = value;
+        }
+    }
+
+    [Space]
+    [SerializeField] private float _max;
+    [HideInInspector] public float Max
+    {
+        get => _max;
+        set => _max = value;
+    }
+
+    [SerializeField] private float _min;
+    [HideInInspector] public float Min
+    {
+        get => _min;
+        set => _min = value;
+    }
+
+    [Space]
+    [SerializeField] private string _displayColor;
+    [HideInInspector] public string DisplayColor
+    {
+        get => _displayColor;
+        set => _displayColor = value;
+    }
+
+    public bool Add(float amount)
+    {
+        if ((Current + amount) <= Max)
+        {
+            Current += amount;
+            return true;
+        }
+        else return false;
+    }
+
+    public bool Remove(float amount)
+    {
+        if ((Current + amount) >= Min)
+        {
+            Current -= amount;
+            return true;
+        }
+        else return false;
+    }
+
+    public void Reset()
+    {
+        Current = Base;
+    }
 }

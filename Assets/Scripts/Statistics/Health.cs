@@ -6,21 +6,27 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     public UnityEvent onGainHealth, onLostHealth, onDeath;
+    private EntityStats stats;
 
-    public void AddHealthPoint(float HP)
+    public void Awake()
     {
-        EntityStats.Add(StatType.HP, HP);
+        stats = GetComponent<EntityStats>();
+    }
+
+    public void AddHealthPoint(float amount)
+    {
+        stats.Health.Add(amount);
 
         onGainHealth.Invoke();
     }
 
-    public void RemoveHealthPoint(float HP)
+    public void RemoveHealthPoint(float amount)
     {
-        EntityStats.currentHP -= HP;
+        stats.Health.Remove(amount);
 
         onLostHealth.Invoke();
 
-        if(EntityStats.currentHP <= 0)
+        if(stats.Health.Current == 0)
         {
             onDeath.Invoke();
         }
