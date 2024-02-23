@@ -13,8 +13,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     public bool isTooltipVisible = true;
     public bool isDescriptionVisible = true;
 
+    public bool isOccupied = false;
+
     public void OnDrop(PointerEventData eventData)
     {
+        isOccupied = true;
+
         if (isEnable)
         {
             if (transform.childCount == 0)
@@ -34,7 +38,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isTooltipVisible)
+        if (isTooltipVisible && isOccupied)
         {
             if (isDescriptionVisible)
             {

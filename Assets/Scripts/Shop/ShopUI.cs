@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class ShopUI : MonoBehaviour
 {
     [SerializeField] private EntityStats playerStats;
-    [SerializeField] private TMP_Text playerCoins;
 
     [SerializeField] private new TMP_Text name;
     [SerializeField] private TMP_Text category;
@@ -13,7 +12,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private TMP_Text description;
     [SerializeField] private TMP_Text price;
     [SerializeField] private Button purchaseButton;
-    
+
     [SerializeField] public Item SelectedItem;
     [SerializeField] private InventorySlot[] ShopInventory;
 
@@ -43,13 +42,15 @@ public class ShopUI : MonoBehaviour
 
     private void AddToInventory()
     {
-        InventoryManager.instance.Add(SelectedItem);
+        if (SelectedItem.Purchase(playerStats))
+        {
+            InventoryManager.instance.Add(SelectedItem);
+            InventoryUI.Instance.Refresh();
+        }
     }
 
     public void ShowDescription(Item item)
     {
-        playerCoins.text = $"{playerStats.Coins.Current}";
-
         this.name.text = item.name;
 
         switch (item.rarety)
@@ -74,12 +75,18 @@ public class ShopUI : MonoBehaviour
 
         switch (item.category)
         {
-            case Type.WEAK_HEALTH_POTION: case Type.NORMAL_HEALTH_POTION:  case Type.STRONG_HEALTH_POTION: case Type.ULTIMATE_HEALTH_POTION:
+            case Type.WEAK_HEALTH_POTION:
+            case Type.NORMAL_HEALTH_POTION:
+            case Type.STRONG_HEALTH_POTION:
+            case Type.ULTIMATE_HEALTH_POTION:
             case Type.NORMAL_EXPERIENCE_POTION:
                 this.category.text = "<color=#F83BFF>Potion</color>";
                 break;
 
-            case Type.WEAK_MAGIC_ESSENCE: case Type.NORMAL_MAGIC_ESSENCE: case Type.STRONG_MAGIC_ESSENCE:case Type.ULTIMATE_MAGIC_ESSENCE:
+            case Type.WEAK_MAGIC_ESSENCE:
+            case Type.NORMAL_MAGIC_ESSENCE:
+            case Type.STRONG_MAGIC_ESSENCE:
+            case Type.ULTIMATE_MAGIC_ESSENCE:
             case Type.NORMAL_WARRIOR_ESSENCE:
             case Type.NORMAL_MAGICIAN_ESSENCE:
                 this.category.text = "<color=#4ADE2C>Essence</color>";
@@ -87,6 +94,14 @@ public class ShopUI : MonoBehaviour
 
             case Type.SHIELD:
                 this.category.text = "<color=#853815>Shield</color>";
+                break;
+
+            case Type.FOUR_LEAF_CLOVER:
+                this.category.text = "<color=#1C9C02>Clover</color>";
+                break;
+
+            case Type.VITAL_LEAF:
+                this.category.text = "<color=#1C9C02>Leaf</color>";
                 break;
 
             case Type.OTHER:
@@ -98,12 +113,11 @@ public class ShopUI : MonoBehaviour
                 break;
         }
 
-
         this.description.text = item.description;
 
         switch (item.price)
         {
-            case 0: 
+            case 0:
                 this.price.text = $"<b><color=#17FF3E>FREE</color></b>";
                 break;
 

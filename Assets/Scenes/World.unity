@@ -2113,6 +2113,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb4e5917cf3e55849bc7674d060a478b, type: 2}
   - {fileID: 11400000, guid: 53d918b835eb85f4d9edb8651aa27be3, type: 2}
   - {fileID: 11400000, guid: acccf4e508e5f1e4ebc6650913454fd1, type: 2}
+  - {fileID: 11400000, guid: 74b0740a40f7bed4eb1192156a30639c, type: 2}
   prefab: {fileID: 1185992408}
 --- !u!1 &316135857
 GameObject:
@@ -4103,10 +4104,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1608851797426404535, guid: 7b2146ec22ddef040b499562087cbf62, type: 3}
       insertIndex: -1
       addedObject: {fileID: 690891683}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3130285402686476505, guid: 7b2146ec22ddef040b499562087cbf62, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1497619151}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b2146ec22ddef040b499562087cbf62, type: 3}
 --- !u!224 &519381082 stripped
 RectTransform:
@@ -4518,11 +4516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d99b78adbc3e7419194301114a0f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &605044521 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3130285402686476505, guid: 7b2146ec22ddef040b499562087cbf62, type: 3}
-  m_PrefabInstance: {fileID: 519381081}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &617553626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5282,7 +5275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats: {fileID: 394582509}
-  playerCoins: {fileID: 130616578}
   name: {fileID: 196898649}
   category: {fileID: 958335027}
   rarety: {fileID: 1231463141}
@@ -9030,22 +9022,10 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1590111882674138334, guid: 7b2146ec22ddef040b499562087cbf62, type: 3}
   m_PrefabInstance: {fileID: 519381081}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605044521}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30d99b78adbc3e7419194301114a0f71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1497619151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605044521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ca16a28c37ab394f9ef19d38ffdc8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1499859896
@@ -11122,6 +11102,7 @@ GameObject:
   - component: {fileID: 1877417082}
   - component: {fileID: 1877417084}
   - component: {fileID: 1877417083}
+  - component: {fileID: 1877417085}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -11190,6 +11171,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877417081}
   m_CullTransparentMesh: 1
+--- !u!114 &1877417085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877417081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a10ef8f8165d3224eb36fe4440660508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 394582509}
+  coins: {fileID: 130616578}
 --- !u!1 &1919662514
 GameObject:
   m_ObjectHideFlags: 0
@@ -12979,6 +12974,14 @@ PrefabInstance:
     - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
       propertyPath: Coins._base
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: Health._displayColor
+      value: FF2E2E
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: Defense._displayColor
+      value: 213BFF
       objectReference: {fileID: 0}
     - target: {fileID: 5487998106283863161, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
       propertyPath: LookAt

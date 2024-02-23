@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private GameObject prefab;
 
-    public void Add(Item item)
+    public bool Add(Item item)
     {
         // Stacking
         for (int i = 0; i < slots.Length; i++)
@@ -21,8 +21,6 @@ public class Inventory : MonoBehaviour
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
-
-                return;
             }
         }
 
@@ -35,9 +33,11 @@ public class Inventory : MonoBehaviour
             if (itemInSlot == null)
             {
                 Spawn(item, slot);
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
     private void Spawn(Item item, InventorySlot slot)

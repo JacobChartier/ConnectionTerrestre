@@ -20,7 +20,7 @@ MonoBehaviour:
     Health Points</color><br>+100%<color=#34BAEB> Magic Points</color>
   category: 14
   rarety: 3
-  price: 9999
+  price: 5
   isStackable: 1
   stackSize: 999
   isBreakable: 1

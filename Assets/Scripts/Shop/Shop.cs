@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Shop : InteractableObjectBase
 {
@@ -24,6 +25,7 @@ public class Shop : InteractableObjectBase
         {
             var generatedItem = inventory.GenerateRandomItem();
 
+            generatedItem.price = generatedItem.GeneratePrice(5, 15);
             inventory.Add(generatedItem);
         }
     }

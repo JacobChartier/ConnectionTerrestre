@@ -20,7 +20,7 @@ MonoBehaviour:
     Health Points</color>
   category: 3
   rarety: 3
-  price: 0
+  price: 11
   isStackable: 1
   stackSize: 5
   isBreakable: 0

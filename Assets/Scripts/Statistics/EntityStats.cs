@@ -80,6 +80,14 @@ public struct EntityStatistic
         set => _min = value;
     }
 
+    [Space]
+    [SerializeField] private string _displayColor;
+    [HideInInspector] public string DisplayColor
+    {
+        get => _displayColor;
+        set => _displayColor = value;
+    }
+
     public bool Add(float amount)
     {
         if ((Current + amount) <= Max)

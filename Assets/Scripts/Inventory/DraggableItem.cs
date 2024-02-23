@@ -29,6 +29,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         parentAfterDrag = transform.parent;
         originalSlot = transform.parent.GetComponent<InventorySlot>();
 
+        transform.parent.GetComponent<InventorySlot>().isOccupied = true;
+
         this.item = item;
         image.sprite = item.icon;
 
@@ -52,6 +54,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        originalSlot.isOccupied = false;
+
         if (originalSlot.isEnable)
         {
             parentAfterDrag = transform.parent;

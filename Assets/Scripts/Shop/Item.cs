@@ -16,7 +16,7 @@ public class Item : ScriptableObject
 
     [Header("Description")]
     public Sprite icon;
-    
+
     public new string name;
     public string description;
 
@@ -29,11 +29,28 @@ public class Item : ScriptableObject
     public int price;
 
     [Header("Options")]
-    public bool isStackable;
-    public int stackSize;
+    public bool isStackable = true;
+    public int stackSize = 5;
 
     public bool isBreakable = false;
-    public int durability;
+    public int durability = 10;
+
+    public int GeneratePrice(int min, int max)
+    {
+        return Random.Range(min, max);
+    }
+
+    public bool Purchase(EntityStats player)
+    {
+        if (price <= player.Coins.Current)
+        {
+            player.Coins.Remove(price);
+
+            return true;
+        }
+
+        return default;
+    }
 
     public void FaireEffet(EntityStats stats)
     {
@@ -88,38 +105,37 @@ public class Item : ScriptableObject
 
 public enum Rarety
 {
-    COMMON, 
-    RARE, 
-    EPIC, 
+    COMMON,
+    RARE,
+    EPIC,
     LEGENDARY
 }
 
 public enum Type
 {
     // Potions
-    WEAK_HEALTH_POTION, 
+    WEAK_HEALTH_POTION,
     NORMAL_HEALTH_POTION,
-    STRONG_HEALTH_POTION, 
-    ULTIMATE_HEALTH_POTION, 
+    STRONG_HEALTH_POTION,
+    ULTIMATE_HEALTH_POTION,
 
     NORMAL_EXPERIENCE_POTION,
 
     // Essences
-    WEAK_MAGIC_ESSENCE, 
-    NORMAL_MAGIC_ESSENCE, 
-    STRONG_MAGIC_ESSENCE, 
-    ULTIMATE_MAGIC_ESSENCE, 
+    WEAK_MAGIC_ESSENCE,
+    NORMAL_MAGIC_ESSENCE,
+    STRONG_MAGIC_ESSENCE,
+    ULTIMATE_MAGIC_ESSENCE,
 
     NORMAL_WARRIOR_ESSENCE,
     NORMAL_MAGICIAN_ESSENCE,
 
     // Plants
     VITAL_LEAF,
-    FOUR_LEAF_CLOVER,   
+    FOUR_LEAF_CLOVER,
 
     // Tools
     SHIELD,
 
     OTHER
-
 }

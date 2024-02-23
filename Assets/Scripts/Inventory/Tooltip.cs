@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
-    public static Tooltip Instance { get; private set; }
+    public static Tooltip Instance;
 
     [SerializeField] RectTransform canvasRectTransform;
 
