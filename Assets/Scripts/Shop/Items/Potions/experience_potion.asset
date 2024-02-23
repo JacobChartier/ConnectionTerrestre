@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   name: Experience potion
-  description: EXPERIENCE POTION
+  description: "Augmente de 30% le montant d'experience recu apr\xE8s un combat.
+    L'effet dispara\xEEt apr\xE8s 5 utilisations."
   tooltipName: <b>Experience potion</b>
   tooltipDescription: <color=#384CFF>RARE POTION</color><br><br>+30% <color=#00D0FF>Experience</color>
   category: 4

@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80954fc1f85087748a5006d793462f68, type: 3}
   m_Name: weak_magic_essence
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 5108118a58327ce4e9e7e43f0d832ad9, type: 3}
+  icon: {fileID: 21300000, guid: 7429cf3a055e2ed41ac0b62613e12c6c, type: 3}
   name: Magic essence
-  description: WEAK MAGIC ESSENCE
+  description: "Essence faible qui r\xE9g\xE9n\xE8re 15% de ton MP maximal. Peut
+    \xEAtre utilis\xE9 en ou hors combat."
   tooltipName: <b>Magic essence (Weak)</b>
   tooltipDescription: <color=#FFFFFF>COMMON ESSENCE</color><br><br>+10% <color=#00D0FF>Magic
     Points</color>
   category: 5
   rarety: 0
-  price: 0
+  price: 9
   isStackable: 1
   stackSize: 5
   isBreakable: 0

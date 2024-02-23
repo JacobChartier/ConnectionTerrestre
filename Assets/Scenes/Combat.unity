@@ -916,31 +916,37 @@ MonoBehaviour:
     _current: 0
     _max: 100
     _min: 0
+    _displayColor: 
   Defense:
     _base: 10
     _current: 0
     _max: 100
     _min: 0
+    _displayColor: 
   MagicPoint:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
   Strength:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
   AttackSpeed:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
   Coins:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
 --- !u!114 &521000416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,7 +1274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -39.6, y: 28.1}
+  m_AnchoredPosition: {x: -40, y: 28}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &672483776
@@ -1392,7 +1398,7 @@ MonoBehaviour:
   stats_joueur: {fileID: 1506973970}
   joueur_transform: {fileID: 1506973969}
   stats_ennemi: {fileID: 521000415}
-  image_liste_atk: {fileID: 0}
+  selector: {fileID: 1818923870}
   essence_guerrier: 0
   essence_magicien: 0
   bouclier_temporaire: 0
@@ -1964,31 +1970,37 @@ MonoBehaviour:
     _current: 0
     _max: 100
     _min: 0
+    _displayColor: 
   Defense:
     _base: 10
     _current: 0
     _max: 100
     _min: 0
+    _displayColor: 
   MagicPoint:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
   Strength:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
   AttackSpeed:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
   Coins:
     _base: 10
     _current: 0
     _max: 0
     _min: 0
+    _displayColor: 
 --- !u!114 &1506973971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2434,6 +2446,7 @@ GameObject:
   - component: {fileID: 1818923867}
   - component: {fileID: 1818923869}
   - component: {fileID: 1818923868}
+  - component: {fileID: 1818923870}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -2501,6 +2514,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818923866}
   m_CullTransparentMesh: 1
+--- !u!114 &1818923870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818923866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d508dfe8df00d724296e210b1c657180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txt_titre: {fileID: 1855909063}
+  txt_liste: {fileID: 485711888}
+  curseur: {fileID: 672483775}
 --- !u!1 &1853499068
 GameObject:
   m_ObjectHideFlags: 0

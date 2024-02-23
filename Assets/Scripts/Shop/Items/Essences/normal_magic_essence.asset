@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80954fc1f85087748a5006d793462f68, type: 3}
   m_Name: normal_magic_essence
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 5108118a58327ce4e9e7e43f0d832ad9, type: 3}
+  icon: {fileID: 21300000, guid: c3cdcea07705c164389695f279568cb8, type: 3}
   name: Magic essence
-  description: NORMAL MAGIC ESSENCE
+  description: "Essence qui r\xE9g\xE9n\xE8re 30% de ton HP maximal. Peut \xEAtre
+    utilis\xE9 en ou hors combat."
   tooltipName: <b>Magic essence</b>
   tooltipDescription: <color=#384CFF>RARE ESSENCE</color><br><br>+20% <color=#00D0FF>Magic
     Points</color>
   category: 6
   rarety: 1
-  price: 0
+  price: 6
   isStackable: 1
   stackSize: 5
   isBreakable: 0

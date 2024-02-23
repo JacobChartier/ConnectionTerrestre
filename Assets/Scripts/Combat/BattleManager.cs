@@ -26,7 +26,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] EntityStats stats_joueur;
     [SerializeField] Transform joueur_transform;
     [SerializeField] EntityStats stats_ennemi;
-    [SerializeField] Image image_liste_atk;
+    [SerializeField] selectormanager selector;
 
     public static PlayersControls controls;
     public static bool left_pressed = false;
@@ -36,6 +36,8 @@ public class BattleManager : MonoBehaviour
     public static bool select_pressed = false;
     public static bool up_pressed = false;
     public static bool down_pressed = false;
+    public static bool down_held = false;
+    public static bool up_held = false;
 
     Evenement evenement_actuel
     {
@@ -56,8 +58,7 @@ public class BattleManager : MonoBehaviour
     int timer = 0;
     bool fuir_fail = false;
     bool stunlock = false;
-    bool selection_atk = false;
-    bool selection_magie = false;
+    bool selection = false;
     public bool essence_guerrier = false;
     public bool essence_magicien = false;
     public bool bouclier_temporaire = false;
@@ -80,8 +81,11 @@ public class BattleManager : MonoBehaviour
         controls.Player.selectionenter.performed += ctx => select_pressed = ctx.ReadValueAsButton();
         controls.Player.selectionenter.canceled += ctx => select_pressed = ctx.ReadValueAsButton();
 
-        controls.Player.selectionhaut.performed += ctx => up_pressed = ctx.ReadValueAsButton();
-        controls.Player.selectionhaut.canceled += ctx => up_pressed = ctx.ReadValueAsButton();
+        controls.Player.selectionhaut.performed += ctx => up_pressed = up_held = ctx.ReadValueAsButton();
+        controls.Player.selectionhaut.canceled += ctx => up_pressed = up_held = ctx.ReadValueAsButton();
+
+        controls.Player.selectionbas.performed += ctx => down_pressed = down_held = ctx.ReadValueAsButton();
+        controls.Player.selectionbas.canceled += ctx => down_pressed = down_held = ctx.ReadValueAsButton();
     }
 
     // Start is called before the first frame update
@@ -176,9 +180,9 @@ public class BattleManager : MonoBehaviour
 
     private void CodeTourJoueur()
     {
-        if (selection_atk)
+        if (selection)
         {
-            CodeChoixAtk();
+            CodeChoixAtkItm();
             return;
         }
 
@@ -197,15 +201,16 @@ public class BattleManager : MonoBehaviour
         switch (choix_combat.CheckRotate())
         {
             case 0:
-                selection_atk = true;
-                image_liste_atk.color = Color.red;
+                selection = true;
+                selector.Startup(selectormanager.StartupType.PHYSIQUE);
                 break;
             case 1:
-                selection_magie = true;
-                image_liste_atk.color = Color.yellow;
+                selection = true;
+                selector.Startup(selectormanager.StartupType.MAGIQUE);
                 break;
             case 2:
-                Debug.Log("itm");
+                selection = true;
+                selector.Startup(selectormanager.StartupType.ITEM);
                 break;
             case 3:
                 fuir_fail = false;
@@ -217,9 +222,14 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void CodeChoixAtk()
+    private void CodeChoixAtkItm()
     {
-
+        if (left_pressed)
+        {
+            selection = false;
+            selector.Close();
+            timer = 15;
+        }
     }
 
     private void CodeIntro()

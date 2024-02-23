@@ -19,8 +19,8 @@ MonoBehaviour:
   tooltipDescription: <color=#FFD700>LEGENDARY ITEM</color><br><br>+100%<color=#FF2E2E>
     Health Points</color><br>+100%<color=#34BAEB> Magic Points</color>
   category: 14
-  rarety: 3
-  price: 5
+  rarety: 0
+  price: 1
   isStackable: 1
   stackSize: 999
   isBreakable: 1

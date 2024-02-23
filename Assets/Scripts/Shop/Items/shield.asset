@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   name: Shield
-  description: SHIELD
+  description: "Si utilis\xE9 en combat, ta d\xE9fense est augment\xE9e pendant au
+    moins 3 tours. Pour chaque tour apr\xE8s le 3e en effet, le bouclier a 50% de
+    chance de briser. Si utilis\xE9 hors combat, pour un certain temps, si tu entre
+    en combat, l\u2019effet du bouclier sera automatiquement appliqu\xE9 sur toi."
   tooltipName: <b>Shield</b>
   tooltipDescription: <color=#F83BFF>EPIC SHIELD</color><br><br>+30% <color=#213BFF>Defense</color>
   category: 13

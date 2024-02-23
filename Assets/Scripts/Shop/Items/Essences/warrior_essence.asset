@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5108118a58327ce4e9e7e43f0d832ad9, type: 3}
   name: Warrior essence
-  description: WARRIOR ESSENCE
+  description: "Les attaques physiques deviennent 30% plus fortes. Ne peux pas \xEAtre
+    utilis\xE9 hors combat."
   tooltipName: <b>Warrior essence</b>
   tooltipDescription: <color=#F83BFF>EPIC ESSENCE</color><br><br>+30% <color=#00D0FF>Physical
     Damages</color>
-  category: 8
+  category: 9
   rarety: 2
   price: 0
   isStackable: 1

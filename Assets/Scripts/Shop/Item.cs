@@ -6,8 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable object/Item")]
 public class Item : ScriptableObject
 {
-    const int HP_RECU_POTION = 40;
-    const int MP_RECU_ESSENCE = 40;
+    const int HP_RECU_POTION = 30;
+    const int MP_RECU_ESSENCE = 30;
     const int POURCENTAGE_VIE_FEUILLE_VITALE = 25;
     const int POURCENTAGE_ESSENCE_GUERRIER = 30;
     const int POURCENTAGE_ESSENCE_MAGICIEN = 30;
@@ -98,6 +98,9 @@ public class Item : ScriptableObject
 
             case Type.NORMAL_MAGICIAN_ESSENCE:
                 stats.Defense.Add(stats.Defense.Current * (1.0f + POURCENTAGE_ESSENCE_MAGICIEN / 100.0f));
+                break;
+
+            case Type.NORMAL_EXPERIENCE_POTION:
                 break;
         }
     }
