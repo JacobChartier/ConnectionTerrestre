@@ -14,15 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: a6f80d7d8defacc4498a5523d7a89a01, type: 3}
   name: Health potion
-  description: "Potion faible qui r\xE9g\xE9n\xE8re 15% de ton HP maximal. Peut \xEAtre
-    utilis\xE9 en ou hors combat."
-  tooltipName: <b>Health potion (Weak)</b>
-  tooltipDescription: <color=#FFFFFF>COMMON POTION</color><br><br>+10%<color=#FF2E2E>
-    Health Points</color>
+  description: <color=#FFFFFF>COMMON POTION</color><br><br>+15%<color=#FF2E2E> Health
+    Points</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 9
   category: 0
   rarety: 0
-  price: 0
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 15
+      isPercentage: 1
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0

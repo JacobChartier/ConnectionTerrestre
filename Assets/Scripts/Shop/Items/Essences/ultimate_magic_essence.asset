@@ -17,13 +17,44 @@ MonoBehaviour:
   description: "Essence puissante qui r\xE9g\xE9n\xE8re tout ton MP. Peut \xEAtre
     utilis\xE9 en ou hors combat. Ne peut pas \xEAtre achet\xE9, est seulement laiss\xE9
     par des ennemis puissants."
-  tooltipName: <b>Magic essence (Ultimate)</b>
-  tooltipDescription: <color=#FFD700>LEGENDARY ESSENCE</color><br><br>+100% <color=#00D0FF>Magic
-    Points</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 9
   category: 8
   rarety: 3
-  price: 6
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 100
+      isPercentage: 1
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0

@@ -89,6 +89,24 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Open inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""f2f40820-bc6c-42f4-b43b-0fd7c75c2eb2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4db98a7-a6c9-40b8-a9c5-f3e16d31fb50"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -256,11 +274,33 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""selection bas"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63f20fb5-327c-404d-bf59-67bc8af34038"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c496e1ac-5a54-4297-9fed-c2b231b214da"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""Inventory"",
+            ""name"": ""Menus"",
             ""id"": ""bb7956ee-3856-4de0-83e9-a0e367dd4bd8"",
             ""actions"": [
                 {
@@ -319,10 +359,12 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_selectionenter = m_Player.FindAction("selection enter", throwIfNotFound: true);
         m_Player_selectionhaut = m_Player.FindAction("selection haut", throwIfNotFound: true);
         m_Player_selectionbas = m_Player.FindAction("selection bas", throwIfNotFound: true);
-        // Inventory
-        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_SplitStackInHalf = m_Inventory.FindAction("SplitStackInHalf", throwIfNotFound: true);
-        m_Inventory_TakeOneItemFromStack = m_Inventory.FindAction("TakeOneItemFromStack", throwIfNotFound: true);
+        m_Player_Openinventory = m_Player.FindAction("Open inventory", throwIfNotFound: true);
+        m_Player_Closemenu = m_Player.FindAction("Close menu", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_SplitStackInHalf = m_Menus.FindAction("SplitStackInHalf", throwIfNotFound: true);
+        m_Menus_TakeOneItemFromStack = m_Menus.FindAction("TakeOneItemFromStack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -391,6 +433,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_selectionenter;
     private readonly InputAction m_Player_selectionhaut;
     private readonly InputAction m_Player_selectionbas;
+    private readonly InputAction m_Player_Openinventory;
+    private readonly InputAction m_Player_Closemenu;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
@@ -402,6 +446,8 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @selectionenter => m_Wrapper.m_Player_selectionenter;
         public InputAction @selectionhaut => m_Wrapper.m_Player_selectionhaut;
         public InputAction @selectionbas => m_Wrapper.m_Player_selectionbas;
+        public InputAction @Openinventory => m_Wrapper.m_Player_Openinventory;
+        public InputAction @Closemenu => m_Wrapper.m_Player_Closemenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -432,6 +478,12 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @selectionbas.started += instance.OnSelectionbas;
             @selectionbas.performed += instance.OnSelectionbas;
             @selectionbas.canceled += instance.OnSelectionbas;
+            @Openinventory.started += instance.OnOpeninventory;
+            @Openinventory.performed += instance.OnOpeninventory;
+            @Openinventory.canceled += instance.OnOpeninventory;
+            @Closemenu.started += instance.OnClosemenu;
+            @Closemenu.performed += instance.OnClosemenu;
+            @Closemenu.canceled += instance.OnClosemenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -457,6 +509,12 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @selectionbas.started -= instance.OnSelectionbas;
             @selectionbas.performed -= instance.OnSelectionbas;
             @selectionbas.canceled -= instance.OnSelectionbas;
+            @Openinventory.started -= instance.OnOpeninventory;
+            @Openinventory.performed -= instance.OnOpeninventory;
+            @Openinventory.canceled -= instance.OnOpeninventory;
+            @Closemenu.started -= instance.OnClosemenu;
+            @Closemenu.performed -= instance.OnClosemenu;
+            @Closemenu.canceled -= instance.OnClosemenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -475,26 +533,26 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
-    // Inventory
-    private readonly InputActionMap m_Inventory;
-    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
-    private readonly InputAction m_Inventory_SplitStackInHalf;
-    private readonly InputAction m_Inventory_TakeOneItemFromStack;
-    public struct InventoryActions
+    // Menus
+    private readonly InputActionMap m_Menus;
+    private List<IMenusActions> m_MenusActionsCallbackInterfaces = new List<IMenusActions>();
+    private readonly InputAction m_Menus_SplitStackInHalf;
+    private readonly InputAction m_Menus_TakeOneItemFromStack;
+    public struct MenusActions
     {
         private @PlayersControls m_Wrapper;
-        public InventoryActions(@PlayersControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SplitStackInHalf => m_Wrapper.m_Inventory_SplitStackInHalf;
-        public InputAction @TakeOneItemFromStack => m_Wrapper.m_Inventory_TakeOneItemFromStack;
-        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public MenusActions(@PlayersControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SplitStackInHalf => m_Wrapper.m_Menus_SplitStackInHalf;
+        public InputAction @TakeOneItemFromStack => m_Wrapper.m_Menus_TakeOneItemFromStack;
+        public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
-        public void AddCallbacks(IInventoryActions instance)
+        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
+        public void AddCallbacks(IMenusActions instance)
         {
-            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_MenusActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenusActionsCallbackInterfaces.Add(instance);
             @SplitStackInHalf.started += instance.OnSplitStackInHalf;
             @SplitStackInHalf.performed += instance.OnSplitStackInHalf;
             @SplitStackInHalf.canceled += instance.OnSplitStackInHalf;
@@ -503,7 +561,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @TakeOneItemFromStack.canceled += instance.OnTakeOneItemFromStack;
         }
 
-        private void UnregisterCallbacks(IInventoryActions instance)
+        private void UnregisterCallbacks(IMenusActions instance)
         {
             @SplitStackInHalf.started -= instance.OnSplitStackInHalf;
             @SplitStackInHalf.performed -= instance.OnSplitStackInHalf;
@@ -513,21 +571,21 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @TakeOneItemFromStack.canceled -= instance.OnTakeOneItemFromStack;
         }
 
-        public void RemoveCallbacks(IInventoryActions instance)
+        public void RemoveCallbacks(IMenusActions instance)
         {
-            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_MenusActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInventoryActions instance)
+        public void SetCallbacks(IMenusActions instance)
         {
-            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_MenusActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_MenusActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InventoryActions @Inventory => new InventoryActions(this);
+    public MenusActions @Menus => new MenusActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -537,8 +595,10 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnSelectionenter(InputAction.CallbackContext context);
         void OnSelectionhaut(InputAction.CallbackContext context);
         void OnSelectionbas(InputAction.CallbackContext context);
+        void OnOpeninventory(InputAction.CallbackContext context);
+        void OnClosemenu(InputAction.CallbackContext context);
     }
-    public interface IInventoryActions
+    public interface IMenusActions
     {
         void OnSplitStackInHalf(InputAction.CallbackContext context);
         void OnTakeOneItemFromStack(InputAction.CallbackContext context);

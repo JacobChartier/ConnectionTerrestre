@@ -67,6 +67,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Open inventory",
+                    "type": "Button",
+                    "id": "f2f40820-bc6c-42f4-b43b-0fd7c75c2eb2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Close menu",
+                    "type": "Button",
+                    "id": "a4db98a7-a6c9-40b8-a9c5-f3e16d31fb50",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -234,11 +252,33 @@
                     "action": "selection bas",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63f20fb5-327c-404d-bf59-67bc8af34038",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c496e1ac-5a54-4297-9fed-c2b231b214da",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Close menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Inventory",
+            "name": "Menus",
             "id": "bb7956ee-3856-4de0-83e9-a0e367dd4bd8",
             "actions": [
                 {

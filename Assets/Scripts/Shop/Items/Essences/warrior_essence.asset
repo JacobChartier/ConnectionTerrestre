@@ -16,13 +16,44 @@ MonoBehaviour:
   name: Warrior essence
   description: "Les attaques physiques deviennent 30% plus fortes. Ne peux pas \xEAtre
     utilis\xE9 hors combat."
-  tooltipName: <b>Warrior essence</b>
-  tooltipDescription: <color=#F83BFF>EPIC ESSENCE</color><br><br>+30% <color=#00D0FF>Physical
-    Damages</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 7
   category: 9
   rarety: 2
-  price: 0
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 30
+      isPercentage: 1
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 1
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0

@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
+    ShopUI shopUI = new ShopUI();
 
     private void Start()
     {
@@ -30,10 +31,12 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
-        controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>();
+        controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>(); 
         controls.Player.Movement.canceled += ctx => mouvementInput = ctx.ReadValue<Vector2>();
 
         controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
         controls.Player.Rotation.canceled += ctx => rotationInput = ctx.ReadValue<Vector2>();
+
+        controls.Player.Closemenu.performed += shopUI.Hide;
     }
 }

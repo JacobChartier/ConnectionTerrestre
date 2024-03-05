@@ -14,17 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   name: Vital leaf
-  description: "Si cette feuille magique se trouve dans ton inventaire quand tu meurs
-    au combat, tu reviens en vie avec \xBC de ton HP maximal. Ne peut pas \xEAtre
-    utilis\xE9 hors combat. "
-  tooltipName: <b>Vital leaf</b>
-  tooltipDescription: <color=#FFD700>LEGENDARY ITEM</color><br><br>+25% of <color=#FF0000>Max
+  description: <color=#FFD700>LEGENDARY ITEM</color><br><br>+25% of <color=#FF0000>Max
     Health</color> after a <br>death.<br><br><color=#FF0F0F>Cannot be use outside
     of combat.</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 12
   category: 11
   rarety: 3
-  price: 1
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 1
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 1
   isBreakable: 0
+  maxDurability: 10
   durability: 0

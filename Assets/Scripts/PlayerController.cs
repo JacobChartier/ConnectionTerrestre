@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 5;
+    [SerializeField] private float speed = 1;
     Rigidbody rb;
 
     [SerializeField] private float verticalInput;
@@ -48,6 +48,6 @@ public class PlayerController : MonoBehaviour
         Vector3 rightRelativeToHorizontalInput = (horizontalInput * right);
 
         Vector3 cameraRelativeMovement = forwardRelativeToVerticalInput + rightRelativeToHorizontalInput;
-        this.transform.Translate(cameraRelativeMovement * 0.25f);
+        this.transform.Translate(cameraRelativeMovement, Space.World);
     }
 }

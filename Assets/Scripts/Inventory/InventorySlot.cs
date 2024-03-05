@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -42,11 +41,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             if (isDescriptionVisible)
             {
-                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>().item.tooltipName, this.gameObject.GetComponentInChildren<DraggableItem>().item.tooltipDescription);
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>().item.GenerateTooltipTitle(), this.gameObject.GetComponentInChildren<DraggableItem>().item.GenerateTooltipDescription());
             }
             else
             {
-                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>().item.tooltipName);
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>().item.GenerateTooltipTitle());
             }
 
             switch (this.gameObject.GetComponentInChildren<DraggableItem>().item.rarety)
@@ -75,8 +74,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     {
         if (isTooltipVisible)
         {
-            Debug.Log($"exited {this.gameObject.name}");
-
             Tooltip.Instance.Hide();
         }
     }

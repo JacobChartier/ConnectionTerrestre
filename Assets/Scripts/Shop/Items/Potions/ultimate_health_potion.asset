@@ -17,13 +17,44 @@ MonoBehaviour:
   description: "Potion puissante qui r\xE9g\xE9n\xE8re tout ton HP. Peut \xEAtre
     utilis\xE9 en ou hors combat. Ne peut pas \xEAtre achet\xE9, est seulement laiss\xE9
     par des ennemis puissants."
-  tooltipName: <b>Health potion (Ultimate)</b>
-  tooltipDescription: <color=#FFD700>LEGENDARY POTION</color><br><br>+100%<color=#FF2E2E>
-    Health Points</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 12
   category: 3
   rarety: 3
-  price: 5
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 100
+      isPercentage: 1
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0
