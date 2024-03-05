@@ -1,9 +1,13 @@
 using TMPro;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ShopUI : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
     [SerializeField] private EntityStats playerStats;
 
     [SerializeField] private new TMP_Text name;
@@ -20,6 +24,11 @@ public class ShopUI : MonoBehaviour
     {
         ResetDescription();
         this.purchaseButton.onClick.AddListener(delegate { AddToInventory(); });
+    }
+
+    private void OnEnable()
+    {
+        CameraController.Instance.EnableCursor();
     }
 
     private void ResetOutlines()
@@ -44,9 +53,11 @@ public class ShopUI : MonoBehaviour
     {
         if (SelectedItem.Purchase(playerStats))
         {
-            InventoryManager.instance.Add(SelectedItem);
+            player.GetComponentInChildren<Inventory>().Add(SelectedItem);
             InventoryUI.Instance.Refresh();
         }
+
+        ShowPrice(SelectedItem);
     }
 
     public void ShowDescription(Item item)
@@ -115,16 +126,20 @@ public class ShopUI : MonoBehaviour
 
         this.description.text = item.description;
 
+        ShowPrice(item);
+
+    }
+
+    private void ShowPrice(Item item)
+    {
         switch (item.price)
         {
             case 0:
                 this.price.text = $"<b><color=#17FF3E>FREE</color></b>";
                 break;
-
             default:
                 this.price.text = (item.price > playerStats.Coins.Current) ? $"<b><color=#FF0000>{item.price}</color></b>" : $"<b><color=#FFFFFF>{item.price}</color></b>";
                 break;
-
         }
     }
 
@@ -135,5 +150,17 @@ public class ShopUI : MonoBehaviour
         this.rarety.text = "";
         this.description.text = "";
         this.price.text = "<b>0</b>";
+    }
+
+    public void Show()
+    {
+        this.transform.gameObject.SetActive(true);
+        this.transform.parent.gameObject.GetComponentInChildren<InventoryUI>().gameObject.SetActive(true);
+    }
+
+    public void Hide(InputAction.CallbackContext ctx)
+    {
+        this.transform.gameObject.SetActive(false);
+        this.transform.parent.gameObject.GetComponentInChildren<InventoryUI>().gameObject.SetActive(false);
     }
 }

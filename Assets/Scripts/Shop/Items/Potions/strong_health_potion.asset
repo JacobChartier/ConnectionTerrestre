@@ -14,15 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: d7d630377361b3f44a72a87e694f43a5, type: 3}
   name: Health potion
-  description: "Potion forte qui r\xE9g\xE9n\xE8re 60% de ton HP maximal. Peut \xEAtre
-    utilis\xE9 en ou hors combat."
-  tooltipName: <b>Health potion (Strong)</b>
-  tooltipDescription: <color=#F83BFF>EPIC POTION</color><br><br>+40%<color=#FF2E2E>
-    Health Points</color>
+  description: <color=#F83BFF>EPIC POTION</color><br><br>+60%<color=#FF2E2E> Health
+    Points</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 10
   category: 2
   rarety: 2
-  price: 0
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 60
+      isPercentage: 1
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0

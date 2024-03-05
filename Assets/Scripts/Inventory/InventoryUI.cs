@@ -18,6 +18,16 @@ public class InventoryUI : MonoBehaviour
         Show();
     }
 
+    private void OnEnable()
+    {
+        CameraController.Instance.EnableCursor();
+    }
+
+    private void OnDisable()
+    {
+        CameraController.Instance.DisableCursor();
+    }
+
     private void Show()
     {
         this.coins.text = player.Coins.Current.ToString();

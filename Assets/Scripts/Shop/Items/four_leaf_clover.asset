@@ -14,17 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   name: Four leaf clover
-  description: "Augmente de 50% la monnaie et exp\xE9rience que le joueur re\xE7oit
-    lors de la d\xE9faite d\u2019un ennemi. Cet item peut seulement \xEAtre utilis\xE9
-    hors combat. L'effet dure 5 utilisations."
-  tooltipName: <b>Four leaf clover</b>
-  tooltipDescription: <color=#FFD700>LEGENDARY ITEM</color><br><br>+50% <color=#FFD700>Coins</color>
+  description: <color=#FFD700>LEGENDARY ITEM</color><br><br>+50% <color=#FFD700>Coins</color>
     (10 minutes)<br>+50% <color=#00D0FF>Experience</color> (10 minutes)<br><br><color=#FF0F0F>Cannot
     be use in combat.</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 8
   category: 12
   rarety: 3
-  price: 14
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 50
+      isPercentage: 1
+    EXPERIENCE:
+      number: 50
+      isPercentage: 1
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 1
   isStackable: 1
   stackSize: 1
   isBreakable: 0
+  maxDurability: 10
   durability: 0

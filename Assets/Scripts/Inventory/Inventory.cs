@@ -1,26 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public static InventoryManager instance;
-    public Item[] items;
-
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
+    [SerializeField] private GameObject prefab;
 
     public InventorySlot[] slots;
-    public GameObject prefab;
+    public Item[] items;
 
-    public void Add(Item item)
+    public bool Add(Item item)
     {
         // Stacking
         for (int i = 0; i < slots.Length; i++)
@@ -32,8 +22,7 @@ public class InventoryManager : MonoBehaviour
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
-
-                return;
+                return true;
             }
         }
 
@@ -46,9 +35,11 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot == null)
             {
                 Spawn(item, slot);
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
     private void Spawn(Item item, InventorySlot slot)
@@ -59,9 +50,27 @@ public class InventoryManager : MonoBehaviour
         inventoryItem.InitialiseItem(item);
     }
 
-    public void GenerateRandomItem()
+    public Item GetItem(InventorySlot slot)
+    {
+        return slot.GetComponentInChildren<DraggableItem>().item;
+    }
+
+    public Item[] GetItems(Inventory inventory)
+    {
+        Item[] items = new Item[slots.Length];
+
+        for(int i = 0; i < inventory.slots.Length; i++)
+        {
+            items[i] = inventory.GetItem(inventory.slots[i]);
+        }
+
+        Debug.Log(items);
+        return items;
+    }
+
+    public Item GenerateRandomItem()
     {
         var num = UnityEngine.Random.Range(0, items.Length);
-        Add(items[num]);
+        return items[num];
     }
 }

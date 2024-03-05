@@ -428,7 +428,7 @@ MonoBehaviour:
   image: {fileID: 4347563203910633066}
   countText: {fileID: 7655360553535895847}
   durability: {fileID: 8257000715170083761}
-  item: {fileID: 11400000, guid: 53d918b835eb85f4d9edb8651aa27be3, type: 2}
+  item: {fileID: 0}
   count: 1
   parentAfterDrag: {fileID: 0}
 --- !u!1 &5843309488015085861

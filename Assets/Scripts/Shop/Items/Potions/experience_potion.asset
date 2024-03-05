@@ -16,12 +16,45 @@ MonoBehaviour:
   name: Experience potion
   description: "Augmente de 30% le montant d'experience recu apr\xE8s un combat.
     L'effet dispara\xEEt apr\xE8s 5 utilisations."
-  tooltipName: <b>Experience potion</b>
-  tooltipDescription: <color=#384CFF>RARE POTION</color><br><br>+30% <color=#00D0FF>Experience</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 13
   category: 4
   rarety: 1
-  price: 0
+  customFields:
+  - 'Duration: 10 minutes'
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 30
+      isPercentage: 1
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0

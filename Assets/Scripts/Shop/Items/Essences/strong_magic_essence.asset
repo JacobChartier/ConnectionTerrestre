@@ -14,15 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 6322aeafa140d5d4cbf33eef3f7b8dab, type: 3}
   name: Magic essence
-  description: "Essence forte qui r\xE9g\xE9n\xE8re 60% de ton MP maximal. Peut \xEAtre
-    utilis\xE9 en ou hors combat."
-  tooltipName: <b>Magic essence (Strong)</b>
-  tooltipDescription: <color=#F83BFF>EPIC ESSENCE</color><br><br>+40% <color=#00D0FF>Magic
+  description: <color=#F83BFF>EPIC ESSENCE</color><br><br>+60% <color=#00D0FF>Magic
     Points</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 9
   category: 7
   rarety: 2
-  price: 10
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 60
+      isPercentage: 1
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 5
   isBreakable: 0
+  maxDurability: 10
   durability: 0

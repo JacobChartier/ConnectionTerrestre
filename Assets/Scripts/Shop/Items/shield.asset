@@ -18,12 +18,44 @@ MonoBehaviour:
     moins 3 tours. Pour chaque tour apr\xE8s le 3e en effet, le bouclier a 50% de
     chance de briser. Si utilis\xE9 hors combat, pour un certain temps, si tu entre
     en combat, l\u2019effet du bouclier sera automatiquement appliqu\xE9 sur toi."
-  tooltipName: <b>Shield</b>
-  tooltipDescription: <color=#F83BFF>EPIC SHIELD</color><br><br>+30% <color=#213BFF>Defense</color>
+  tooltipName: 
+  tooltipDescription: 
+  price: 8
   category: 13
   rarety: 2
-  price: 0
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 30
+      isPercentage: 1
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
   isStackable: 1
   stackSize: 1
   isBreakable: 1
+  maxDurability: 10
   durability: 10
