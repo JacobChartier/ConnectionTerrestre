@@ -1,12 +1,12 @@
 using TMPro;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
-public class ShopUI : MonoBehaviour
+public class ShopUI : MonoBehaviour, IMenuHandler
 {
+    public static ShopUI Instance;
+
     [SerializeField] private GameObject player;
     [SerializeField] private EntityStats playerStats;
 
@@ -22,13 +22,16 @@ public class ShopUI : MonoBehaviour
 
     void Start()
     {
+        if (Instance != null)
+            Instance = this;
+
         ResetDescription();
         this.purchaseButton.onClick.AddListener(delegate { AddToInventory(); });
     }
 
     private void OnEnable()
     {
-        CameraController.Instance.EnableCursor();
+        CameraController.Instance.EnableFreeCameraMovement(false);
     }
 
     private void ResetOutlines()
@@ -154,13 +157,24 @@ public class ShopUI : MonoBehaviour
 
     public void Show()
     {
+        InputManager.controls?.Player.Disable();
+        InputManager.controls?.Menus.Enable();
+
+        CameraController.Instance?.FreezeCamera(true);
+
         this.transform.gameObject.SetActive(true);
-        this.transform.parent.gameObject.GetComponentInChildren<InventoryUI>().gameObject.SetActive(true);
     }
 
-    public void Hide(InputAction.CallbackContext ctx)
+    public void Hide()
     {
+        InputManager.controls?.Player.Enable();
+        InputManager.controls?.Menus.Disable();
+
+        CameraController.Instance?.FreezeCamera(false);
         this.transform.gameObject.SetActive(false);
-        this.transform.parent.gameObject.GetComponentInChildren<InventoryUI>().gameObject.SetActive(false);
+
+        Tooltip.Instance?.Hide();
+
+        InventoryUI.Instance?.Hide();
     }
 }

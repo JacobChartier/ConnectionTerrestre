@@ -91,7 +91,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Open inventory"",
+                    ""name"": ""Open Inventory"",
                     ""type"": ""Button"",
                     ""id"": ""f2f40820-bc6c-42f4-b43b-0fd7c75c2eb2"",
                     ""expectedControlType"": ""Button"",
@@ -100,9 +100,18 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Close menu"",
+                    ""name"": ""Close Menu"",
                     ""type"": ""Button"",
                     ""id"": ""a4db98a7-a6c9-40b8-a9c5-f3e16d31fb50"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""c0f92ada-40ad-4db3-a72c-2a48f92f1f22"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -282,18 +291,29 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Open inventory"",
+                    ""action"": ""Open Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c496e1ac-5a54-4297-9fed-c2b231b214da"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Close menu"",
+                    ""action"": ""Close Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30deb3d2-e526-4258-ac37-bc4b38fef3d3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -316,6 +336,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""name"": ""TakeOneItemFromStack"",
                     ""type"": ""Button"",
                     ""id"": ""e84dc22c-a199-4516-a00e-e894273ae697"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c49d5e9-e99d-46e9-9887-603fb5bcbb34"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -344,6 +373,17 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""TakeOneItemFromStack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8041850-0fea-41ba-9350-c989dcd6309b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -359,12 +399,14 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_selectionenter = m_Player.FindAction("selection enter", throwIfNotFound: true);
         m_Player_selectionhaut = m_Player.FindAction("selection haut", throwIfNotFound: true);
         m_Player_selectionbas = m_Player.FindAction("selection bas", throwIfNotFound: true);
-        m_Player_Openinventory = m_Player.FindAction("Open inventory", throwIfNotFound: true);
-        m_Player_Closemenu = m_Player.FindAction("Close menu", throwIfNotFound: true);
+        m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
+        m_Player_CloseMenu = m_Player.FindAction("Close Menu", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_SplitStackInHalf = m_Menus.FindAction("SplitStackInHalf", throwIfNotFound: true);
         m_Menus_TakeOneItemFromStack = m_Menus.FindAction("TakeOneItemFromStack", throwIfNotFound: true);
+        m_Menus_Close = m_Menus.FindAction("Close", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -433,8 +475,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_selectionenter;
     private readonly InputAction m_Player_selectionhaut;
     private readonly InputAction m_Player_selectionbas;
-    private readonly InputAction m_Player_Openinventory;
-    private readonly InputAction m_Player_Closemenu;
+    private readonly InputAction m_Player_OpenInventory;
+    private readonly InputAction m_Player_CloseMenu;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
@@ -446,8 +489,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @selectionenter => m_Wrapper.m_Player_selectionenter;
         public InputAction @selectionhaut => m_Wrapper.m_Player_selectionhaut;
         public InputAction @selectionbas => m_Wrapper.m_Player_selectionbas;
-        public InputAction @Openinventory => m_Wrapper.m_Player_Openinventory;
-        public InputAction @Closemenu => m_Wrapper.m_Player_Closemenu;
+        public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
+        public InputAction @CloseMenu => m_Wrapper.m_Player_CloseMenu;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -478,12 +522,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @selectionbas.started += instance.OnSelectionbas;
             @selectionbas.performed += instance.OnSelectionbas;
             @selectionbas.canceled += instance.OnSelectionbas;
-            @Openinventory.started += instance.OnOpeninventory;
-            @Openinventory.performed += instance.OnOpeninventory;
-            @Openinventory.canceled += instance.OnOpeninventory;
-            @Closemenu.started += instance.OnClosemenu;
-            @Closemenu.performed += instance.OnClosemenu;
-            @Closemenu.canceled += instance.OnClosemenu;
+            @OpenInventory.started += instance.OnOpenInventory;
+            @OpenInventory.performed += instance.OnOpenInventory;
+            @OpenInventory.canceled += instance.OnOpenInventory;
+            @CloseMenu.started += instance.OnCloseMenu;
+            @CloseMenu.performed += instance.OnCloseMenu;
+            @CloseMenu.canceled += instance.OnCloseMenu;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -509,12 +556,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @selectionbas.started -= instance.OnSelectionbas;
             @selectionbas.performed -= instance.OnSelectionbas;
             @selectionbas.canceled -= instance.OnSelectionbas;
-            @Openinventory.started -= instance.OnOpeninventory;
-            @Openinventory.performed -= instance.OnOpeninventory;
-            @Openinventory.canceled -= instance.OnOpeninventory;
-            @Closemenu.started -= instance.OnClosemenu;
-            @Closemenu.performed -= instance.OnClosemenu;
-            @Closemenu.canceled -= instance.OnClosemenu;
+            @OpenInventory.started -= instance.OnOpenInventory;
+            @OpenInventory.performed -= instance.OnOpenInventory;
+            @OpenInventory.canceled -= instance.OnOpenInventory;
+            @CloseMenu.started -= instance.OnCloseMenu;
+            @CloseMenu.performed -= instance.OnCloseMenu;
+            @CloseMenu.canceled -= instance.OnCloseMenu;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -538,12 +588,14 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private List<IMenusActions> m_MenusActionsCallbackInterfaces = new List<IMenusActions>();
     private readonly InputAction m_Menus_SplitStackInHalf;
     private readonly InputAction m_Menus_TakeOneItemFromStack;
+    private readonly InputAction m_Menus_Close;
     public struct MenusActions
     {
         private @PlayersControls m_Wrapper;
         public MenusActions(@PlayersControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @SplitStackInHalf => m_Wrapper.m_Menus_SplitStackInHalf;
         public InputAction @TakeOneItemFromStack => m_Wrapper.m_Menus_TakeOneItemFromStack;
+        public InputAction @Close => m_Wrapper.m_Menus_Close;
         public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -559,6 +611,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @TakeOneItemFromStack.started += instance.OnTakeOneItemFromStack;
             @TakeOneItemFromStack.performed += instance.OnTakeOneItemFromStack;
             @TakeOneItemFromStack.canceled += instance.OnTakeOneItemFromStack;
+            @Close.started += instance.OnClose;
+            @Close.performed += instance.OnClose;
+            @Close.canceled += instance.OnClose;
         }
 
         private void UnregisterCallbacks(IMenusActions instance)
@@ -569,6 +624,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @TakeOneItemFromStack.started -= instance.OnTakeOneItemFromStack;
             @TakeOneItemFromStack.performed -= instance.OnTakeOneItemFromStack;
             @TakeOneItemFromStack.canceled -= instance.OnTakeOneItemFromStack;
+            @Close.started -= instance.OnClose;
+            @Close.performed -= instance.OnClose;
+            @Close.canceled -= instance.OnClose;
         }
 
         public void RemoveCallbacks(IMenusActions instance)
@@ -595,12 +653,14 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnSelectionenter(InputAction.CallbackContext context);
         void OnSelectionhaut(InputAction.CallbackContext context);
         void OnSelectionbas(InputAction.CallbackContext context);
-        void OnOpeninventory(InputAction.CallbackContext context);
-        void OnClosemenu(InputAction.CallbackContext context);
+        void OnOpenInventory(InputAction.CallbackContext context);
+        void OnCloseMenu(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {
         void OnSplitStackInHalf(InputAction.CallbackContext context);
         void OnTakeOneItemFromStack(InputAction.CallbackContext context);
+        void OnClose(InputAction.CallbackContext context);
     }
 }

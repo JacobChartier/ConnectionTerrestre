@@ -8,11 +8,12 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
-    ShopUI shopUI = new ShopUI();
+    [SerializeField] private GameObject inventoryMenu;
+    [SerializeField] private GameObject shopMenu;
 
     private void Start()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -22,6 +23,8 @@ public class InputManager : MonoBehaviour
 
     public static Vector2 mouvementInput;
     public static Vector2 rotationInput;
+
+    public static MouseButton mouseButtonInput;
 
     private void Awake()
     {
@@ -37,6 +40,29 @@ public class InputManager : MonoBehaviour
         controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
         controls.Player.Rotation.canceled += ctx => rotationInput = ctx.ReadValue<Vector2>();
 
-        controls.Player.Closemenu.performed += shopUI.Hide;
+        controls.Player.OpenInventory.performed += OpenInventory;
+
+        controls.Menus.Close.performed += HideMenus;
+
+        controls.Menus.SplitStackInHalf.performed += ctx => mouseButtonInput = MouseButton.RIGHT;
+        controls.Menus.TakeOneItemFromStack.performed += ctx => mouseButtonInput = MouseButton.MIDDLE;
     }
+
+    private void OpenInventory(InputAction.CallbackContext ctx)
+    {
+        inventoryMenu.GetComponent<InventoryUI>().Show();
+    }
+
+    private void HideMenus(InputAction.CallbackContext ctx)
+    {
+        inventoryMenu.GetComponent<InventoryUI>()?.Hide();
+        shopMenu.GetComponent<ShopUI>()?.Hide();
+    }
+}
+
+public enum MouseButton
+{
+    LEFT,
+    MIDDLE,
+    RIGHT
 }

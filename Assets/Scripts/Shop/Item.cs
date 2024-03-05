@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [CreateAssetMenu(menuName = "Scriptable object/Item")]
 public class Item : ScriptableObject
@@ -249,6 +248,11 @@ public class Item : ScriptableObject
 
         if (buffs.EXPERIENCE.number > 0)
             tooltip += $"<br>+{buffs.EXPERIENCE.number}{(buffs.EXPERIENCE.isPercentage ? "%" : "")} <color=#00D0FF>Experience</color>";
+
+        // Durability
+
+        if (isBreakable)
+            tooltip += $"<br><br><color=#505050>Durability: {(durability < (maxDurability / 3) ? $"<color=#FF0000>{durability}</color>" : $"{durability}")}/{maxDurability}</color>";
 
         // Use Only In
 

@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         Vector2 move = InputManager.mouvementInput;
-        rb.velocity = new Vector3(move.x * speed, rb.velocity.y, move.y * speed);
+        rb.velocity = new Vector3(((move.x * speed) * Time.deltaTime) / 20, rb.velocity.y, ((move.y * speed) * Time.deltaTime) / 20);
     }
 
     private void MovePlayerRelativeToCamera()
@@ -48,6 +48,6 @@ public class PlayerController : MonoBehaviour
         Vector3 rightRelativeToHorizontalInput = (horizontalInput * right);
 
         Vector3 cameraRelativeMovement = forwardRelativeToVerticalInput + rightRelativeToHorizontalInput;
-        this.transform.Translate(cameraRelativeMovement, Space.World);
+        this.transform.Translate((cameraRelativeMovement * speed) * Time.deltaTime, Space.World);
     }
 }

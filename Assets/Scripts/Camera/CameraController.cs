@@ -8,26 +8,54 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController Instance;
 
+    [SerializeField] private CinemachineVirtualCamera playerVCam;
+    [SerializeField] private List<CinemachineVirtualCamera> cameras = new List<CinemachineVirtualCamera>();
+
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
 
-        DisableCursor();
+        EnableFreeCameraMovement(true);
     }
 
-    public void EnableCursor()
+    public void EnableFreeCameraMovement(bool isEnable)
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        this.gameObject.GetComponent<CinemachineInputProvider>().enabled = false;
+        if (isEnable)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
-    public void DisableCursor()
+    public void FreezeCamera(bool isFrozen)
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (isFrozen)
+            playerVCam.GetComponent<CinemachineInputProvider>().enabled = false;
+        else
+            playerVCam.GetComponent<CinemachineInputProvider>().enabled = true;
+    }
 
-        this.gameObject.GetComponent<CinemachineInputProvider>().enabled = true;
+    public void SetCamera(CinemachineVirtualCamera vCam)
+    {
+        foreach (var camera in cameras)
+            camera.Priority = 0;
+
+        playerVCam.Priority = 0;
+
+        vCam.Priority = 1;
+    }
+
+    public void ResetCameras()
+    {
+        playerVCam.Priority = 1;
+
+        foreach (var camera in cameras)
+            camera.Priority = 0;
     }
 }

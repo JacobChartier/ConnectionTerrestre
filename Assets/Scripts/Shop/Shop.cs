@@ -11,7 +11,6 @@ public class Shop : InteractableObjectBase
 
     [Header("Interaction label")]
     [SerializeField] private GameObject label;
-    [SerializeField] private Sprite icon;
     [SerializeField] private string text;
 
     public Inventory inventory;
@@ -24,7 +23,7 @@ public class Shop : InteractableObjectBase
 
     private void Start()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -40,39 +39,15 @@ public class Shop : InteractableObjectBase
 
     public override void Interact()
     {
-        CameraController.Instance.EnableCursor();
-        //EnableFreeCameraMovement(false);
-
         shopMenu.GetComponent<ShopUI>().Show();
-    }
 
-    private void OnEnable()
-    {
-        InputManager.controls.Player.Closemenu.performed += CloseMenu;
-    }
+        CameraController.Instance?.EnableFreeCameraMovement(false);
+        CameraController.Instance?.SetCamera(shopVCAM);
 
-    private void CloseMenu(InputAction.CallbackContext ctx)
-    {
-        CameraController.Instance.DisableCursor();
-        //EnableFreeCameraMovement(true);
+        CameraController.Instance?.FreezeCamera(true);
 
-        //shopMenu.GetComponent<ShopUI>().Hide();
-    }
-
-    public override void EnableFreeCameraMovement(bool isEnable)
-    {
-        base.EnableFreeCameraMovement(isEnable);
-
-        if (isEnable)
-        {
-            playerVCAM.Priority = 0;
-            shopVCAM.Priority = 1;
-        }
-        else
-        {
-            playerVCAM.Priority = 1;
-            shopVCAM.Priority = 0;
-        }
+        inventoryMenu.gameObject.transform.position = new Vector3((Camera.main.scaledPixelWidth / 2) - 155, inventoryMenu.transform.position.y, inventoryMenu.transform.position.z);
+        inventoryMenu.GetComponent<InventoryUI>().Show();
     }
 
     public override void ShowContextLabel()

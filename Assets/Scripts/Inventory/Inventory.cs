@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    private void Spawn(Item item, InventorySlot slot)
+    public void Spawn(Item item, InventorySlot slot)
     {
         GameObject itemGO = Instantiate(prefab, slot.transform);
         DraggableItem inventoryItem = itemGO.GetComponent<DraggableItem>();

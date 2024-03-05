@@ -17,11 +17,12 @@ MonoBehaviour:
   description: '*** This is a test item ***'
   tooltipName: 
   tooltipDescription: 
-  price: 11
+  price: 14
   category: 14
   rarety: 3
   customFields:
   - Custom field #1
+  - Custom field #2
   buffs:
     HEALTH:
       number: 100
@@ -55,5 +56,5 @@ MonoBehaviour:
   isStackable: 1
   stackSize: 999
   isBreakable: 1
-  maxDurability: 10
-  durability: 100
+  maxDurability: 100
+  durability: 32

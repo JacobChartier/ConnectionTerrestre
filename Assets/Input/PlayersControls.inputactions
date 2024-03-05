@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Open inventory",
+                    "name": "Open Inventory",
                     "type": "Button",
                     "id": "f2f40820-bc6c-42f4-b43b-0fd7c75c2eb2",
                     "expectedControlType": "Button",
@@ -78,9 +78,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Close menu",
+                    "name": "Close Menu",
                     "type": "Button",
                     "id": "a4db98a7-a6c9-40b8-a9c5-f3e16d31fb50",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "c0f92ada-40ad-4db3-a72c-2a48f92f1f22",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -260,18 +269,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Open inventory",
+                    "action": "Open Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "c496e1ac-5a54-4297-9fed-c2b231b214da",
-                    "path": "<Keyboard>/i",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Close menu",
+                    "action": "Close Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30deb3d2-e526-4258-ac37-bc4b38fef3d3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -298,6 +318,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Close",
+                    "type": "Button",
+                    "id": "4c49d5e9-e99d-46e9-9887-603fb5bcbb34",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -320,6 +349,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TakeOneItemFromStack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8041850-0fea-41ba-9350-c989dcd6309b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Close",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

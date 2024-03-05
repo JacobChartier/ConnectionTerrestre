@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.InputSystem;
+using JetBrains.Annotations;
 
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -15,7 +16,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Item item;
     [HideInInspector] public int count;
 
-    [HideInInspector] public Transform parentAfterDrag; 
+    [HideInInspector] public Transform parentAfterDrag;
     InventorySlot originalSlot;
 
     private void Start()
@@ -37,6 +38,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (item.isBreakable)
         {
             durability.gameObject.SetActive(true);
+
+            durability.gameObject.GetComponent<Slider>().maxValue = item.maxDurability;
+            durability.gameObject.GetComponent<Slider>().value = item.durability;
         }
         else
         {
@@ -54,6 +58,13 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        int currentStack = item.stackSize;
+
+        if (InputManager.mouseButtonInput == MouseButton.RIGHT) // Split stack in half
+        {
+            currentStack /= 2;
+        }
+
         originalSlot.isOccupied = false;
 
         if (originalSlot.isEnable)

@@ -9,9 +9,9 @@ public class Interactor : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.E)) // todo: changer pour bon input system
         {
-            Debug.Log("d");
             interactable?.Interact();
         }
 

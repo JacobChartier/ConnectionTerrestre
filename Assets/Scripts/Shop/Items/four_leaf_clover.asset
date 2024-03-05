@@ -19,10 +19,11 @@ MonoBehaviour:
     be use in combat.</color>
   tooltipName: 
   tooltipDescription: 
-  price: 8
+  price: 14
   category: 12
   rarety: 3
-  customFields: []
+  customFields:
+  - 'Duration: 10 minutes.'
   buffs:
     HEALTH:
       number: 0

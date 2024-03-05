@@ -19,10 +19,12 @@ MonoBehaviour:
     of combat.</color>
   tooltipName: 
   tooltipDescription: 
-  price: 12
+  price: 14
   category: 11
   rarety: 3
-  customFields: []
+  customFields:
+  - Restores 25% of the<br>player's <color=#FF0000>Max Health</color><br>after a
+    death.
   buffs:
     HEALTH:
       number: 0
