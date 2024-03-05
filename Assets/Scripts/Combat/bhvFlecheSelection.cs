@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class bhvFlecheSelection : MonoBehaviour
 {
-    const float VITESSE = 50.0f;
+    const float VITESSE = 8.0f;
     const float MAGNITUDE = 3.0f;
+    const float DIST_BOUGER = 11.0f;
 
     [SerializeField] TMP_Text text;
     int timer = 0;
@@ -21,18 +22,19 @@ public class bhvFlecheSelection : MonoBehaviour
         og_x = transform.position.x;
         // facon terrible de compter les lignes de texte, svp ne jamais me copier :(
         max_choix = text.text.ToCharArray().Count(x => x == '\n');
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         timer++;
-
         transform.position = new Vector3(
             og_x + Mathf.Sin(timer / VITESSE) * MAGNITUDE,
             transform.position.y,
             transform.position.z
         );
+        //Debug.Log(transform.position);
     }
 
     public void BougerHaut()
@@ -40,7 +42,7 @@ public class bhvFlecheSelection : MonoBehaviour
         if (choix <= 0)
             return;
 
-        transform.position += new Vector3(0, 10, 0);
+        transform.position += new Vector3(0, DIST_BOUGER, 0);
         choix--;
     }
 
@@ -49,12 +51,17 @@ public class bhvFlecheSelection : MonoBehaviour
         if (choix >= max_choix)
             return;
 
-        transform.position -= new Vector3(0, 10, 0);
+        transform.position -= new Vector3(0, DIST_BOUGER, 0);
         choix++;
     }
 
-    public int GetChoixSelectione()
+    public int GetChoixSelection()
     {
         return choix;
+    }
+
+    public void SetActive(bool value)
+    {
+        gameObject.SetActive(value);
     }
 }

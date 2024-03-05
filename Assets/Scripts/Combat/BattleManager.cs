@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class BattleManager : MonoBehaviour
 {
@@ -19,14 +20,25 @@ public class BattleManager : MonoBehaviour
         DEFAITE_JOUEUR
     }
 
+    const int FRAMES_AVANT_ATTAQUE = 80;
+
+    [SerializeField] GameObject prefab_text_dommages;
+    [Space]
     [SerializeField] CinemachineVirtualCamera camera_option_joueur;
     [SerializeField] CinemachineVirtualCamera camera_generale;
     [SerializeField] CinemachineVirtualCamera camera_joueur_fuit;
+    [SerializeField] CinemachineVirtualCamera camera_joueur_mort;
+    [Space]
     [SerializeField] choixcombatmanager choix_combat;
+    [Space]
     [SerializeField] EntityStats stats_joueur;
+    [SerializeField] EntityStats stats_monstre;
+    [Space]
     [SerializeField] Transform joueur_transform;
-    [SerializeField] EntityStats stats_ennemi;
+    [SerializeField] Transform ennemi_transform;
+    [Space]
     [SerializeField] selectormanager selector;
+    [SerializeField] bhvFlecheSelection curseur;
 
     public static PlayersControls controls;
     public static bool left_pressed = false;
@@ -52,8 +64,8 @@ public class BattleManager : MonoBehaviour
         }
     }
     private Evenement evenement;
-    private InfoAttaqueMonstre attaque_monstre;
-    private InfosMonstre monstre;
+    private InfoAttaque attaque_monstre;
+    private InfoAttaque attaque_joueur;
 
     int timer = 0;
     bool fuir_fail = false;
@@ -68,6 +80,8 @@ public class BattleManager : MonoBehaviour
     {
         controls = new PlayersControls();
         controls.Player.Enable();
+
+        stats_monstre.Attaques.Add(new InfoAttaque("test", 30, 15, 100, 10)); // debug
     }
 
     private void OnEnable()
@@ -95,7 +109,6 @@ public class BattleManager : MonoBehaviour
         camera_generale.Priority = 1;
         camera_option_joueur.Priority = 0;
         choix_combat.Active = false;
-        monstre = GameObject.Find("Ennemi").GetComponent<InfosMonstre>();
     }
 
     // Update is called once per frame
@@ -111,12 +124,22 @@ public class BattleManager : MonoBehaviour
                 CodeTourJoueur();
                 break;
 
+            case Evenement.ANIMATION_JOUEUR:
+                CodeAnimJoueur();
+                break;
+
             case Evenement.FUIR:
                 CodeFuir();
                 break;
 
             case Evenement.TOUR_ENNEMI:
                 CodeTourEnnemi();
+                break;
+
+            case Evenement.VICTOIRE_JOUEUR:
+                break;
+
+            case Evenement.DEFAITE_JOUEUR:
                 break;
         }
 
@@ -125,7 +148,6 @@ public class BattleManager : MonoBehaviour
 
     private void CodeTourEnnemi()
     {
-        const int FRAMES_AVANT_MONSTRE_ATTAQUE = 80;
         if (timer <= 1)
         {
             camera_joueur_fuit.Priority = 0;
@@ -134,13 +156,13 @@ public class BattleManager : MonoBehaviour
             choix_combat.Active = false;
         }
 
-        if (timer == FRAMES_AVANT_MONSTRE_ATTAQUE)
+        if (timer == FRAMES_AVANT_ATTAQUE)
         {
-            attaque_monstre = monstre.attaques[UnityEngine.Random.Range(0, monstre.attaques.Length)];
+            attaque_monstre = stats_monstre.Attaques[UnityEngine.Random.Range(0, stats_monstre.Attaques.Count - 1)];
             //donner anim à objet monstre
         }
 
-        if (timer > attaque_monstre.anim_len + FRAMES_AVANT_MONSTRE_ATTAQUE) //todo: monstre choisit attaque + anim attaque + bloc/parry
+        if (timer > attaque_monstre.anim_len + FRAMES_AVANT_ATTAQUE) //todo: monstre choisit attaque + anim attaque + bloc/parry
         {
             stunlock = false;
             evenement_actuel = Evenement.TOUR_JOUEUR;
@@ -148,33 +170,99 @@ public class BattleManager : MonoBehaviour
 
         if (select_pressed && !stunlock)
         {
-            if (timer > attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE)
+            if (timer > attaque_monstre.parry_frame + FRAMES_AVANT_ATTAQUE)
             {
                 stunlock = true;
                 // todo (peut etre) animation stumble joueur
             }
-            else if (timer == attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE)
+            else if (timer == attaque_monstre.parry_frame + FRAMES_AVANT_ATTAQUE)
             {
                 // mettre l'anim joueur à attaque
-                float dommages = (attaque_monstre.damage + stats_ennemi.Strength.Current - stats_ennemi.Defense.Current) / 2.0f;
-                stats_ennemi.Health.Remove(MathF.Round(dommages, MidpointRounding.AwayFromZero));
+                float dommages = (attaque_monstre.damage + stats_monstre.Strength.Current - stats_monstre.Defense.Current) / 2.0f;
+
+                FaireDegats(dommages, false);
             }
-            else if (timer > attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE - attaque_monstre.block_window)
+            else if (timer > attaque_monstre.parry_frame + FRAMES_AVANT_ATTAQUE - attaque_monstre.block_window)
             {
                 // mettre l'anim monstre à knockback
                 // mettre l'anim joueur à block
-                float dommages = (attaque_monstre.damage + stats_ennemi.Strength.Current - stats_joueur.Defense.Current) / 2.0f;
-                stats_joueur.Health.Remove(dommages);
+                float dommages = (attaque_monstre.damage + stats_monstre.Strength.Current - stats_joueur.Defense.Current) / 2.0f;
+
+                FaireDegats(dommages, true);
             }
         }
-        else if (timer == attaque_monstre.parry_frame + FRAMES_AVANT_MONSTRE_ATTAQUE)
+        else if (timer == attaque_monstre.parry_frame + FRAMES_AVANT_ATTAQUE)
         {
-            float dommages = attaque_monstre.damage + stats_ennemi.Strength.Current - stats_joueur.Defense.Current;
+            float dommages = attaque_monstre.damage + stats_monstre.Strength.Current - stats_joueur.Defense.Current;
 
-            if (stats_joueur.Health.Remove(dommages))
+            FaireDegats(dommages, true);
+        }
+    }
+
+    private void CodeAnimJoueur()
+    {
+        if (timer <= 1)
+        {
+            camera_joueur_fuit.Priority = 0;
+            camera_generale.Priority = 1;
+            camera_option_joueur.Priority = 0;
+            choix_combat.Active = false;
+        }
+
+        if (timer == attaque_joueur.parry_frame)
+        {
+            float dommages = attaque_joueur.damage;
+            if (select_pressed)
+                dommages *= 1.5f;
+
+            FaireDegats(dommages, false);
+        }
+
+        if (timer > attaque_joueur.anim_len + FRAMES_AVANT_ATTAQUE)
+        {
+            stunlock = false;
+            evenement_actuel = Evenement.TOUR_ENNEMI;
+        }
+    }
+
+    private void FaireDegats(float dommages, bool monstre_est_attaqueur)
+    {
+        EntityStats attaqueur;
+        EntityStats defendant;
+        Vector3 position_defendant;
+
+        if (monstre_est_attaqueur)
+        {
+            attaqueur = stats_monstre;
+            defendant = stats_joueur;
+            position_defendant = joueur_transform.position;
+        }
+        else
+        {
+            attaqueur = stats_joueur;
+            defendant = stats_monstre;
+            position_defendant = ennemi_transform.position;
+        }
+
+        dommages = MathF.Round(dommages, MidpointRounding.AwayFromZero);
+
+        bhvdamagetextprefab damage_text = Instantiate(prefab_text_dommages, GameObject.Find("Canvas").GetComponent<Transform>()).GetComponent<bhvdamagetextprefab>();
+        damage_text.Init(dommages, position_defendant);
+
+        if (defendant.Health.Remove(dommages))
+        {
+            if (monstre_est_attaqueur)
             {
-                // utiliser feuille vitale si en a une
+                // todo: feuille vitale
+                if (false)
+                {
+                    return;
+                }
+
+                evenement_actuel = Evenement.DEFAITE_JOUEUR;
             }
+
+            evenement_actuel = Evenement.VICTOIRE_JOUEUR;
         }
     }
 
@@ -197,19 +285,22 @@ public class BattleManager : MonoBehaviour
         // assure que les choix du joueur sont visibles avant qu'il ne peux en choisir
         if (timer < 30)
             return;
-
+        // todo: qqc de meilleur comme code
         switch (choix_combat.CheckRotate())
         {
             case 0:
                 selection = true;
+                curseur.SetActive(true);
                 selector.Startup(selectormanager.StartupType.PHYSIQUE);
                 break;
             case 1:
                 selection = true;
+                curseur.SetActive(true);
                 selector.Startup(selectormanager.StartupType.MAGIQUE);
                 break;
             case 2:
                 selection = true;
+                curseur.SetActive(true);
                 selector.Startup(selectormanager.StartupType.ITEM);
                 break;
             case 3:
@@ -229,6 +320,26 @@ public class BattleManager : MonoBehaviour
             selection = false;
             selector.Close();
             timer = 15;
+            curseur.SetActive(false);
+        }
+
+        if (up_pressed)
+        {
+            curseur.BougerHaut();
+        }
+
+        if (down_pressed)
+        {
+            curseur.BougerBas();
+        }
+
+        if (select_pressed)
+        {
+            attaque_joueur = stats_joueur.Attaques[curseur.GetChoixSelection()];
+            selection = false;
+            selector.Close();
+            curseur.SetActive(false);
+            evenement_actuel = Evenement.ANIMATION_JOUEUR;
         }
     }
 
@@ -236,9 +347,9 @@ public class BattleManager : MonoBehaviour
     {
         if (timer >= 200)
         {
-            if (stats_joueur.AttackSpeed.Current > stats_ennemi.AttackSpeed.Current ||
+            if (stats_joueur.AttackSpeed.Current > stats_monstre.AttackSpeed.Current ||
                 DEBUG_PLAYER_ALWAYS_GOES_FIRST ||
-                stats_joueur.AttackSpeed.Current == stats_ennemi.AttackSpeed.Current && UnityEngine.Random.Range(0, 2) == 0) // si vitesses égales, premier tour = hasard
+                stats_joueur.AttackSpeed.Current == stats_monstre.AttackSpeed.Current && UnityEngine.Random.Range(0, 2) == 0) // si vitesses égales, premier tour = hasard
             {
                 evenement_actuel = Evenement.TOUR_JOUEUR;
             }
@@ -320,6 +431,18 @@ public class BattleManager : MonoBehaviour
                 if (fuir_fail)
                     timer = 2;
             }
+        }
+    }
+
+    private void CodeDefaiteJoueur()
+    {
+        if (timer <= 1)
+        {
+            choix_combat.Active = false;
+            camera_generale.Priority = 0;
+            camera_option_joueur.Priority = 0;
+            camera_joueur_fuit.Priority = 0;
+            camera_joueur_mort.Priority = 1;
         }
     }
 }

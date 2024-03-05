@@ -1,3 +1,4 @@
+using Assets.Scripts.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,34 +14,31 @@ public class selectormanager : MonoBehaviour
         ITEM
     }
 
-    Image img;
     [SerializeField] TMP_Text txt_titre;
     [SerializeField] TMP_Text txt_liste;
-    [SerializeField] Transform curseur;
+    [SerializeField] Image img;
 
     private StartupType type;
     private int selection = 0;
+    private List<InfoAttaque> attaques;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(":)))))");
         img = GetComponent<Image>();
         gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        attaques = GameObject.Find("Joueur").GetComponent<EntityStats>().Attaques;
+        // DEBUG
+        attaques.Add(new("test1", 0, 0, 100, 10, true));
+        attaques.Add(new("test1.2", 0, 0, 100, 10, true));
+        attaques.Add(new("test2", 0, 0, 100, 20, false));
+        attaques.Add(new("test3", 0, 0, 100, 100, false));
     }
 
     public void Startup(StartupType type)
     {
         this.type = type;
         gameObject.SetActive(true);
-
-        curseur.position = new Vector3(-40, 28, 0);
         selection = 0;
 
         switch (type)
@@ -59,7 +57,18 @@ public class selectormanager : MonoBehaviour
                 break;
         }
 
-        //todo: code pour lister possibilités
+        txt_liste.text = "";
+
+        if (type == StartupType.ITEM)
+            return;
+
+        foreach (InfoAttaque i in attaques)
+        {
+            if (i.magique == (type == StartupType.MAGIQUE))
+            {
+                txt_liste.text += $"- {i.nom}\n";
+            }
+        }
     }
 
     public void Close()

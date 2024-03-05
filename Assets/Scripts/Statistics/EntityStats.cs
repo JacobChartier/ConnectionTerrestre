@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Assets.Scripts.Combat;
 
 [RequireComponent(typeof(Health))]
 public class EntityStats : MonoBehaviour
@@ -30,6 +31,8 @@ public class EntityStats : MonoBehaviour
 
     [Header("Economy Statistics")]
     public EntityStatistic Coins = new EntityStatistic() { Base = 10, Min = 0 };
+
+    public List<InfoAttaque> Attaques = new();
 
     private void OnEnable()
     {
@@ -95,17 +98,25 @@ public struct EntityStatistic
             Current += amount;
             return true;
         }
-        else return false;
+        else
+        {
+            Current = Max;
+            return false;
+        }
     }
 
     public bool Remove(float amount)
     {
-        if ((Current + amount) >= Min)
+        if ((Current - amount) >= Min)
         {
             Current -= amount;
             return true;
         }
-        else return false;
+        else
+        {
+            Current = Min;
+            return false;
+        }
     }
 
     public void Reset()
