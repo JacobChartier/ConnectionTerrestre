@@ -22,6 +22,7 @@ public class bhvdamagetextprefab : MonoBehaviour
             text.color = Color.red;
 
         transform.position = Camera.main.WorldToScreenPoint(pos, Camera.MonoOrStereoscopicEye.Mono);
+        Destroy(gameObject, LIFETIME_IN_SECS);
     }
 
     // Update is called once per frame

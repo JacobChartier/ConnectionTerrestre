@@ -5,12 +5,24 @@ namespace Assets.Scripts.Combat
     // infos pour chaque attaque individuelle
     public struct InfoAttaque
     {
-        public string nom; // nom de l'attaque
-        public int anim_len; // longueure de l'animation en frames.
-        public int parry_frame; // nb de frames d'animation avant que l'attaque touche l'opposant visuellement
-        public int block_window; // nb de frames avant parry_frame où que le joueur peut bloquer mais ne va pas parry;
-        public int damage; // dommages de l'attaque
-        public bool magique; // si attaque joueur magique
+        // nom de l'attaque. en ce moment, ceci est seulement important pour les attaques du joueur
+        public string nom;
+
+        // longueure de l'animation en frames. (fixedupdate)
+        public int anim_len;
+
+        // numéro de frame d'animation où l'attaquant fait contact avec l'opposant. Ceci détermine quand il faut peser enter pour un crit/parry
+        public int contact_frame;
+
+        // nb de frames avant parry_frame où que le joueur peut bloquer partiellement une attaque d'un monstre. ceci est seulement
+        // utilisé pour les attaques monstres
+        public int block_window;
+
+        // base dommages de l'attaque
+        public int damage;
+
+        // si attaque joueur magique. en ce moment, affect seulement les attaques du joueur
+        public bool magique;
 
         // id ou objet pour l'animation
         // particules crées
@@ -21,7 +33,7 @@ namespace Assets.Scripts.Combat
             if (parry_frame < 0)
                 parry_frame = 0;
 
-            this.parry_frame = parry_frame;
+            this.contact_frame = parry_frame;
 
             if (block_window < 0)
                 block_window = 0;

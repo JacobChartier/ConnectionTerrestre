@@ -17,7 +17,7 @@ public class CameraJoueurMort : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public void Move()
     {
         if (cam.Priority == 0)
             return;

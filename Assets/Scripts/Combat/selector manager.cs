@@ -29,10 +29,10 @@ public class selectormanager : MonoBehaviour
         gameObject.SetActive(false);
         attaques = GameObject.Find("Joueur").GetComponent<EntityStats>().Attaques;
         // DEBUG
-        attaques.Add(new("test1", 0, 0, 100, 10, true));
-        attaques.Add(new("test1.2", 0, 0, 100, 10, true));
-        attaques.Add(new("test2", 0, 0, 100, 20, false));
-        attaques.Add(new("test3", 0, 0, 100, 100, false));
+        attaques.Add(new("test1", 50, 0, 100, 10, true));
+        attaques.Add(new("test1.2", 50, 0, 100, 10, true));
+        attaques.Add(new("test2", 50, 0, 100, 20, false));
+        attaques.Add(new("test3", 50, 0, 100, 100, false));
     }
 
     public void Startup(StartupType type)
