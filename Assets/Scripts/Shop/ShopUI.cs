@@ -3,10 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class ShopUI : MonoBehaviour, IMenuHandler
+public class ShopUI : MenuHandler
 {
-    public static ShopUI Instance;
-
     [SerializeField] private GameObject player;
     [SerializeField] private EntityStats playerStats;
 
@@ -22,16 +20,13 @@ public class ShopUI : MonoBehaviour, IMenuHandler
 
     void Start()
     {
-        if (Instance != null)
-            Instance = this;
-
         ResetDescription();
         this.purchaseButton.onClick.AddListener(delegate { AddToInventory(); });
     }
 
     private void OnEnable()
     {
-        CameraController.Instance.EnableFreeCameraMovement(false);
+        CameraManager.Instance.EnableFreeCameraMovement(false);
     }
 
     private void ResetOutlines()
@@ -44,7 +39,7 @@ public class ShopUI : MonoBehaviour, IMenuHandler
 
     public void SelectItem(InventorySlot slot)
     {
-        SelectedItem = slot.GetComponentInChildren<DraggableItem>().item;
+        SelectedItem = slot.GetComponentInChildren<DraggableItem>()?.item;
 
         ResetOutlines();
         slot.GetComponent<Outline>().enabled = !slot.GetComponent<Outline>().enabled;
@@ -56,8 +51,8 @@ public class ShopUI : MonoBehaviour, IMenuHandler
     {
         if (SelectedItem.Purchase(playerStats))
         {
-            player.GetComponentInChildren<Inventory>().Add(SelectedItem);
-            InventoryUI.Instance.Refresh();
+            player.GetComponentInChildren<Inventory>()?.Add(SelectedItem);
+
         }
 
         ShowPrice(SelectedItem);
@@ -65,9 +60,9 @@ public class ShopUI : MonoBehaviour, IMenuHandler
 
     public void ShowDescription(Item item)
     {
-        this.name.text = item.name;
+        this.name.text = item.Name;
 
-        switch (item.rarety)
+        switch (item.Rarety)
         {
             case Rarety.COMMON:
                 this.rarety.text = "<color=#FFFFFF>Common</color>";
@@ -87,47 +82,35 @@ public class ShopUI : MonoBehaviour, IMenuHandler
 
         }
 
-        switch (item.category)
+        switch (item.Category)
         {
-            case Type.WEAK_HEALTH_POTION:
-            case Type.NORMAL_HEALTH_POTION:
-            case Type.STRONG_HEALTH_POTION:
-            case Type.ULTIMATE_HEALTH_POTION:
-            case Type.NORMAL_EXPERIENCE_POTION:
+
+            case Category.POTION:
                 this.category.text = "<color=#F83BFF>Potion</color>";
                 break;
 
-            case Type.WEAK_MAGIC_ESSENCE:
-            case Type.NORMAL_MAGIC_ESSENCE:
-            case Type.STRONG_MAGIC_ESSENCE:
-            case Type.ULTIMATE_MAGIC_ESSENCE:
-            case Type.NORMAL_WARRIOR_ESSENCE:
-            case Type.NORMAL_MAGICIAN_ESSENCE:
+            case Category.ESSENCE:
                 this.category.text = "<color=#4ADE2C>Essence</color>";
                 break;
 
-            case Type.SHIELD:
+            case Category.SHIELD:
                 this.category.text = "<color=#853815>Shield</color>";
                 break;
 
-            case Type.FOUR_LEAF_CLOVER:
+            case Category.LEAF:
                 this.category.text = "<color=#1C9C02>Clover</color>";
                 break;
 
-            case Type.VITAL_LEAF:
-                this.category.text = "<color=#1C9C02>Leaf</color>";
-                break;
-
-            case Type.OTHER:
+            case Category.DEBUG:
                 this.category.text = "<color=#FFFFFF>Other</color>";
                 break;
 
             default:
-                this.category.text = $"<color=#FFFFFF>{item.category}</color>";
+                this.category.text = $"<color=#FFFFFF>{item.Category}</color>";
                 break;
         }
 
-        this.description.text = item.description;
+        this.description.text = item.Description;
 
         ShowPrice(item);
 
@@ -160,7 +143,7 @@ public class ShopUI : MonoBehaviour, IMenuHandler
         InputManager.controls?.Player.Disable();
         InputManager.controls?.Menus.Enable();
 
-        CameraController.Instance?.FreezeCamera(true);
+        CameraManager.Instance?.FreezeCamera(true);
 
         this.transform.gameObject.SetActive(true);
     }
@@ -170,11 +153,11 @@ public class ShopUI : MonoBehaviour, IMenuHandler
         InputManager.controls?.Player.Enable();
         InputManager.controls?.Menus.Disable();
 
-        CameraController.Instance?.FreezeCamera(false);
+        CameraManager.Instance?.FreezeCamera(false);
         this.transform.gameObject.SetActive(false);
 
         Tooltip.Instance?.Hide();
 
-        InventoryUI.Instance?.Hide();
+        GetMenu<InventoryUI>().Hide();
     }
 }

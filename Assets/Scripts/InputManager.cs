@@ -14,9 +14,11 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
+        else
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public static PlayersControls controls;
@@ -28,6 +30,9 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        inventoryMenu = FindObjectOfType<InventoryUI>(true).gameObject;
+        shopMenu = FindObjectOfType<ShopUI>(true).gameObject;
+
         controls = new PlayersControls();
         controls.Player.Enable();
     }

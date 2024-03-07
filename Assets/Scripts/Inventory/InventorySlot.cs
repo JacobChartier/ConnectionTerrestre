@@ -41,14 +41,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             if (isDescriptionVisible)
             {
-                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>().item.GenerateTooltipTitle(), this.gameObject.GetComponentInChildren<DraggableItem>().item.GenerateTooltipDescription());
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipTitle(), this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipDescription());
             }
             else
             {
-                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>().item.GenerateTooltipTitle());
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipTitle());
             }
 
-            switch (this.gameObject.GetComponentInChildren<DraggableItem>().item.rarety)
+            switch (this.gameObject.GetComponentInChildren<DraggableItem>().item.Rarety)
             {
                 case Rarety.LEGENDARY:
                     Tooltip.Instance.SetColors(bg: new Color(0.01960784f, 0.01960784f, 0.01960784f), outlines: new Color(1.0f, 0.8431373f, 0.0f));

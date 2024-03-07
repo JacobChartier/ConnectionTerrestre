@@ -33,7 +33,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.parent.GetComponent<InventorySlot>().isOccupied = true;
 
         this.item = item;
-        image.sprite = item.icon;
+        image.sprite = item.Icon;
 
         if (item.isBreakable)
         {
@@ -79,6 +79,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        Tooltip.Instance?.Hide();
+
         if (originalSlot.isEnable)
         {
             transform.position = Input.mousePosition;

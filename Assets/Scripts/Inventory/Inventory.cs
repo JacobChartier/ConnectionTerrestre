@@ -1,6 +1,11 @@
+using Assets.Scripts.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -8,7 +13,13 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject prefab;
 
     public InventorySlot[] slots;
-    public Item[] items;
+    public static Item[] items;
+    public Item[] unauthorizedItems;
+
+    private void Awake()
+    {
+        prefab = Resources.Load<GameObject>("Prefabs/inventory_item");
+    }
 
     public bool Add(Item item)
     {
@@ -45,6 +56,8 @@ public class Inventory : MonoBehaviour
     public void Spawn(Item item, InventorySlot slot)
     {
         GameObject itemGO = Instantiate(prefab, slot.transform);
+        itemGO.AddComponent(ItemManager.Instance.items.ElementAt(0).GetType());
+
         DraggableItem inventoryItem = itemGO.GetComponent<DraggableItem>();
 
         inventoryItem.InitialiseItem(item);
@@ -68,9 +81,22 @@ public class Inventory : MonoBehaviour
         return items;
     }
 
-    public Item GenerateRandomItem()
+    public static System.Type GenerateRandomItem()
     {
-        var num = UnityEngine.Random.Range(0, items.Length);
-        return items[num];
+        System.Random rand = new System.Random();
+        //List<System.Type> itemTypes = new List<System.Type> { typeof(HealthPotion) };
+
+        int randomIndex = rand.Next(ItemManager.Instance.types.Count);
+        System.Type randomType = ItemManager.Instance.types[randomIndex];
+
+        return randomType;
+    }
+
+    public static void RemoveAllItem(Inventory inventory)
+    {
+        foreach (var slot in inventory.slots)
+        {
+            Destroy(slot.gameObject.transform.GetChild(0).gameObject);
+        }
     }
 }

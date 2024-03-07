@@ -4,19 +4,37 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
-    public static CameraController Instance;
+    public static CameraManager Instance;
 
     [SerializeField] private CinemachineVirtualCamera playerVCam;
-    [SerializeField] private List<CinemachineVirtualCamera> cameras = new List<CinemachineVirtualCamera>();
+    public List<CinemachineVirtualCamera> cameras = new List<CinemachineVirtualCamera>();
+
+    public List<IMenuHandler> menus = new List<IMenuHandler>();
 
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
+        else
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
 
         EnableFreeCameraMovement(true);
+        FreezeCamera(false);
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (level == 1)
+        {
+            playerVCam = GameObject.Find("vCam (1st Person View)").GetComponent<CinemachineVirtualCamera>();    // Set player vCam
+
+            foreach (var cam in cameras)
+                if (cam == null) cameras.Remove(cam);
+        }
     }
 
     public void EnableFreeCameraMovement(bool isEnable)

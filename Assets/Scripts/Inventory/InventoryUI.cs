@@ -4,10 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InventoryUI : MonoBehaviour, IMenuHandler
+public class InventoryUI : MenuHandler
 {
-    public static InventoryUI Instance;
-
     [SerializeField] private GameObject shopUI;
 
     [SerializeField] private EntityStats player;
@@ -16,8 +14,9 @@ public class InventoryUI : MonoBehaviour, IMenuHandler
 
     private void Awake()
     {
-        if (Instance != null)
-            Instance = this;
+        GetMenu<InventoryUI>().Refresh();
+
+        Refresh(); 
     }
 
     public void Refresh()
@@ -32,8 +31,10 @@ public class InventoryUI : MonoBehaviour, IMenuHandler
 
         this.transform.gameObject.SetActive(true);
 
-        CameraController.Instance?.FreezeCamera(true);
-        CameraController.Instance?.EnableFreeCameraMovement(false);
+        CameraManager.Instance?.FreezeCamera(true);
+        CameraManager.Instance?.EnableFreeCameraMovement(false);
+
+        HeadUpDisplay.Instance?.Hide();
     }
 
     public void Hide()
@@ -41,11 +42,13 @@ public class InventoryUI : MonoBehaviour, IMenuHandler
         InputManager.controls?.Player.Enable();
         InputManager.controls?.Menus.Disable();
 
-        CameraController.Instance?.FreezeCamera(false);
-        CameraController.Instance?.ResetCameras();
-        CameraController.Instance?.EnableFreeCameraMovement(true);
+        CameraManager.Instance?.FreezeCamera(false);
+        CameraManager.Instance?.ResetCameras();
+        CameraManager.Instance?.EnableFreeCameraMovement(true);
 
         Tooltip.Instance?.Hide();
+
+        HeadUpDisplay.Instance?.Show();
 
         this.gameObject.transform.position = new Vector3((Camera.main.scaledPixelWidth / 2), this.transform.position.y, this.transform.position.z);
         this.transform.gameObject.SetActive(false);
