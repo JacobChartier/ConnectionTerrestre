@@ -46,6 +46,37 @@ public class MenuController : MonoBehaviour
     public TMP_Dropdown resolutionDropDown;
     private Resolution[] resolutions;
 
+    private void Start()
+    {
+        resolutions = Screen.resolutions;
+        resolutionDropDown.ClearOptions();
+
+        List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
+
+        for (int i = 0; i< resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropDown.AddOptions(options);
+        resolutionDropDown.value = currentResolutionIndex;
+        resolutionDropDown.RefreshShownValue();
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
     public void NewGameDialogYes()
     {
         SceneManager.LoadScene(_newGameLevel);
@@ -101,12 +132,59 @@ public class MenuController : MonoBehaviour
         }
 
         PlayerPrefs.SetFloat("masterSen", mainControllerSen);
-        StartCoroutine (ConfirmationBox());
+        StartCoroutine(ConfirmationBox());
+    }
 
+    public void SetBrightness(float brightness)
+    {
+        _brightnessLevel = brightness;
+        brightnessTextValue.text = brightness.ToString("0.0");
+    }
+
+    public void SetFullScreen(bool isFullScreen)
+    {
+        _isFullScreen = isFullScreen;
+    }
+
+    public void SetQuality(int qualityIndex)
+    {
+        _qualityLevel = qualityIndex;
+    }
+
+    public void GraphicsApply()
+    {
+        PlayerPrefs.SetFloat("masterBrightness", _brightnessLevel);
+        //Change your brightness with your post processing or whatever it is
+
+        PlayerPrefs.SetInt("masterQuality", _qualityLevel);
+        QualitySettings.SetQualityLevel(_qualityLevel);
+
+        PlayerPrefs.SetInt("masterFullscreen", (_isFullScreen ? 1 : 0));
+        Screen.fullScreen = _isFullScreen;
+
+        StartCoroutine(ConfirmationBox());
     }
 
     public void ResetButton(string MenuType)
     {
+        if(MenuType == "Graphics")
+        {
+            //Reset brightness value
+            brightnessSlider.value = defaultBrigthness;
+            brightnessTextValue.text = defaultBrigthness.ToString("0.0");
+
+            qualityDropDown.value = 1;
+            QualitySettings.SetQualityLevel(1);
+
+            fullScreenToggle.isOn = false;
+            Screen.fullScreen = false;
+
+            Resolution currentResolution = Screen.currentResolution;
+            Screen.SetResolution(currentResolution.width, currentResolution.height, Screen.fullScreen);
+            resolutionDropDown.value = resolutions.Length;
+            GraphicsApply();
+
+        }
         if (MenuType == "Audio")
         {
             AudioListener.volume = defaultVolume;
