@@ -172,25 +172,30 @@ public class BattleManager : MonoBehaviour
 
         if (select_pressed && !stunlock)
         {
-            if (timer > attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE)
+            if (timer < attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE)// TROP TÔT: joueur est stunned
             {
+                Debug.Log("avant");
                 stunlock = true;
                 // todo (peut etre) animation stumble joueur
             }
-            else if (timer == attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE)
+            else if (timer == attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE)// PARRY: monstre recoit moitié de dommages de son attaque
             {
+                Debug.Log("pendant");
                 // mettre l'anim joueur à attaque
                 float dommages = (attaque_monstre.damage + stats_monstre.Strength.Current - stats_monstre.Defense.Current) / 2.0f;
 
                 FaireDegats(dommages, false);
+                stunlock = true;
             }
-            else if (timer > attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE - attaque_monstre.block_window)
+            else if (timer > attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE - attaque_monstre.block_window)// BLOCK: joueur recoit moitié dommages
             {
+                Debug.Log("après");
                 // mettre l'anim monstre à knockback
                 // mettre l'anim joueur à block
                 float dommages = (attaque_monstre.damage + stats_monstre.Strength.Current - stats_joueur.Defense.Current) / 2.0f;
 
                 FaireDegats(dommages, true);
+                stunlock = true;
             }
         }
         else if (timer == attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE)
@@ -231,19 +236,19 @@ public class BattleManager : MonoBehaviour
     {
         EntityStats attaqueur;
         EntityStats defendant;
-        Vector3 position_defendant;
+        Transform position_defendant;
 
         if (monstre_est_attaqueur)
         {
             attaqueur = stats_monstre;
             defendant = stats_joueur;
-            position_defendant = joueur_transform.position;
+            position_defendant = joueur_transform;
         }
         else
         {
             attaqueur = stats_joueur;
             defendant = stats_monstre;
-            position_defendant = ennemi_transform.position;
+            position_defendant = ennemi_transform;
         }
 
         dommages = MathF.Round(dommages, MidpointRounding.AwayFromZero);
