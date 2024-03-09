@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80954fc1f85087748a5006d793462f68, type: 3}
+  m_Script: {fileID: 11500000, guid: 67e556e199ee8a24498545f677d53d5c, type: 3}
   m_Name: experience_potion
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
