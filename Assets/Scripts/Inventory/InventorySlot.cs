@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -37,6 +38,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        this.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0.2f, 0.2f, 0.2f, 0.8627451f);
+
         if (isTooltipVisible && isOccupied)
         {
             if (isDescriptionVisible)
@@ -48,7 +51,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
                 Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipTitle());
             }
 
-            switch (this.gameObject.GetComponentInChildren<DraggableItem>().item.Rarety)
+            switch (this.gameObject.GetComponentInChildren<DraggableItem>()?.item.Rarety)
             {
                 case Rarety.LEGENDARY:
                     Tooltip.Instance.SetColors(bg: new Color(0.01960784f, 0.01960784f, 0.01960784f), outlines: new Color(1.0f, 0.8431373f, 0.0f));
@@ -72,6 +75,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        this.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.8627451f);
+
         if (isTooltipVisible)
         {
             Tooltip.Instance.Hide();

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.XR.OpenVR;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -8,7 +7,7 @@ namespace Assets.Scripts.Items
     {
         public DebugItem()
         {
-            Name = "Debug Item";
+            Name = "Test Item";
             Category = Category.DEBUG;
         }
 
@@ -17,7 +16,7 @@ namespace Assets.Scripts.Items
             Debug.Log($"{Name} ({typeof(DebugItem)}) has been used.");
         }
 
-        protected override void LoadAssets()
+        protected override void Load()
         {
             Icon = Resources.Load<Sprite>("Sprites/DebugIcon");
         }

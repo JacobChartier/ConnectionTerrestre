@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.Events;
+using static IGameItemBase;
 
 [Serializable]
 public abstract class Item : MonoBehaviour, IGameItemBase
 {
     public int ID = -1;
+    protected OnDataChange? OnChange;
 
-    [Header("Data")]
+    [Header("Item Specific Data")]
     public Sprite Icon;
-    public string Name = "Invalid Item";
+    public string Name { get; set; } = "Invalid Item";
     public string Description;
 
     public Rarety Rarety { get; protected set; } = Rarety.INVALID;
@@ -20,15 +23,32 @@ public abstract class Item : MonoBehaviour, IGameItemBase
     public bool isUsableOnlyInCombat { get; protected set; } = false;
     public bool isUsableOnlyInOverworld { get; protected set; } = false;
 
+    public bool isStackable { get; protected set; } = true;
+    public int StackSize { get; protected set; } = 5;
+
+    public bool isBreakable { get; protected set; } = false;
+    public int MaxDurability { get; protected set; } = 10;
+    public int Durability { get; set; } = 10;
+
+
     protected void Start()
     {
-        LoadAssets();
+        Load();
         GenerateData();
+
+        name = Name;
+    }
+
+    public void SetData(string name = null, Category category = Category.INVALID, Rarety rarety = Rarety.INVALID)
+    {
+        this.Name = name;
+        this.Rarety = rarety;
+        this.Category = category;
     }
 
     public abstract void Use();
 
-    protected virtual void LoadAssets()
+    protected virtual void Load()
     {
         Icon = Resources.Load<Sprite>("Sprites/MissingTexture");
     }
@@ -38,35 +58,20 @@ public abstract class Item : MonoBehaviour, IGameItemBase
 
     }
 
+    protected virtual void Refresh()
+    {
+        Debug.Log("REFRESH() -> From base");
+
+        OnChange();
+    }
+
+    /* Everything below this will be reworked and might not be working in the future. DO NOT USE */
+    [Header("Will be reworked")]
+    
+    // TODO: Change the tooltip generation system to only use one variable
     public string tooltipName;
     public string tooltipDescription;
-    public int price;
-
     [SerializeField] private List<string> customFields = new List<string>();
-    public bool isStackable = true;
-    public int stackSize = 5;
-    public bool isBreakable = false;
-    public int maxDurability = 10;
-    public int durability = 10;
-
-
-    public int GeneratePrice(int min, int max)
-    {
-        return UnityEngine.Random.Range(min, max);
-    }
-
-    public bool Purchase(EntityStats player)
-    {
-        if (price <= player.Coins.Current)
-        {
-            player.Coins.Remove(price);
-            MenuHandler.Instance.GetMenu<InventoryUI>().Refresh();
-
-            return true;
-        }
-
-        return false;
-    }
 
     public string GenerateTooltipTitle()
     {
@@ -199,7 +204,7 @@ public abstract class Item : MonoBehaviour, IGameItemBase
         // Durability
 
         if (isBreakable)
-            tooltip += $"<br><br><color=#505050>Durability: {(durability < (maxDurability / 3) ? $"<color=#FF0000>{durability}</color>" : $"{durability}")}/{maxDurability}</color>";
+            tooltip += $"<br><br><color=#505050>Durability: {(Durability < (MaxDurability / 3) ? $"<color=#FF0000>{Durability}</color>" : $"{Durability}")}/{MaxDurability}</color>";
 
         // Use Only In
 
@@ -215,10 +220,25 @@ public abstract class Item : MonoBehaviour, IGameItemBase
         return tooltip;
     }
 
-    public void SetData(string name = null, Category category = Category.INVALID, Rarety rarety = Rarety.INVALID)
+    // TODO: Make a new price generator
+    public int price;
+
+    public int GeneratePrice(int min, int max)
     {
-        this.name = name;
-        this.Rarety = rarety;
+        return UnityEngine.Random.Range(min, max);
+    }
+
+    public bool Purchase(EntityStats player)
+    {
+        if (price <= player.Coins.Current)
+        {
+            player.Coins.Remove(price);
+            MenuHandler.Instance.GetMenu<InventoryUI>().Refresh();
+
+            return true;
+        }
+
+        return false;
     }
 }
 

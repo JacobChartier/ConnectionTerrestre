@@ -37,6 +37,12 @@ public class InputManager : MonoBehaviour
         controls.Player.Enable();
     }
 
+    private void OnLevelWasLoaded(int level)
+    {
+        inventoryMenu = FindObjectOfType<InventoryUI>(true).gameObject;
+        shopMenu = FindObjectOfType<ShopUI>(true).gameObject;
+    }
+
     private void OnEnable()
     {
         controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>(); 

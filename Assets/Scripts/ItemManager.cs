@@ -16,15 +16,17 @@ public class ItemManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(gameObject);
+            Destroy(this);
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
         CreateItem<DebugItem>();
         CreateItem<HealthPotion>();
+
+        DontDestroyOnLoad(GameObject.Find("Items"));
     }
 
     public Item CreateItem(System.Type type)
@@ -46,9 +48,9 @@ public class ItemManager : MonoBehaviour
         return item;
     }
 
-    public Item CreateItem<T>() where T : Item, new()
+    public static Item CreateItem<T>() where T : Item, new()
     {
-        return CreateItem(typeof(T));
+        return Instance.CreateItem(typeof(T));
     }
 
     #region Debug Stuff (to be remove later)
@@ -57,6 +59,8 @@ public class ItemManager : MonoBehaviour
     {
         System.Type type = Inventory.GenerateRandomItem();
         playerInventory.Add(CreateItem(type));
+
+        items.ElementAt(0).Use();
     }
 
     public void ClearAllItemFromPlayerInventory()

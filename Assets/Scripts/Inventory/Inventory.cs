@@ -1,11 +1,5 @@
 using Assets.Scripts.Items;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -13,12 +7,23 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject prefab;
 
     public InventorySlot[] slots;
-    public static Item[] items;
+    public Item[] items;
     public Item[] unauthorizedItems;
 
     private void Awake()
     {
         prefab = Resources.Load<GameObject>("Prefabs/inventory_item");
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        for(int i = 0; i < slots.Length; i++)
+        {
+            if (items[i] != null)
+            {
+                Spawn(items[i], slots[i]);
+            }
+        }
     }
 
     public bool Add(Item item)
@@ -29,7 +34,7 @@ public class Inventory : MonoBehaviour
             InventorySlot slot = slots[i];
             DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
 
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.stackSize)
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.StackSize)
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
@@ -46,8 +51,11 @@ public class Inventory : MonoBehaviour
             if (itemInSlot == null)
             {
                 Spawn(item, slot);
+                items[i] = item;
+
                 return true;
             }
+
         }
 
         return false;
@@ -84,7 +92,6 @@ public class Inventory : MonoBehaviour
     public static System.Type GenerateRandomItem()
     {
         System.Random rand = new System.Random();
-        //List<System.Type> itemTypes = new List<System.Type> { typeof(HealthPotion) };
 
         int randomIndex = rand.Next(ItemManager.Instance.types.Count);
         System.Type randomType = ItemManager.Instance.types[randomIndex];

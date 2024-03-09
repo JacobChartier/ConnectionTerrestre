@@ -39,8 +39,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             durability.gameObject.SetActive(true);
 
-            durability.gameObject.GetComponent<Slider>().maxValue = item.maxDurability;
-            durability.gameObject.GetComponent<Slider>().value = item.durability;
+            durability.gameObject.GetComponent<Slider>().maxValue = item.MaxDurability;
+            durability.gameObject.GetComponent<Slider>().value = item.Durability;
         }
         else
         {
@@ -58,7 +58,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        int currentStack = item.stackSize;
+        int currentStack = item.StackSize;
 
         if (InputManager.mouseButtonInput == MouseButton.RIGHT) // Split stack in half
         {

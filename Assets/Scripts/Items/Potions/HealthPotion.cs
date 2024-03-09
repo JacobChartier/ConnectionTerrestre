@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HealthPotion : Item
@@ -12,14 +13,16 @@ public class HealthPotion : Item
     {
         System.Random rng = new System.Random();
         Rarety = (Rarety)rng.Next(0, 4);
+
+        Category = Category.POTION;
     }
 
     public override void Use()
     {
-        throw new NotImplementedException();
+        Refresh();
     }
 
-    protected override void LoadAssets()
+    protected override void Load()
     {
         icons[0] = Resources.Load<Sprite>("Sprites/Items/weak_health_potion");
         icons[1] = Resources.Load<Sprite>("Sprites/Items/normal_health_potion");
@@ -29,12 +32,24 @@ public class HealthPotion : Item
 
     protected override void GenerateData()
     {
-        RenderSprite();
+        SelectRarety();
 
         Name = $"Health Potion{(type == Type.NORMAL ? $"" : $" ({type.ToString().ToLower()})")}";
+        Description = $"This is a health potion !";
+
+        isBreakable = true;
+        MaxDurability = UnityEngine.Random.Range(10, 100);
     }
 
-    private void RenderSprite()
+
+    protected override void Refresh()
+    {
+        Debug.Log("REFRESH() -> From item");
+
+        base.Refresh();
+    }
+
+    private void SelectRarety()
     {
         switch(Rarety)
         {
