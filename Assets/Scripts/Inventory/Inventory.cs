@@ -12,18 +12,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        prefab = Resources.Load<GameObject>("Prefabs/inventory_item");
-    }
-
-    private void OnLevelWasLoaded(int level)
-    {
-        for(int i = 0; i < slots.Length; i++)
-        {
-            if (items[i] != null)
-            {
-                Spawn(items[i], slots[i]);
-            }
-        }
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Item");
     }
 
     public bool Add(Item item)
@@ -32,12 +21,13 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             InventorySlot slot = slots[i];
-            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+            Draggable itemInSlot = slot.GetComponentInChildren<Draggable>();
 
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.StackSize)
+            if (itemInSlot != null && itemInSlot.item.Name == item.Name && itemInSlot.count < item.StackSize)
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
+
                 return true;
             }
         }
@@ -46,7 +36,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             InventorySlot slot = slots[i];
-            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+            Draggable itemInSlot = slot.GetComponentInChildren<Draggable>();
 
             if (itemInSlot == null)
             {
@@ -55,7 +45,6 @@ public class Inventory : MonoBehaviour
 
                 return true;
             }
-
         }
 
         return false;
@@ -66,27 +55,9 @@ public class Inventory : MonoBehaviour
         GameObject itemGO = Instantiate(prefab, slot.transform);
         itemGO.AddComponent(ItemManager.Instance.items.ElementAt(0).GetType());
 
-        DraggableItem inventoryItem = itemGO.GetComponent<DraggableItem>();
+        Draggable inventoryItem = itemGO.GetComponent<Draggable>();
 
         inventoryItem.InitialiseItem(item);
-    }
-
-    public Item GetItem(InventorySlot slot)
-    {
-        return slot.GetComponentInChildren<DraggableItem>().item;
-    }
-
-    public Item[] GetItems(Inventory inventory)
-    {
-        Item[] items = new Item[slots.Length];
-
-        for(int i = 0; i < inventory.slots.Length; i++)
-        {
-            items[i] = inventory.GetItem(inventory.slots[i]);
-        }
-
-        Debug.Log(items);
-        return items;
     }
 
     public static System.Type GenerateRandomItem()

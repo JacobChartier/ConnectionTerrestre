@@ -23,10 +23,36 @@ public class ItemManager : MonoBehaviour
 
     private void Start()
     {
-        CreateItem<DebugItem>();
-        CreateItem<HealthPotion>();
+        // Potions
+        CreateItem<ExperiencePotion>();
+
+        CreateItem<WeakHealthPotion>();
+        CreateItem<NormalHealthPotion>();
+        CreateItem<StrongHealthPotion>();
+        CreateItem<UltimateHealthPotion>();
+
+        // Essences
+        CreateItem<MagicianEssence>();
+        CreateItem<WarriorEssence>();
+
+        CreateItem<WeakMagicEssence>();
+        CreateItem<NormalMagicEssence>();
+        CreateItem<StrongMagicEssence>();
+        CreateItem<UltimateMagicEssence>();
+
+        // Leaves
+        CreateItem<VitalLeaf>();
+        CreateItem<FourLeafClover>();
+
+        // Shields
+        CreateItem<Shield>();
 
         DontDestroyOnLoad(GameObject.Find("Items"));
+    }
+
+    public static Item CreateItem<T>() where T : Item, new()
+    {
+        return Instance.CreateItem(typeof(T));
     }
 
     public Item CreateItem(System.Type type)
@@ -35,7 +61,16 @@ public class ItemManager : MonoBehaviour
             new GameObject("Items");
 
         GameObject itemObject = new GameObject();
+
+        // Add the components
         Item item = (Item)itemObject.AddComponent(type);
+
+        // Generate the two prefabs as a child
+        var inventoryObject = Instantiate(Resources.Load("Prefabs/Items/inventory_item"), itemObject.transform);
+        inventoryObject.name = "Inventory Item";
+
+        var droppedObject = Instantiate(Resources.Load("Prefabs/Items/dropped_item"), itemObject.transform);
+        droppedObject.name = "Dropped Item";
 
         if (!types.Contains(type))
             types.Add(type);
@@ -46,11 +81,6 @@ public class ItemManager : MonoBehaviour
         itemObject.name = item.Name;
 
         return item;
-    }
-
-    public static Item CreateItem<T>() where T : Item, new()
-    {
-        return Instance.CreateItem(typeof(T));
     }
 
     #region Debug Stuff (to be remove later)

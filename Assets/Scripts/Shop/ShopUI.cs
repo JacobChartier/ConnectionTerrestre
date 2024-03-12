@@ -39,7 +39,7 @@ public class ShopUI : MenuHandler
 
     public void SelectItem(InventorySlot slot)
     {
-        SelectedItem = slot.GetComponentInChildren<DraggableItem>()?.item;
+        SelectedItem = slot.GetComponentInChildren<Draggable>()?.item;
 
         ResetOutlines();
         slot.GetComponent<Outline>().enabled = !slot.GetComponent<Outline>().enabled;
@@ -80,6 +80,9 @@ public class ShopUI : MenuHandler
                 this.rarety.text = "<color=#FFD700>Legendary</color>";
                 break;
 
+            default:
+                this.rarety.text = $"<color=#FFFFFF>{item.Rarety}</color>";
+                break;
         }
 
         switch (item.Category)

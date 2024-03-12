@@ -18,14 +18,14 @@ public class Enemy : InteractableObjectBase
 
     public override void ShowContextLabel()
     {
-        TMP_Text labelText = label.GetComponentInChildren<TMP_Text>();
+        //TMP_Text labelText = label.GetComponentInChildren<TMP_Text>();
 
-        labelText.text = text;
-        label.SetActive(true);
+        //labelText.text = text;
+        //label.SetActive(true);
     }
 
     public override void HideContextLabel()
     {
-        label.SetActive(false);
+        //label.SetActive(false);
     }
 }

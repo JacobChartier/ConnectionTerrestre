@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraManager : MonoBehaviour
 {
@@ -24,17 +25,16 @@ public class CameraManager : MonoBehaviour
 
         EnableFreeCameraMovement(true);
         FreezeCamera(false);
+
+        SceneManager.sceneLoaded += OnLevelLoaded;
     }
 
-    private void OnLevelWasLoaded(int level)
+    public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (level == 1)
-        {
-            playerVCam = GameObject.Find("vCam (1st Person View)").GetComponent<CinemachineVirtualCamera>();    // Set player vCam
+        playerVCam = GameObject.Find("vCam (1st Person View)").GetComponent<CinemachineVirtualCamera>();    // Set player vCam
 
-            foreach (var cam in cameras)
-                if (cam == null) cameras.Remove(cam);
-        }
+        foreach (var cam in cameras)
+            if (cam == null) cameras.Remove(cam);
     }
 
     public void EnableFreeCameraMovement(bool isEnable)

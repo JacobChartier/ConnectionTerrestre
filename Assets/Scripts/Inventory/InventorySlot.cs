@@ -9,7 +9,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 {
     public bool isDraggable = true;
     public bool isEnable = true;
-    
+
     public bool isTooltipVisible = true;
     public bool isDescriptionVisible = true;
 
@@ -21,19 +21,34 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
         if (isEnable)
         {
-            if (transform.childCount == 0)
-            {
-                GameObject droppedItem = eventData.pointerDrag;
-                DraggableItem item = droppedItem.GetComponent<DraggableItem>();
+            GameObject droppedItem = eventData.pointerDrag;
+            Draggable item = droppedItem.GetComponent<Draggable>();
 
+            if (isOccupied || item.item.Name == GetItemInSlot().Name)
+            {
                 item.parentAfterDrag = transform;
+            }
+
+            Draggable[] items = GetComponentsInChildren<Draggable>();
+
+            if (items.Count() > 0)
+            {
+                items[0].count++;
+                items[0].RefreshCount();
+
+                foreach (var i in items)
+                {
+                    i.enabled = false;
+                }
+
+                items[0].enabled = true;
             }
         }
     }
 
     public Item GetItemInSlot()
     {
-        return GetComponentInChildren<DraggableItem>().item;
+        return GetComponentInChildren<Draggable>().item;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -44,14 +59,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             if (isDescriptionVisible)
             {
-                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipTitle(), this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipDescription());
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<Draggable>()?.item.GenerateTooltipTitle(), this.gameObject.GetComponentInChildren<Draggable>()?.item.GenerateTooltipDescription());
             }
             else
             {
-                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<DraggableItem>()?.item.GenerateTooltipTitle());
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<Draggable>()?.item.GenerateTooltipTitle());
             }
 
-            switch (this.gameObject.GetComponentInChildren<DraggableItem>()?.item.Rarety)
+            switch (this.gameObject.GetComponentInChildren<Draggable>()?.item.Rarety)
             {
                 case Rarety.LEGENDARY:
                     Tooltip.Instance.SetColors(bg: new Color(0.01960784f, 0.01960784f, 0.01960784f), outlines: new Color(1.0f, 0.8431373f, 0.0f));

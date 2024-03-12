@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e556e199ee8a24498545f677d53d5c, type: 3}
+  m_Name: normal_magic_essence
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: c3cdcea07705c164389695f279568cb8, type: 3}
+  name: Magic essence
+  description: "Essence qui r\xE9g\xE9n\xE8re 30% de ton HP maximal. Peut \xEAtre
+    utilis\xE9 en ou hors combat."
+  tooltipName: 
+  tooltipDescription: 
+  price: 6
+  category: 6
+  rarety: 1
+  customFields: []
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 30
+      isPercentage: 1
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 0
+  UseOnlyInWorld: 0
+  isStackable: 1
+  stackSize: 5
+  isBreakable: 0
+  maxDurability: 10
+  durability: 0

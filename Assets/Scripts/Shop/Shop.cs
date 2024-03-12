@@ -34,9 +34,6 @@ public class Shop : InteractableObjectBase
 
     public override void Interact()
     {
-        inventory.Add(ItemManager.Instance.items.ElementAt(0));
-        inventory.Add(ItemManager.Instance.items.ElementAt(1));
-
         shopMenu.GetComponent<ShopUI>().Show();
 
         CameraManager.Instance?.EnableFreeCameraMovement(false);
@@ -50,14 +47,14 @@ public class Shop : InteractableObjectBase
 
     public override void ShowContextLabel()
     {
-        TMP_Text labelText = label.GetComponentInChildren<TMP_Text>();
+        //TMP_Text labelText = label.GetComponentInChildren<TMP_Text>();
 
-        labelText.text = text;
-        label.SetActive(true);
+        //labelText.text = text;
+        //label.SetActive(true);
     }
 
     public override void HideContextLabel()
     {
-        label.SetActive(false);
+        //label.SetActive(false);
     }
 }

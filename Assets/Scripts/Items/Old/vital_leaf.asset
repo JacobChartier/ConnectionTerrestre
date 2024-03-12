@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e556e199ee8a24498545f677d53d5c, type: 3}
+  m_Name: vital_leaf
+  m_EditorClassIdentifier: 
+  icon: {fileID: 0}
+  name: Vital leaf
+  description: "Si cette feuille magique se trouve dans ton inventaire quand tu meurs
+    au combat, tu reviens en vie avec \xBC de ton HP maximal. Ne peut pas \xEAtre
+    utilis\xE9 hors combat."
+  tooltipName: 
+  tooltipDescription: 
+  price: 14
+  category: 11
+  rarety: 3
+  customFields:
+  - Restores 25% of the<br>player's <color=#FF0000>Max Health</color><br>after a
+    death.
+  buffs:
+    HEALTH:
+      number: 0
+      isPercentage: 0
+    PHYSICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    MAGIC:
+      number: 0
+      isPercentage: 0
+    MAGICAL_DAMAGES:
+      number: 0
+      isPercentage: 0
+    DEFENSE:
+      number: 0
+      isPercentage: 0
+    STRENGTH:
+      number: 0
+      isPercentage: 0
+    ATTACK_SPEED:
+      number: 0
+      isPercentage: 0
+    COINS:
+      number: 0
+      isPercentage: 0
+    EXPERIENCE:
+      number: 0
+      isPercentage: 0
+  UseOnlyInCombat: 1
+  UseOnlyInWorld: 0
+  isStackable: 1
+  stackSize: 1
+  isBreakable: 0
+  maxDurability: 10
+  durability: 0
