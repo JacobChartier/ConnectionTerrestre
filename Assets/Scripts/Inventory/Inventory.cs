@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using Assets.Scripts.Items;
 using System.Linq;
 using UnityEngine;
 
@@ -7,30 +6,13 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
 
-    public Slot[] slots;
-    public List<Item> items;
+    public InventorySlot[] slots;
+    public Item[] items;
     public Item[] unauthorizedItems;
 
     private void Awake()
     {
-        prefab = Resources.Load<GameObject>("Prefabs/Items/inventory_item");
-    }
-
-    private void OnEnable()
-    {
-        //foreach (Slot slot in slots)
-        //{
-        //    slot.GetComponentInChildren<Draggable>().InitialiseItem();
-        //}
-    }
-
-    private void Update()
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            //items[i].Slot = slots[i];
-            //items[i].Item = slots[i].GetItemInSlot();
-        }
+        prefab = Resources.Load<GameObject>("Prefabs/Items/Item");
     }
 
     public bool Add(Item item)
@@ -38,13 +20,13 @@ public class Inventory : MonoBehaviour
         // Stacking
         for (int i = 0; i < slots.Length; i++)
         {
-            Slot slot = slots[i];
+            InventorySlot slot = slots[i];
             Draggable itemInSlot = slot.GetComponentInChildren<Draggable>();
 
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.StackSize)
+            if (itemInSlot != null && itemInSlot.item.Name == item.Name && itemInSlot.count < item.StackSize)
             {
                 itemInSlot.count++;
-                //itemInSlot.RefreshCount();
+                itemInSlot.RefreshCount();
 
                 return true;
             }
@@ -53,7 +35,7 @@ public class Inventory : MonoBehaviour
         // Check for an empty slot
         for (int i = 0; i < slots.Length; i++)
         {
-            Slot slot = slots[i];
+            InventorySlot slot = slots[i];
             Draggable itemInSlot = slot.GetComponentInChildren<Draggable>();
 
             if (itemInSlot == null)
@@ -68,12 +50,16 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void Spawn(Item item, Slot slot)
+    public void Spawn(Item item, InventorySlot slot)
     {
-        GameObject itemGameObject = ItemManager.Instance.CreateItem(item.GetType(), slot);
+        GameObject itemGO = Instantiate(prefab, slot.transform);
+        itemGO.AddComponent(ItemManager.Instance.items.ElementAt(0).GetType());
+
+        Draggable inventoryItem = itemGO.GetComponent<Draggable>();
+
+        inventoryItem.InitialiseItem(item);
     }
 
-    #region Debug Stuff
     public static System.Type GenerateRandomItem()
     {
         System.Random rand = new System.Random();
@@ -88,8 +74,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (var slot in inventory.slots)
         {
-            Destroy(slot.gameObject.transform.GetChild(0)?.gameObject);
+            Destroy(slot.gameObject.transform.GetChild(0).gameObject);
         }
     }
-    #endregion
 }

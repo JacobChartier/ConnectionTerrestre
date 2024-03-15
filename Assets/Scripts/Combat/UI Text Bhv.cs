@@ -7,14 +7,13 @@ public class UITextBhv : MonoBehaviour
 {
     private TMP_Text tmp;
     [SerializeField] private EntityStats.StatType current_stat;
+    [SerializeField] private EntityStats stats_entite;
     [SerializeField] private bool montrer_current_et_max;
     [SerializeField] private string text_divisor = " / ";
-    private EntityStats stats_entite;
 
     // Start is called before the first frame update
     void Start()
     {
-        stats_entite = GameObject.Find("BATTLE MANAGER").GetComponent<BattleManager>().stats_joueur;
         tmp = GetComponent<TMP_Text>();
     }
 

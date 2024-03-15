@@ -5,38 +5,57 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-[RequireComponent(typeof(Item))]
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Item item;
-    private GameObject renderedItem;
-    private Slot currentSlot;
-
     public TMP_Text countText;
     public Slider durability;
 
+    public Item item;
     [HideInInspector] public int count;
 
-    public Transform parentAfterDrag;
-    public Slot originalSlot;
+    [HideInInspector] public Transform parentAfterDrag;
+    InventorySlot originalSlot;
 
-    public void InitialiseItem()
+    private void Awake()
     {
-        renderedItem = gameObject.transform.GetChild(0).gameObject;
-        currentSlot = transform.GetComponentInParent<Slot>(true);
-        originalSlot = transform.GetComponentInParent<Slot>(true);
+        item = gameObject.GetComponentInParent<Item>();
+    }
 
-        transform.parent.GetComponentInParent<Slot>().isOccupied = true;
+    private void Start()
+    {
+        InitialiseItem(item);
+        RefreshCount();
+    }
 
-        item.transform.localPosition = Vector2.zero;
+    public void InitialiseItem(Item item)
+    {
+        parentAfterDrag = transform.parent;
+        originalSlot = transform.parent.GetComponent<InventorySlot>();
 
-        renderedItem.GetComponent<Image>().sprite = item.Icon;
-        renderedItem.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
+        transform.parent.GetComponent<InventorySlot>().isOccupied = true;
+
+        this.item = item;
+        GetComponentInChildren<Image>().sprite = item.Icon;
 
         if (item.IsBreakable)
-            this.GetComponentInChildren<Slider>().gameObject.SetActive(true);
+        {
+            durability.gameObject.SetActive(true);
+
+            durability.gameObject.GetComponent<Slider>().maxValue = item.MaxUses;
+            durability.gameObject.GetComponent<Slider>().value = item.Durability;
+        }
         else
-            this.GetComponentInChildren<Slider>().gameObject.SetActive(false);
+        {
+            durability.gameObject.SetActive(false);
+        }
+    }
+
+    public void RefreshCount()
+    {
+        countText.text = count.ToString();
+
+        bool isCounterActive = count > 1;
+        countText.gameObject.transform.parent.gameObject.SetActive(isCounterActive);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -45,7 +64,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         if (originalSlot.isEnable)
         {
-            parentAfterDrag = gameObject.transform.parent;
+            parentAfterDrag = transform.parent;
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
 
@@ -67,11 +86,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (originalSlot.isEnable)
         {
-            gameObject.transform.SetParent(parentAfterDrag);
-            GetComponentInChildren<Image>().raycastTarget = true;
-            transform.position = this.gameObject.transform.position;
-        }
+            transform.SetParent(parentAfterDrag);
 
-        transform.position = parentAfterDrag.transform.position;
+            GetComponentInChildren<Image>().raycastTarget = true;
+        }
     }
 }

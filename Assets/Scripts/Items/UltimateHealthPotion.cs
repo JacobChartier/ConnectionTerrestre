@@ -10,7 +10,7 @@ public class UltimateHealthPotion : Item
         Model = Resources.Load<Mesh>("Meshes/Items/ultimate_health_potion");
 
         Name = "Health Potion (Ultimate)";
-        Description = "Potion puissante qui régénère tout ton HP. Peut être utilisé en ou hors combat. Ne peut pas être acheté, est seulement laissé par des ennemis puissants.";
+        Description = "Potion puissante qui régénère tout ton HP. <br>Peut être utilisé en ou hors combat. <br>Ne peut pas être acheté, est seulement laissé par des ennemis puissants.";
 
         Rarety = Rarety.LEGENDARY;
         Category = Category.POTION;

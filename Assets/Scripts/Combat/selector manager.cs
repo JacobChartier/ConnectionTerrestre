@@ -27,12 +27,12 @@ public class selectormanager : MonoBehaviour
     {
         img = GetComponent<Image>();
         gameObject.SetActive(false);
-        attaques = GameObject.Find("BATTLE MANAGER").GetComponent<BattleManager>().stats_joueur.Attaques;
+        attaques = GameObject.Find("Joueur").GetComponent<EntityStats>().Attaques;
         // DEBUG
-        attaques.Add(new("test1", 50, 100, 10, 2));
-        attaques.Add(new("test1.2", 50, 100, 10, 5));
-        attaques.Add(new("test2", 50, 100, 20));
-        attaques.Add(new("test3", 50, 100, 100));
+        attaques.Add(new("test1", 50, 0, 100, 10, true));
+        attaques.Add(new("test1.2", 50, 0, 100, 10, true));
+        attaques.Add(new("test2", 50, 0, 100, 20, false));
+        attaques.Add(new("test3", 50, 0, 100, 100, false));
     }
 
     public void Startup(StartupType type)
@@ -60,22 +60,11 @@ public class selectormanager : MonoBehaviour
         txt_liste.text = "";
 
         if (type == StartupType.ITEM)
-        {
-            //txt_liste.fontSize = 5;
-            foreach (Item i in BattleDataTransfer.instance.inventory.items)
-            {
-                txt_liste.text += $"- {i.Name}\n";
-            }
             return;
-        }
 
         foreach (InfoAttaque i in attaques)
         {
-            if (i.magique && type == StartupType.MAGIQUE)
-            {
-                txt_liste.text += $"- {i.nom}: {i.cout_magique} MP\n";
-            }
-            else if (!i.magique && type == StartupType.PHYSIQUE)
+            if (i.magique == (type == StartupType.MAGIQUE))
             {
                 txt_liste.text += $"- {i.nom}\n";
             }
@@ -85,10 +74,5 @@ public class selectormanager : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-    }
-
-    public StartupType GetStartupType()
-    {
-        return type;
     }
 }

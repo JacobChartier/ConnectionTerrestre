@@ -11,7 +11,7 @@ public class WeakMagicEssence : Item
         Model = Resources.Load<Mesh>("Meshes/Items/weak_magic_essence");
 
         Name = "Magic Essence (Weak)";
-        Description = "Essence faible qui régénère 15% de ton MP maximal. Peut être utilisé en ou hors combat.";
+        Description = "Essence faible qui régénère 15% de ton MP maximal. <br>Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.COMMON;
         Category = Category.ESSENCE;

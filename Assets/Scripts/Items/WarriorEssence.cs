@@ -10,7 +10,7 @@ public class WarriorEssence : Item
         Model = Resources.Load<Mesh>("Meshes/Items/normal_warrior_essence");
 
         Name = "Warrior Essence";
-        Description = "Les attaques physiques deviennent 30% plus fortes. Ne peux pas être utilisé hors combat.";
+        Description = "Les attaques physiques deviennent 30% plus fortes. <br>Ne peux pas être utilisé hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.ESSENCE;

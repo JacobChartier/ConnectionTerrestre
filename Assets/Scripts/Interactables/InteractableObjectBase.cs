@@ -1,23 +1,14 @@
-using Assets.Scripts.Interactables;
 using Cinemachine;
 using System;
-using TMPro;
 using UnityEngine;
 
 public abstract class InteractableObjectBase : MonoBehaviour, IInteractable
 {
-    private void Start()
-    {
-    }
-
     public abstract void Interact();
 
     public abstract void ShowContextLabel();
 
-    public void HideContextLabel()
-    {
-        ContextLabelUI.Instance.HideContextLabel();
-    }
+    public abstract void HideContextLabel();
 
     public virtual void EnableFreeCameraMovement(bool isEnable)
     {
@@ -33,7 +24,7 @@ public abstract class InteractableObjectBase : MonoBehaviour, IInteractable
         }
     }
 
-    public virtual void SwitchVirtualCameraPriority(CinemachineVirtualCamera playerVCam, CinemachineVirtualCamera OtherVCam, bool setVCamToPlayer = false)
+    public virtual void SwitchVirtualCameraPriority(CinemachineVirtualCamera playerVCam,CinemachineVirtualCamera OtherVCam, bool setVCamToPlayer = false)
     {
         if (setVCamToPlayer)
         {

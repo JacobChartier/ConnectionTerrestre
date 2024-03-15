@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,19 +5,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    public bool isDraggable = true;
     public bool isEnable = true;
 
     public bool isTooltipVisible = true;
     public bool isDescriptionVisible = true;
 
     public bool isOccupied = false;
-
-    private void Update()
-    {
-        
-    }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -39,7 +34,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             if (items.Count() > 0)
             {
                 items[0].count++;
-                //items[0].RefreshCount();
+                items[0].RefreshCount();
 
                 foreach (var i in items)
                 {
@@ -48,8 +43,6 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
                 items[0].enabled = true;
             }
-            
-            droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
         }
     }
 
@@ -66,11 +59,11 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         {
             if (isDescriptionVisible)
             {
-                Tooltip.Instance.Show(GenerateTooltipTitleString(gameObject.GetComponentInChildren<Draggable>()?.item), GenerateTooltipString(gameObject.GetComponentInChildren<Draggable>()?.item));
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<Draggable>()?.item.GenerateTooltipTitle(), this.gameObject.GetComponentInChildren<Draggable>()?.item.GenerateTooltipDescription());
             }
             else
             {
-                Tooltip.Instance.Show(GenerateTooltipTitleString(gameObject.GetComponentInChildren<Draggable>()?.item));
+                Tooltip.Instance.Show(this.gameObject.GetComponentInChildren<Draggable>()?.item.GenerateTooltipTitle());
             }
 
             switch (this.gameObject.GetComponentInChildren<Draggable>()?.item.Rarety)
@@ -104,68 +97,4 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             Tooltip.Instance.Hide();
         }
     }
-
-    private string GenerateTooltipString(Item item)
-    {
-        string tooltip = "";
-
-        tooltip += "<br>";
-
-        tooltip += item.Description;
-
-        if (item.IsUsableOnlyInCombat | item.IsUsableOnlyInOverworld | item.IsBreakable)
-            tooltip += "<br>";
-
-        if (item.IsBreakable)
-            tooltip += $"<br><color=#505050>Utilisations restantes: {(item.RemainingUses < (item.MaxUses / 3) ? $"<color=#FF0000>{item.RemainingUses}</color>" : $"{item.RemainingUses}")}/{item.MaxUses}</color>";
-
-        // Use Only In
-
-        if (item.IsUsableOnlyInCombat)
-            tooltip += "<br><color=#FF0F0F>Peut seulement être utilisé dans le monde de combat.</color>";
-
-        if (item.IsUsableOnlyInOverworld)
-            tooltip += "<br><color=#FF0F0F>Peut seulement être utilisé en dehors du monde de combat.</color>";
-
-
-        return tooltip;
-    }
-
-
-    public string GenerateTooltipTitleString(Item item)
-    {
-        string tooltip = $"<size=+5><b>{item.Name}";
-
-        switch (item.Rarety)
-        {
-            case Rarety.LEGENDARY:
-                tooltip += $"<br><color=#FFD700>LEGENDARY</color>";
-                break;
-
-            case Rarety.EPIC:
-                tooltip += $"<br><color=#F83BFF>EPIC</color>";
-                break;
-
-            case Rarety.RARE:
-                tooltip += $"<br><color=#384CFF>RARE</color>";
-                break;
-
-            case Rarety.COMMON:
-                tooltip += $"<br><color=#FFFFFF>COMMON</color>";
-                break;
-
-            default:
-                tooltip += "";
-                break;
-        }
-
-        return tooltip;
-    }
-}
-
-[Serializable]
-public struct SlotData
-{
-    public Slot Slot;
-    public GameObject Item;
 }

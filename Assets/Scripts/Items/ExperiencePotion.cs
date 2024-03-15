@@ -11,12 +11,10 @@ public class ExperiencePotion : Item
         Model = Resources.Load<Mesh>("Meshes/Items/normal_experience_potion");
 
         Name = "Experience Potion";
-        Description = "Augmente de 30% le montant d'experience recu après un combat. L'effet disparaît après 5 utilisations.";
+        Description = "Augmente de 30% le montant d'experience recu après un combat. <br>L'effet disparaît après 5 utilisations.";
 
         Rarety = Rarety.RARE;
         Category = Category.POTION;
-
-        IsBreakable = true;
     }
 
     public override void Use()

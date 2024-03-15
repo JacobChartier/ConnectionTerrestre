@@ -1,7 +1,9 @@
+using Assets.Scripts.Items;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ItemManager : MonoBehaviour
 {
@@ -16,86 +18,69 @@ public class ItemManager : MonoBehaviour
         else
             Destroy(this);
 
-        SceneManager.sceneLoaded += CreateItems;
-
         DontDestroyOnLoad(this);
     }
 
-    public void CreateItems(Scene scene, LoadSceneMode mode)
+    private void Start()
     {
         // Potions
-        CreateItem<ExperiencePotion>(GameObject.Find("Inventory Slot (14)").GetComponent<Slot>());
+        CreateItem<ExperiencePotion>();
 
-        CreateItem<WeakHealthPotion>(GameObject.Find("Inventory Slot (10)").GetComponent<Slot>());
-        CreateItem<NormalHealthPotion>(GameObject.Find("Inventory Slot (11)").GetComponent<Slot>());
-        CreateItem<StrongHealthPotion>(GameObject.Find("Inventory Slot (12)").GetComponent<Slot>());
-        CreateItem<UltimateHealthPotion>(GameObject.Find("Inventory Slot (13)").GetComponent<Slot>());
+        CreateItem<WeakHealthPotion>();
+        CreateItem<NormalHealthPotion>();
+        CreateItem<StrongHealthPotion>();
+        CreateItem<UltimateHealthPotion>();
 
         // Essences
-        CreateItem<MagicianEssence>(GameObject.Find("Inventory Slot (22)").GetComponent<Slot>());
-        CreateItem<WarriorEssence>(GameObject.Find("Inventory Slot (23)").GetComponent<Slot>());
+        CreateItem<MagicianEssence>();
+        CreateItem<WarriorEssence>();
 
-        CreateItem<WeakMagicEssence>(GameObject.Find("Inventory Slot (18)").GetComponent<Slot>());
-        CreateItem<NormalMagicEssence>(GameObject.Find("Inventory Slot (19)").GetComponent<Slot>());
-        CreateItem<StrongMagicEssence>(GameObject.Find("Inventory Slot (20)").GetComponent<Slot>());
-        CreateItem<UltimateMagicEssence>(GameObject.Find("Inventory Slot (21)").GetComponent<Slot>());
+        CreateItem<WeakMagicEssence>();
+        CreateItem<NormalMagicEssence>();
+        CreateItem<StrongMagicEssence>();
+        CreateItem<UltimateMagicEssence>();
 
         // Leaves
-        CreateItem<VitalLeaf>(GameObject.Find("Inventory Slot (26)").GetComponent<Slot>());
-        CreateItem<FourLeafClover>(GameObject.Find("Inventory Slot (27)").GetComponent<Slot>());
+        CreateItem<VitalLeaf>();
+        CreateItem<FourLeafClover>();
 
         // Shields
-        CreateItem<Shield>(GameObject.Find("Inventory Slot (28)").GetComponent<Slot>());
+        CreateItem<Shield>();
 
         DontDestroyOnLoad(GameObject.Find("Items"));
     }
 
-    public static GameObject CreateItem<T>(Slot slot = null) where T : Item, new()
+    public static Item CreateItem<T>() where T : Item, new()
     {
-        return Instance.CreateItem(typeof(T), slot);
+        return Instance.CreateItem(typeof(T));
     }
 
-    public GameObject CreateItem(System.Type type, Slot slot = null)
+    public Item CreateItem(System.Type type)
     {
-        // Create the Items GameObject is it doesn't already exist.
         if (!GameObject.Find("Items"))
             new GameObject("Items");
 
-        // Register the item type if it doesn't already exist.
-        if (!types.Contains(type))
-            types.Add(type);
-
-        GameObject itemObject = new();
+        GameObject itemObject = new GameObject();
 
         // Add the components
-        Item itemComponent = (Item)itemObject.AddComponent(type);
+        Item item = (Item)itemObject.AddComponent(type);
 
-        Draggable draggableCompoment = itemObject.AddComponent<Draggable>();
-        draggableCompoment.item = itemComponent;
-
-        //Droppable droppableComponent = itemObject.AddComponent<Droppable>();
-        //droppableComponent.item = itemComponent;
-
-        // Instantiate the prefabs
+        // Generate the two prefabs as a child
         var inventoryObject = Instantiate(Resources.Load("Prefabs/Items/inventory_item"), itemObject.transform);
         inventoryObject.name = "Inventory Item";
 
-        //var droppedObject = Instantiate(Resources.Load("Prefabs/Items/dropped_item"), itemObject.transform);
-        //droppedObject.name = "Dropped Item";
+        var droppedObject = Instantiate(Resources.Load("Prefabs/Items/dropped_item"), itemObject.transform);
+        droppedObject.name = "Dropped Item";
 
-        items.Add(itemComponent);
+        if (!types.Contains(type))
+            types.Add(type);
+
+        items.Add(item);
 
         itemObject.transform.parent = GameObject.Find("Items").transform;
-        itemObject.name = itemComponent.Name;
+        itemObject.name = item.Name;
 
-        if (slot != null)
-        {
-            itemObject.transform.SetParent(slot.gameObject.transform);
-        }
-
-        draggableCompoment.InitialiseItem();
-
-        return itemObject;
+        return item;
     }
 
     #region Debug Stuff (to be remove later)
@@ -103,7 +88,7 @@ public class ItemManager : MonoBehaviour
     public void AddRandomItemToPlayerInventory()
     {
         System.Type type = Inventory.GenerateRandomItem();
-        //playerInventory.Add(type);
+        playerInventory.Add(CreateItem(type));
 
         items.ElementAt(0).Use();
     }
@@ -111,37 +96,6 @@ public class ItemManager : MonoBehaviour
     public void ClearAllItemFromPlayerInventory()
     {
         Inventory.RemoveAllItem(playerInventory);
-    }
-
-    public void AddAllItemsToInventory()
-    {
-        // Potions
-        CreateItem<ExperiencePotion>(GameObject.Find("Inventory Slot (14)").GetComponent<Slot>());
-
-        CreateItem<WeakHealthPotion>(GameObject.Find("Inventory Slot (10)").GetComponent<Slot>());
-        CreateItem<NormalHealthPotion>(GameObject.Find("Inventory Slot (11)").GetComponent<Slot>());
-        CreateItem<StrongHealthPotion>(GameObject.Find("Inventory Slot (12)").GetComponent<Slot>());
-        CreateItem<UltimateHealthPotion>(GameObject.Find("Inventory Slot (13)").GetComponent<Slot>());
-
-        // Essences
-        CreateItem<MagicianEssence>(GameObject.Find("Inventory Slot (22)").GetComponent<Slot>());
-        CreateItem<WarriorEssence>(GameObject.Find("Inventory Slot (23)").GetComponent<Slot>());
-
-        CreateItem<WeakMagicEssence>(GameObject.Find("Inventory Slot (18)").GetComponent<Slot>());
-        CreateItem<NormalMagicEssence>(GameObject.Find("Inventory Slot (19)").GetComponent<Slot>());
-        CreateItem<StrongMagicEssence>(GameObject.Find("Inventory Slot (20)").GetComponent<Slot>());
-        CreateItem<UltimateMagicEssence>(GameObject.Find("Inventory Slot (21)").GetComponent<Slot>());
-
-        // Leaves
-        CreateItem<VitalLeaf>(GameObject.Find("Inventory Slot (26)").GetComponent<Slot>());
-        CreateItem<FourLeafClover>(GameObject.Find("Inventory Slot (27)").GetComponent<Slot>());
-
-        // Shields
-        CreateItem<Shield>(GameObject.Find("Inventory Slot (28)").GetComponent<Slot>());
-
-
-        // SHOP 
-        CreateItem<Shield>(GameObject.Find("Shop Slot (0)").GetComponent<Slot>());
     }
     #endregion
 }
