@@ -16,7 +16,7 @@ public class bhvLowHealth : MonoBehaviour
     [SerializeField] private float PERCENTAGE_LOW_HEALTH = 20.0f;
     [SerializeField] private int INTERVALE_BATTEMENTS = 64;
     [SerializeField] private Type effect_type;
-    [SerializeField] private EntityStats player_stats;
+    private EntityStats player_stats;
     private TMP_Text tmp;
     private Image img;
 
@@ -26,6 +26,7 @@ public class bhvLowHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player_stats = GameObject.Find("BATTLE MANAGER").GetComponent<BattleManager>().stats_joueur;
         tmp = GetComponent<TMP_Text>();
         img = GetComponent<Image>();
     }

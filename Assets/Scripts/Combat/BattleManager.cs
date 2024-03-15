@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
     const int FRAMES_AVANT_ATTAQUE = 80;
 
     [SerializeField] GameObject prefab_text_dommages;
+    [SerializeField] GameObject prefab_text_xp;
     [Space]
     [SerializeField] CinemachineVirtualCamera camera_option_joueur;
     [SerializeField] CinemachineVirtualCamera camera_generale;
@@ -29,9 +30,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera camera_joueur_mort;
     [Space]
     [SerializeField] choixcombatmanager choix_combat;
-    [Space]
-    [SerializeField] EntityStats stats_joueur;
-    [SerializeField] EntityStats stats_monstre;
     [Space]
     [SerializeField] Transform joueur_transform;
     [SerializeField] Transform ennemi_transform;
@@ -50,6 +48,8 @@ public class BattleManager : MonoBehaviour
     public static bool down_pressed = false;
     public static bool down_held = false;
     public static bool up_held = false;
+    public EntityStats stats_joueur;
+    public EntityStats stats_monstre;
 
     Evenement evenement_actuel
     {
@@ -81,7 +81,14 @@ public class BattleManager : MonoBehaviour
         controls = new PlayersControls();
         controls.Player.Enable();
 
-        stats_monstre.Attaques.Add(new("test", 30, 15, 100, 1)); // debug
+        stats_joueur = BattleDataTransfer.instance.player_stats;
+        stats_monstre = BattleDataTransfer.instance.enemy_stats;
+
+        if (stats_joueur == null)
+            stats_joueur = new EntityStats();
+        if (stats_monstre == null)
+            stats_monstre = new EntityStats();
+
     }
 
     private void OnEnable()
@@ -105,6 +112,7 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stats_monstre.Attaques.Add(new(30, 15, 100, 1)); // debug
         evenement_actuel = Evenement.INTRO;
         camera_generale.Priority = 1;
         camera_option_joueur.Priority = 0;
@@ -158,13 +166,16 @@ public class BattleManager : MonoBehaviour
             choix_combat.Active = false;
         }
 
+        if (timer < FRAMES_AVANT_ATTAQUE)
+            return;
+
         if (timer == FRAMES_AVANT_ATTAQUE)
         {
-            attaque_monstre = stats_monstre.Attaques[UnityEngine.Random.Range(0, stats_monstre.Attaques.Count - 1)];
+            attaque_monstre = stats_monstre.Attaques[UnityEngine.Random.Range(0, stats_monstre.Attaques.Count)];
             //donner anim à objet monstre
         }
 
-        if (timer > attaque_monstre.anim_len + FRAMES_AVANT_ATTAQUE) //todo: monstre choisit attaque + anim attaque + bloc/parry
+        if (timer > attaque_monstre.anim_len + FRAMES_AVANT_ATTAQUE) //todo: anim attaque
         {
             stunlock = false;
             evenement_actuel = Evenement.TOUR_JOUEUR;
@@ -342,12 +353,48 @@ public class BattleManager : MonoBehaviour
 
         if (select_pressed)
         {
-            attaque_joueur = stats_joueur.Attaques[curseur.GetChoixSelection()];
+            if (selector.GetStartupType() == selectormanager.StartupType.ITEM)
+            {
+                if (BattleDataTransfer.instance.inventory.items[0] == null)
+                    return;
+
+
+            }
+
+            attaque_joueur = TrouverAttaque(curseur.GetChoixSelection(), selector.GetStartupType() == selectormanager.StartupType.MAGIQUE);
+            if (attaque_joueur.magique)
+            {
+                if (stats_joueur.MagicPoint.Current < attaque_joueur.cout_magique)
+                {
+                    // jouer sfx de "non" ?
+                    return;
+                }
+
+                stats_joueur.MagicPoint.Remove(attaque_joueur.cout_magique);
+            }
             selection = false;
             selector.Close();
             curseur.SetActive(false);
             evenement_actuel = Evenement.ANIMATION_JOUEUR;
         }
+    }
+
+    private InfoAttaque TrouverAttaque(int index, bool magique)
+    {
+        int counter = 0;
+
+        foreach (InfoAttaque i in stats_joueur.Attaques)
+        {
+            if (i.magique == magique)
+            {
+                if (counter == index)
+                    return i;
+
+                counter++;
+            }
+        }
+
+        return null;
     }
 
     private void CodeIntro()
@@ -493,6 +540,15 @@ public class BattleManager : MonoBehaviour
             camera_generale.Priority = 0;
             camera_option_joueur.Priority = 0;
             camera_joueur_fuit.Priority = 1;
+        }
+
+        if (timer == 2 && stats_monstre.ExpWorth > 0)
+        {
+            timer--;
+            stats_joueur.Experience.Add(1);
+            stats_monstre.ExpWorth -= 1;
+            GameObject g = Instantiate(prefab_text_xp);
+            g.GetComponent<bhvxptext>().Init(joueur_transform);
         }
 
         if (timer > LONGUEURE_ANIM_VICTOIRE_DEBUG)

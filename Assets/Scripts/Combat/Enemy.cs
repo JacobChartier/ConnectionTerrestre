@@ -6,6 +6,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+public enum EnemyType
+{
+    DEFAULT
+}
+
 public class Enemy : InteractableObjectBase
 {
     public override void Interact()
