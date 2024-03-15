@@ -16,7 +16,7 @@ public class ShopUI : MenuHandler
     [SerializeField] private Button purchaseButton;
 
     [SerializeField] public Item SelectedItem;
-    [SerializeField] private InventorySlot[] ShopInventory;
+    [SerializeField] private Slot[] ShopInventory;
 
     void Start()
     {
@@ -37,7 +37,7 @@ public class ShopUI : MenuHandler
         }
     }
 
-    public void SelectItem(InventorySlot slot)
+    public void SelectItem(Slot slot)
     {
         SelectedItem = slot.GetComponentInChildren<Draggable>()?.item;
 
@@ -52,7 +52,6 @@ public class ShopUI : MenuHandler
         if (SelectedItem.Purchase(playerStats))
         {
             player.GetComponentInChildren<Inventory>()?.Add(SelectedItem);
-
         }
 
         ShowPrice(SelectedItem);

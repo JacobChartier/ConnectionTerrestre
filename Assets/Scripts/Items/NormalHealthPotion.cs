@@ -10,7 +10,7 @@ public class NormalHealthPotion : Item
         Model = Resources.Load<Mesh>("Meshes/Items/normal_health_potion");
 
         Name = "Health Potion";
-        Description = "Potion qui régénère 30% de ton HP maximal. <br>Peut être utilisé en ou hors combat.";
+        Description = "Potion qui régénère 30% de ton HP maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.RARE;
         Category = Category.POTION;

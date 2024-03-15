@@ -50,7 +50,7 @@ public class InventoryUI : MenuHandler
 
         HeadUpDisplay.Instance?.Show();
 
-        this.gameObject.transform.position = new Vector3((Camera.main.scaledPixelWidth / 2), this.transform.position.y, this.transform.position.z);
+        this.gameObject.transform.localPosition = new Vector3(0, this.transform.localPosition.y, this.transform.localPosition.z);
         this.transform.gameObject.SetActive(false);
     }
 }

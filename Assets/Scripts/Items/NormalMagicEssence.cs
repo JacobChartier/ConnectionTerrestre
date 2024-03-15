@@ -10,7 +10,7 @@ public class NormalMagicEssence : Item
         Model = Resources.Load<Mesh>("Meshes/Items/normal_magic_essence");
 
         Name = "Magic Essence";
-        Description = "Essence qui régénère 30% de ton HP maximal. <br>Peut être utilisé en ou hors combat.";
+        Description = "Essence qui régénère 30% de ton HP maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.RARE;
         Category = Category.ESSENCE;
