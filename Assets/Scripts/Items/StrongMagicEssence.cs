@@ -10,7 +10,7 @@ public class StrongMagicEssence : Item
         Model = Resources.Load<Mesh>("Meshes/Items/strong_magic_essence");
 
         Name = "Magic Essence (Strong)";
-        Description = "Essence forte qui régénère 60% de ton MP maximal. <br>Peut être utilisé en ou hors combat.";
+        Description = "Essence forte qui régénère 60% de ton MP maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.ESSENCE;

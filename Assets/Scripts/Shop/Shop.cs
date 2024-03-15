@@ -1,3 +1,4 @@
+using Assets.Scripts.Interactables;
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,10 +9,6 @@ using UnityEngine.InputSystem;
 
 public class Shop : InteractableObjectBase
 {
-    [Header("Interaction label")]
-    [SerializeField] private GameObject label;
-    [SerializeField] private string text;
-
     public Inventory inventory;
 
     [Header("Shop")]
@@ -41,20 +38,17 @@ public class Shop : InteractableObjectBase
 
         CameraManager.Instance?.FreezeCamera(true);
 
-        inventoryMenu.gameObject.transform.position = new Vector3((Camera.main.scaledPixelWidth / 2) - 155, inventoryMenu.transform.position.y, inventoryMenu.transform.position.z);
+        inventoryMenu.gameObject.transform.localPosition = new Vector3(-160, inventoryMenu.transform.localPosition.y, inventoryMenu.transform.localPosition.z);
         inventoryMenu.GetComponent<InventoryUI>().Show();
     }
 
     public override void ShowContextLabel()
     {
-        //TMP_Text labelText = label.GetComponentInChildren<TMP_Text>();
-
-        //labelText.text = text;
-        //label.SetActive(true);
+        ContextLabelUI.Instance.ShowContextLabel("E", "Open Shop");
     }
 
-    public override void HideContextLabel()
-    {
-        //label.SetActive(false);
-    }
+    //public override void HideContextLabel()
+    //{
+    //    label.SetActive(false);
+    //}
 }

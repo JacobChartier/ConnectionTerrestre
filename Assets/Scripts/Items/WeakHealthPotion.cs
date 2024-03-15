@@ -11,7 +11,7 @@ public class WeakHealthPotion : Item
         Model = Resources.Load<Mesh>("Meshes/Items/weak_health_potion");
 
         Name = "Health Potion (Weak)";
-        Description = "Potion faible qui régénère 15% de ton HP maximal. <br>Peut être utilisé en ou hors combat.";
+        Description = "Potion faible qui régénère 15% de ton HP maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.COMMON;
         Category = Category.POTION;

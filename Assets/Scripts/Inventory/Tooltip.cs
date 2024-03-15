@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using TMPro;
@@ -15,6 +16,8 @@ public class Tooltip : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text content;
+
+    private const int MAX_TOOLTIP_WIDTH = 450;
 
     private void Awake()
     {
@@ -47,7 +50,13 @@ public class Tooltip : MonoBehaviour
         this.title.text = text;
 
         this.title.ForceMeshUpdate();
-        Vector2 backgroundSize = this.title.GetRenderedValues(false);
+
+        float sizeX = this.title.GetRenderedValues(false).x;
+        if (sizeX > MAX_TOOLTIP_WIDTH) {
+            sizeX = MAX_TOOLTIP_WIDTH;
+        }
+
+        Vector2 backgroundSize = new Vector2(sizeX, this.title.GetRenderedValues(false).y);
         Vector2 padding = new Vector2(10, 10);
 
         this.background.rectTransform.sizeDelta = backgroundSize + padding;
@@ -60,7 +69,14 @@ public class Tooltip : MonoBehaviour
         this.title.text = $"<b>{title}</b>\n{content}";
 
         this.title.ForceMeshUpdate();
-        Vector2 backgroundSize = this.title.GetRenderedValues(false);
+
+        float sizeX = this.title.GetRenderedValues(false).x;
+        if (sizeX > MAX_TOOLTIP_WIDTH)
+        {
+            sizeX = MAX_TOOLTIP_WIDTH;
+        }
+
+        Vector2 backgroundSize = new Vector2(sizeX, this.title.GetRenderedValues(false).y);
         Vector2 padding = new Vector2(10, 10);
 
         this.background.rectTransform.sizeDelta = backgroundSize + padding;
