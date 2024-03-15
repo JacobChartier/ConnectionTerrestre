@@ -5,6 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+public enum EnemyType
+{
+    DEFAULT
+}
+
 public class Enemy : InteractableObjectBase
 {
     [Header("Interaction label")]
