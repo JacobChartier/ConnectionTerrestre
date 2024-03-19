@@ -11,8 +11,15 @@ public class Enemy : InteractableObjectBase
     [SerializeField] private GameObject label;
     [SerializeField] private string text;
 
+    [Header("Info pour combat")]
+    [SerializeField] private EntityStats joueur;
+    [SerializeField] private Inventory inventaire;
+
     public override void Interact()
     {
+        BattleInfo.player = joueur;
+        BattleInfo.enemy = GetComponent<EntityStats>();
+        BattleInfo.inventory = inventaire;
         SceneManager.LoadScene(2);
     }
 

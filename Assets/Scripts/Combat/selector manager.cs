@@ -27,15 +27,18 @@ public class selectormanager : MonoBehaviour
     {
         img = GetComponent<Image>();
         gameObject.SetActive(false);
-        attaques = GameObject.Find("Joueur").GetComponent<EntityStats>().Attaques;
-        // DEBUG
-        attaques.Add(new("test1", 50, 0, 100, 10, true));
-        attaques.Add(new("test1.2", 50, 0, 100, 10, true));
-        attaques.Add(new("test2", 50, 0, 100, 20, false));
-        attaques.Add(new("test3", 50, 0, 100, 100, false));
+        attaques = BattleInfo.player.Attaques;
+        //// DEBUG
+        //if (attaques.Count == 0)
+        //{
+        //    attaques.Add(new("test1", 50, 0, 100, 10, true));
+        //    attaques.Add(new("test1.2", 50, 0, 100, 10, true));
+        //    attaques.Add(new("test2", 50, 0, 100, 20, false));
+        //    attaques.Add(new("test3", 50, 0, 100, 100, false));
+        //}
     }
 
-    public void Startup(StartupType type)
+    public bool Startup(StartupType type)
     {
         this.type = type;
         gameObject.SetActive(true);
@@ -60,7 +63,10 @@ public class selectormanager : MonoBehaviour
         txt_liste.text = "";
 
         if (type == StartupType.ITEM)
-            return;
+        {//DEBUG
+            gameObject.SetActive(false);
+            return false;
+        }
 
         foreach (InfoAttaque i in attaques)
         {
@@ -69,6 +75,14 @@ public class selectormanager : MonoBehaviour
                 txt_liste.text += $"- {i.nom}\n";
             }
         }
+
+        if (txt_liste.text == "")
+        {
+            gameObject.SetActive(false);
+            return false;
+        }
+
+        return true;
     }
 
     public void Close()

@@ -1,6 +1,7 @@
 using Assets.Scripts.Combat;
 using Cinemachine;
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class BattleManager : MonoBehaviour
     const int FRAMES_AVANT_ATTAQUE = 80;
 
     [SerializeField] GameObject prefab_text_dommages;
+    [SerializeField] GameObject prefab_text_xp;
     [Space]
     [SerializeField] CinemachineVirtualCamera camera_option_joueur;
     [SerializeField] CinemachineVirtualCamera camera_generale;
@@ -29,9 +31,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera camera_joueur_mort;
     [Space]
     [SerializeField] choixcombatmanager choix_combat;
-    [Space]
-    [SerializeField] EntityStats stats_joueur;
-    [SerializeField] EntityStats stats_monstre;
     [Space]
     [SerializeField] Transform joueur_transform;
     [SerializeField] Transform ennemi_transform;
@@ -74,14 +73,18 @@ public class BattleManager : MonoBehaviour
     public bool essence_guerrier = false;
     public bool essence_magicien = false;
     public bool bouclier_temporaire = false;
-    private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = false; // debug!!
+    private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = true; // debug!!
+    private Inventory inventory;
 
     private void Awake()
     {
         controls = new PlayersControls();
         controls.Player.Enable();
 
-        stats_monstre.Attaques.Add(new("test", 30, 15, 100, 1)); // debug
+        if (BattleInfo.enemy.Attaques.Count == 0)
+            BattleInfo.enemy.Attaques.Add(new("test", 30, 15, 100, 1));
+        if (BattleInfo.player.Attaques.Count == 0)
+            BattleInfo.player.Attaques.Add(new("test", 1, 1, 100, 100));
     }
 
     private void OnEnable()
@@ -109,6 +112,7 @@ public class BattleManager : MonoBehaviour
         camera_generale.Priority = 1;
         camera_option_joueur.Priority = 0;
         choix_combat.Active = false;
+        BattleInfo.enemy.Experience = 100;
     }
 
     // Update is called once per frame
@@ -160,7 +164,7 @@ public class BattleManager : MonoBehaviour
 
         if (timer == FRAMES_AVANT_ATTAQUE)
         {
-            attaque_monstre = stats_monstre.Attaques[UnityEngine.Random.Range(0, stats_monstre.Attaques.Count - 1)];
+            attaque_monstre = BattleInfo.enemy.Attaques[UnityEngine.Random.Range(0, BattleInfo.enemy.Attaques.Count - 1)];
             //donner anim à objet monstre
         }
 
@@ -182,7 +186,7 @@ public class BattleManager : MonoBehaviour
             {
                 Debug.Log("pendant");
                 // mettre l'anim joueur à attaque
-                float dommages = (attaque_monstre.damage + stats_monstre.Strength.Current - stats_monstre.Defense.Current) / 2.0f;
+                float dommages = (attaque_monstre.damage + BattleInfo.enemy.Strength.Current - BattleInfo.enemy.Defense.Current) / 2.0f;
 
                 FaireDegats(dommages, false);
                 stunlock = true;
@@ -192,7 +196,7 @@ public class BattleManager : MonoBehaviour
                 Debug.Log("après");
                 // mettre l'anim monstre à knockback
                 // mettre l'anim joueur à block
-                float dommages = (attaque_monstre.damage + stats_monstre.Strength.Current - stats_joueur.Defense.Current) / 2.0f;
+                float dommages = (attaque_monstre.damage + BattleInfo.enemy.Strength.Current - BattleInfo.player.Defense.Current) / 2.0f;
 
                 FaireDegats(dommages, true);
                 stunlock = true;
@@ -200,7 +204,7 @@ public class BattleManager : MonoBehaviour
         }
         else if (timer == attaque_monstre.contact_frame + FRAMES_AVANT_ATTAQUE)
         {
-            float dommages = attaque_monstre.damage + stats_monstre.Strength.Current - stats_joueur.Defense.Current;
+            float dommages = attaque_monstre.damage + BattleInfo.enemy.Strength.Current - BattleInfo.player.Defense.Current;
 
             FaireDegats(dommages, true);
         }
@@ -240,20 +244,20 @@ public class BattleManager : MonoBehaviour
 
         if (monstre_est_attaqueur)
         {
-            attaqueur = stats_monstre;
-            defendant = stats_joueur;
+            attaqueur = BattleInfo.enemy;
+            defendant = BattleInfo.player;
             position_defendant = joueur_transform;
         }
         else
         {
-            attaqueur = stats_joueur;
-            defendant = stats_monstre;
+            attaqueur = BattleInfo.player;
+            defendant = BattleInfo.enemy;
             position_defendant = ennemi_transform;
         }
 
         dommages = MathF.Round(dommages, MidpointRounding.AwayFromZero);
 
-        bhvdamagetextprefab damage_text = Instantiate(prefab_text_dommages, GameObject.Find("Canvas").GetComponent<Transform>()).GetComponent<bhvdamagetextprefab>();
+        bhvdamagetextprefab damage_text = Instantiate(prefab_text_dommages, GameObject.Find("Canvas").transform).GetComponent<bhvdamagetextprefab>();
         damage_text.Init(dommages, position_defendant);
 
         if (!defendant.Health.Remove(dommages))
@@ -296,20 +300,29 @@ public class BattleManager : MonoBehaviour
         switch (choix_combat.CheckRotate())
         {
             case 0:
+                if (!selector.Startup(selectormanager.StartupType.PHYSIQUE))
+                    break;
+
                 selection = true;
                 curseur.SetActive(true);
-                selector.Startup(selectormanager.StartupType.PHYSIQUE);
                 break;
+
             case 1:
+                if (!selector.Startup(selectormanager.StartupType.MAGIQUE))
+                    break;
+
                 selection = true;
                 curseur.SetActive(true);
-                selector.Startup(selectormanager.StartupType.MAGIQUE);
                 break;
+
             case 2:
+                if (!selector.Startup(selectormanager.StartupType.ITEM))
+                    break;
+
                 selection = true;
                 curseur.SetActive(true);
-                selector.Startup(selectormanager.StartupType.ITEM);
                 break;
+
             case 3:
                 fuir_fail = false;
                 evenement_actuel = Evenement.FUIR;
@@ -342,7 +355,7 @@ public class BattleManager : MonoBehaviour
 
         if (select_pressed)
         {
-            attaque_joueur = stats_joueur.Attaques[curseur.GetChoixSelection()];
+            attaque_joueur = BattleInfo.player.Attaques[curseur.GetChoixSelection()];
             selection = false;
             selector.Close();
             curseur.SetActive(false);
@@ -354,9 +367,9 @@ public class BattleManager : MonoBehaviour
     {
         if (timer >= 200)
         {
-            if (stats_joueur.AttackSpeed.Current > stats_monstre.AttackSpeed.Current ||
+            if (BattleInfo.player.AttackSpeed.Current > BattleInfo.enemy.AttackSpeed.Current ||
                 DEBUG_PLAYER_ALWAYS_GOES_FIRST ||
-                stats_joueur.AttackSpeed.Current == stats_monstre.AttackSpeed.Current && UnityEngine.Random.Range(0, 2) == 0) // si vitesses égales, premier tour = hasard
+                BattleInfo.player.AttackSpeed.Current == BattleInfo.enemy.AttackSpeed.Current && UnityEngine.Random.Range(0, 2) == 0) // si vitesses égales, premier tour = hasard
             {
                 evenement_actuel = Evenement.TOUR_JOUEUR;
 
@@ -486,7 +499,7 @@ public class BattleManager : MonoBehaviour
 
     private void CodeVictoireJoueur()
     {
-        const int LONGUEURE_ANIM_VICTOIRE_DEBUG = 300;
+        const int LONGUEURE_ANIM_VICTOIRE = 300;
 
         if (timer <= 1)
         {
@@ -495,9 +508,34 @@ public class BattleManager : MonoBehaviour
             camera_joueur_fuit.Priority = 1;
         }
 
-        if (timer > LONGUEURE_ANIM_VICTOIRE_DEBUG)
+        if (timer == 100 && BattleInfo.enemy.Experience > 0)
         {
+            timer--;
+            BattleInfo.player.Experience++;
+            BattleInfo.enemy.Experience--;
+
+            bhvxptextprefab xp = Instantiate(prefab_text_xp, GameObject.Find("Canvas").transform).GetComponent<bhvxptextprefab>();
+            xp.Init(false, joueur_transform);
+
+            if (BattleInfo.player.Experience >= Mathf.Pow(2.0f, BattleInfo.player.Niveau + 4))
+            {
+                Debug.Log(BattleInfo.player.Experience);
+                bhvxptextprefab lvl = Instantiate(prefab_text_xp, GameObject.Find("Canvas").transform).GetComponent<bhvxptextprefab>();
+                lvl.Init(true, joueur_transform);
+                LevelUpStats();
+            }
+        }
+
+        if (timer > LONGUEURE_ANIM_VICTOIRE)
+        {
+            BattleInfo.player = BattleInfo.player;
+            BattleInfo.inventory = inventory;
             SceneManager.LoadScene("World");
         }
+    }
+
+    private void LevelUpStats()
+    {
+        BattleInfo.player.Niveau++;
     }
 }

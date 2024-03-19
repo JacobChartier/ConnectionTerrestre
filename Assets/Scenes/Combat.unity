@@ -928,6 +928,8 @@ MonoBehaviour:
     _max: 0
     _min: 0
     _displayColor: 
+  Experience: 0
+  Niveau: 0
   Coins:
     _base: 10
     _current: 0
@@ -1020,7 +1022,7 @@ Transform:
   m_GameObject: {fileID: 544622767}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0000000032538652, y: 0.9819564, z: -0.18910751, w: -0.000000016895962}
-  m_LocalPosition: {x: 4, y: 7, z: 12}
+  m_LocalPosition: {x: 4, y: 7.92, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1506,13 +1508,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_text_dommages: {fileID: 6928846564581627075, guid: c2b2feec97a2a5d4a9616ba79f0c1dba, type: 3}
+  prefab_text_xp: {fileID: 6928846564581627075, guid: 5bb252ce187e1fb42bddfd2c6f26b78f, type: 3}
   camera_option_joueur: {fileID: 544622768}
   camera_generale: {fileID: 190915056}
   camera_joueur_fuit: {fileID: 1313006361}
   camera_joueur_mort: {fileID: 1853499070}
   choix_combat: {fileID: 396299198}
-  stats_joueur: {fileID: 1506973970}
-  stats_monstre: {fileID: 521000415}
   joueur_transform: {fileID: 1506973969}
   ennemi_transform: {fileID: 521000414}
   selector: {fileID: 1818923870}
@@ -1938,7 +1939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313006360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06356412, y: 0.70424396, z: -0.06356411, w: 0.7042441}
+  m_LocalRotation: {x: 0.031723656, y: 0.7063948, z: -0.031723656, w: 0.7063948}
   m_LocalPosition: {x: 0, y: 2.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2141,9 +2142,9 @@ Transform:
   m_GameObject: {fileID: 1506973965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 10, y: 1.92, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 567871908}
   m_Father: {fileID: 0}
@@ -2190,6 +2191,8 @@ MonoBehaviour:
     _max: 0
     _min: 0
     _displayColor: 
+  Experience: 0
+  Niveau: 0
   Coins:
     _base: 10
     _current: 0

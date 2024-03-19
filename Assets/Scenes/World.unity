@@ -10463,6 +10463,14 @@ PrefabInstance:
       propertyPath: label
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5586002685441042763, guid: 72d728215300c044e882de6667f9cb55, type: 3}
+      propertyPath: joueur
+      value: 
+      objectReference: {fileID: 394582509}
+    - target: {fileID: 5586002685441042763, guid: 72d728215300c044e882de6667f9cb55, type: 3}
+      propertyPath: inventaire
+      value: 
+      objectReference: {fileID: 396464456}
     - target: {fileID: 5882584736917987593, guid: 72d728215300c044e882de6667f9cb55, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -10816,6 +10824,10 @@ PrefabInstance:
     - target: {fileID: 1978427538206340195, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487998106283863161, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: DEBUG_enter_battle_on_C
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
