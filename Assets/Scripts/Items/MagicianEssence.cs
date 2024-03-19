@@ -10,7 +10,7 @@ public class MagicianEssence : Item
         Model = Resources.Load<Mesh>("Meshes/Items/normal_magician_essence");
 
         Name = "Magician Essence";
-        Description = "Les attaques magiques deviennent 30% plus fortes. <br>Ne peux pas être utilisé hors combat.";
+        Description = "Les attaques magiques deviennent 30% plus fortes. Ne peux pas être utilisé hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.ESSENCE;

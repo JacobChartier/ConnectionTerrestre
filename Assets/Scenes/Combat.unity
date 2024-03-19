@@ -789,8 +789,6 @@ GameObject:
   - component: {fileID: 521000413}
   - component: {fileID: 521000412}
   - component: {fileID: 521000411}
-  - component: {fileID: 521000416}
-  - component: {fileID: 521000415}
   m_Layer: 0
   m_Name: Ennemi
   m_TagString: Untagged
@@ -886,75 +884,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &521000415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521000410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1feae75b375b2f04eb6a3130a91de666, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health:
-    _base: 80
-    _current: 0
-    _max: 100
-    _min: 0
-    _displayColor: 
-  Defense:
-    _base: 10
-    _current: 0
-    _max: 100
-    _min: 0
-    _displayColor: 
-  MagicPoint:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
-  Strength:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
-  AttackSpeed:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
-  Coins:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
---- !u!114 &521000416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 521000410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c648e8d21afe33a458e7db45dbcf7823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onGainHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  onLostHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &544622767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,13 +1440,13 @@ MonoBehaviour:
   camera_joueur_fuit: {fileID: 1313006361}
   camera_joueur_mort: {fileID: 1853499070}
   choix_combat: {fileID: 396299198}
-  stats_joueur: {fileID: 1506973970}
-  stats_monstre: {fileID: 521000415}
   joueur_transform: {fileID: 1506973969}
   ennemi_transform: {fileID: 521000414}
   selector: {fileID: 1818923870}
   curseur: {fileID: 672483778}
   image_defaite: {fileID: 1151394840}
+  stats_joueur: {fileID: 0}
+  stats_monstre: {fileID: 0}
   essence_guerrier: 0
   essence_magicien: 0
   bouclier_temporaire: 0
@@ -1855,7 +1784,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current_stat: 0
-  stats_entite: {fileID: 1506973970}
   montrer_current_et_max: 1
   text_divisor: ' / '
 --- !u!114 &1229728994
@@ -1873,7 +1801,6 @@ MonoBehaviour:
   PERCENTAGE_LOW_HEALTH: 20
   INTERVALE_BATTEMENTS: 64
   effect_type: 1
-  player_stats: {fileID: 1506973970}
 --- !u!1 &1313006360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,7 +1964,6 @@ MonoBehaviour:
   PERCENTAGE_LOW_HEALTH: 20
   INTERVALE_BATTEMENTS: 64
   effect_type: 0
-  player_stats: {fileID: 1506973970}
 --- !u!1 &1506973965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2050,8 +1976,6 @@ GameObject:
   - component: {fileID: 1506973968}
   - component: {fileID: 1506973967}
   - component: {fileID: 1506973966}
-  - component: {fileID: 1506973971}
-  - component: {fileID: 1506973970}
   m_Layer: 0
   m_Name: Joueur
   m_TagString: Untagged
@@ -2148,75 +2072,6 @@ Transform:
   - {fileID: 567871908}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1506973970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506973965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1feae75b375b2f04eb6a3130a91de666, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health:
-    _base: 80
-    _current: 0
-    _max: 100
-    _min: 0
-    _displayColor: 
-  Defense:
-    _base: 10
-    _current: 0
-    _max: 100
-    _min: 0
-    _displayColor: 
-  MagicPoint:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
-  Strength:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
-  AttackSpeed:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
-  Coins:
-    _base: 10
-    _current: 0
-    _max: 0
-    _min: 0
-    _displayColor: 
---- !u!114 &1506973971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506973965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c648e8d21afe33a458e7db45dbcf7823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onGainHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  onLostHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1509874416
 GameObject:
   m_ObjectHideFlags: 3
@@ -3092,7 +2947,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   current_stat: 1
-  stats_entite: {fileID: 1506973970}
   montrer_current_et_max: 1
   text_divisor: ' / '
 --- !u!1 &1937978076

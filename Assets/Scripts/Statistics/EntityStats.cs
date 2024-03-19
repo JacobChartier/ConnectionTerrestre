@@ -28,11 +28,26 @@ public class EntityStats : MonoBehaviour
     public EntityStatistic MagicPoint = new EntityStatistic() { Base = 10, Min = 0 };
     public EntityStatistic Strength = new EntityStatistic() { Base = 10, Min = 0 };
     public EntityStatistic AttackSpeed = new EntityStatistic() { Base = 10, Min = 0 };
+    public EntityStatistic Experience = new EntityStatistic() { Base = 0, Min = 0 };
+    public EntityStatistic Level = new EntityStatistic() { Base = 1, Min = 1, Max = 100 };
+    public List<InfoAttaque> Attaques = new();
 
     [Header("Economy Statistics")]
     public EntityStatistic Coins = new EntityStatistic() { Base = 10, Min = 0 };
 
-    public List<InfoAttaque> Attaques = new();
+    [Header("Enemy stats")]
+    private int exp_worth;
+    public int ExpWorth
+    {
+        get => exp_worth;
+        set
+        {
+            if (value < 0)
+                value = 0;
+
+            exp_worth = value;
+        }
+    }
 
     private void OnEnable()
     {
