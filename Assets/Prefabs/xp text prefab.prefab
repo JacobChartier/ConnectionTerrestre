@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2337591692187460100}
   - component: {fileID: 1146789036261204892}
   - component: {fileID: 8604781430243800179}
-  - component: {fileID: 2392297222372983699}
+  - component: {fileID: 571973764742620164}
   m_Layer: 0
-  m_Name: damage text
+  m_Name: xp text prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[damage text]'
+  m_text: '[xp text]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -129,13 +129,13 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -158.34409, y: -126.67737, z: -160.7038, w: -118.02574}
+  m_margin: {x: -66.04593, y: -34.400818, z: -65.634155, w: -32.749725}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2392297222372983699
+--- !u!114 &571973764742620164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,6 +144,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6928846564581627075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9d0988fbe3511d4eb6d68ef0ac1b8bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 49cd02b5e9a63874d95d2aaeb344afdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
