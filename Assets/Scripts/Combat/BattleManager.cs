@@ -536,6 +536,13 @@ public class BattleManager : MonoBehaviour
 
     private void LevelUpStats()
     {
+        const float UPGRADE_SPEED = 1.1f;
+
         BattleInfo.player.Niveau++;
+        BattleInfo.player.Health.Max *= UPGRADE_SPEED;
+        BattleInfo.player.AttackSpeed.Max *= UPGRADE_SPEED;
+        BattleInfo.player.MagicPoint.Max *= UPGRADE_SPEED;
+        BattleInfo.player.Defense.Max *= UPGRADE_SPEED;
+        BattleInfo.player.Strength.Max *= UPGRADE_SPEED;
     }
 }

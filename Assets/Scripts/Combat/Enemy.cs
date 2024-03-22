@@ -15,12 +15,20 @@ public class Enemy : InteractableObjectBase
     [SerializeField] private EntityStats joueur;
     [SerializeField] private Inventory inventaire;
 
+
     public override void Interact()
     {
-        BattleInfo.player = joueur;
-        BattleInfo.enemy = GetComponent<EntityStats>();
-        BattleInfo.inventory = inventaire;
+        //BattleInfo.player = joueur;
+        //BattleInfo.enemy = GetComponent<EntityStats>();
+        //BattleInfo.inventory = inventaire;
         SceneManager.LoadScene(2);
+    }
+
+    private void FinDeCombat(Scene arg0, Scene arg1)
+    {
+        Debug.Log(1);
+        joueur = BattleInfo.player;
+        inventaire = BattleInfo.inventory;
     }
 
     public override void ShowContextLabel()
