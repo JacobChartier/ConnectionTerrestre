@@ -14,7 +14,7 @@ public class UITextBhv : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats_entite = GameObject.Find("BATTLE MANAGER").GetComponent<BattleManager>().stats_joueur;
+        stats_entite = BattleInfo.player;
         tmp = GetComponent<TMP_Text>();
     }
 

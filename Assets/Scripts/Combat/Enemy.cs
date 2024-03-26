@@ -16,25 +16,30 @@ public class Enemy : InteractableObjectBase
     [Header("Interaction label")]
     [SerializeField] private GameObject label;
     [SerializeField] private string text;
+    [SerializeField] private CapsuleCollider collision;
 
     [Header("Info pour combat")]
     [SerializeField] private EntityStats joueur;
     [SerializeField] private Inventory inventaire;
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.name != "Player")
+            return;
+
+        Interact();
+    }
 
     public override void Interact()
     {
-        //BattleInfo.player = joueur;
-        //BattleInfo.enemy = GetComponent<EntityStats>();
-        //BattleInfo.inventory = inventaire;
+        if (BattleInfo.player == null)
+        {
+            Debug.Log("player null");
+            BattleInfo.player = joueur;
+        }
+        BattleInfo.enemy = GetComponent<EntityStats>();
+        BattleInfo.inventory = inventaire;
         SceneManager.LoadScene(2);
-    }
-
-    private void FinDeCombat(Scene arg0, Scene arg1)
-    {
-        Debug.Log(1);
-        joueur = BattleInfo.player;
-        inventaire = BattleInfo.inventory;
     }
 
     public override void ShowContextLabel()

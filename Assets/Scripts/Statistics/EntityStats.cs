@@ -30,6 +30,7 @@ public class EntityStats : MonoBehaviour
     public EntityStatistic AttackSpeed = new EntityStatistic() { Base = 10, Min = 0, Max = 9999 };
     public int Experience = 0; // fucking stupide entitystatistics veux pas fucking fonctionner stupide fucking reste pris à 0 j'hais les struct c'est tellement fucking stupide laisse ca comme int je m'en fous fuck cette stupide structure à chier
     public int Niveau = 0;
+    public List<InfoAttaque> Attaques = new List<InfoAttaque>();
 
     [Header("Economy Statistics")]
     public EntityStatistic Coins = new EntityStatistic() { Base = 10, Min = 0 };

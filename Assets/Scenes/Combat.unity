@@ -789,6 +789,8 @@ GameObject:
   - component: {fileID: 521000413}
   - component: {fileID: 521000412}
   - component: {fileID: 521000411}
+  - component: {fileID: 521000415}
+  - component: {fileID: 521000416}
   m_Layer: 0
   m_Name: Ennemi
   m_TagString: Untagged
@@ -1370,6 +1372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 485711888}
+  max_choix: 0
 --- !u!1 &883836656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,8 +1543,6 @@ MonoBehaviour:
   selector: {fileID: 1818923870}
   curseur: {fileID: 672483778}
   image_defaite: {fileID: 1151394840}
-  stats_joueur: {fileID: 0}
-  stats_monstre: {fileID: 0}
   essence_guerrier: 0
   essence_magicien: 0
   bouclier_temporaire: 0
@@ -1991,7 +1992,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313006360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.031723656, y: 0.7063948, z: -0.031723656, w: 0.7063948}
+  m_LocalRotation: {x: 0.031723652, y: 0.7063948, z: -0.031723652, w: 0.7063948}
   m_LocalPosition: {x: 0, y: 2.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2102,6 +2103,8 @@ GameObject:
   - component: {fileID: 1506973968}
   - component: {fileID: 1506973967}
   - component: {fileID: 1506973966}
+  - component: {fileID: 1506973970}
+  - component: {fileID: 1506973971}
   m_Layer: 0
   m_Name: Joueur
   m_TagString: Untagged
@@ -2786,6 +2789,7 @@ MonoBehaviour:
   txt_titre: {fileID: 1855909063}
   txt_liste: {fileID: 485711888}
   img: {fileID: 1818923868}
+  fleche: {fileID: 672483778}
 --- !u!1 &1853499068
 GameObject:
   m_ObjectHideFlags: 0

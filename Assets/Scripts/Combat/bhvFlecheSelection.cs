@@ -14,15 +14,13 @@ public class bhvFlecheSelection : MonoBehaviour
     [SerializeField] TMP_Text text;
     int timer = 0;
     int choix = 0;
-    int max_choix = 0;
+    public int max_choix = 0;
     float og_x;
 
     // Start is called before the first frame update
     void Start()
     {
         og_x = transform.position.x;
-        // facon terrible de compter les lignes de texte, svp ne jamais me copier :(
-        max_choix = text.text.ToCharArray().Count(x => x == '\n');
         gameObject.SetActive(false);
     }
 

@@ -42,8 +42,6 @@ namespace Assets.Scripts.Combat
             if (block_window < 0)
                 block_window = 0;
 
-            this.block_window = block_window;
-
             if (anim_len < 0)
                 anim_len = 0;
 
@@ -64,8 +62,6 @@ namespace Assets.Scripts.Combat
 
             if (block_window < 0)
                 block_window = 0;
-
-            this.block_window = block_window;
 
             if (anim_len < 0)
                 anim_len = 0;
