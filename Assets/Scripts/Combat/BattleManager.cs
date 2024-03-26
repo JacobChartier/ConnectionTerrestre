@@ -552,7 +552,7 @@ public class BattleManager : MonoBehaviour
 
         if (timer > LONGUEURE_ANIM_VICTOIRE)
         {
-            BattleInfo.player = BattleInfo.player;
+            BattleInfo.player = BattleInfo.player;//fuck
             BattleInfo.inventory = inventory;
             SceneManager.LoadScene("World");
         }

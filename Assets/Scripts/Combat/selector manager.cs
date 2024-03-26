@@ -19,7 +19,7 @@ public class selectormanager : MonoBehaviour
     [SerializeField] Image img;
 
     private StartupType type;
-    private int selection = 0;
+    private int selection;
     private List<InfoAttaque> attaques;
 
     // Start is called before the first frame update
