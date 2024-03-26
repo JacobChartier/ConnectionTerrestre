@@ -25,6 +25,8 @@ public class InputManager : MonoBehaviour
 
     public static Vector2 mouvementInput;
     public static Vector2 rotationInput;
+    public static float scrollWheelInput;
+    [field: ReadOnly] public float scrollWheelInput_t;
 
     public static MouseButton mouseButtonInput;
 
@@ -43,6 +45,10 @@ public class InputManager : MonoBehaviour
         shopMenu = FindObjectOfType<ShopUI>(true).gameObject;
     }
 
+    private void Update()
+    {
+    }
+
     private void OnEnable()
     {
         controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>(); 
@@ -50,6 +56,12 @@ public class InputManager : MonoBehaviour
 
         controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
         controls.Player.Rotation.canceled += ctx => rotationInput = ctx.ReadValue<Vector2>();
+
+        controls.Player.HotbarSelection.performed += ctx => scrollWheelInput = ctx.ReadValue<float>();
+        controls.Player.HotbarSelection.canceled += ctx => scrollWheelInput = ctx.ReadValue<float>();
+
+        controls.Player.HotbarSelection.performed += ctx => scrollWheelInput_t = ctx.ReadValue<float>();
+        controls.Player.HotbarSelection.canceled += ctx => scrollWheelInput_t = ctx.ReadValue<float>();
 
         controls.Player.OpenInventory.performed += OpenInventory;
 

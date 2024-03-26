@@ -8,33 +8,24 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject prefab;
 
     public Slot[] slots;
-    public List<Item> items;
+    public List<Item> itemsOLD;
     public Item[] unauthorizedItems;
+
+    public static Dictionary<Item, int> items = new();
+    public static event Action<Item, int> OnChange;
 
     private void Awake()
     {
         prefab = Resources.Load<GameObject>("Prefabs/Items/inventory_item");
     }
 
-    private void OnEnable()
+    public bool Add(Item item, int amount = 1)
     {
-        //foreach (Slot slot in slots)
-        //{
-        //    slot.GetComponentInChildren<Draggable>().InitialiseItem();
-        //}
-    }
+        if (items.TryAdd(item, amount))
+            items[item] += amount;
 
-    private void Update()
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            //items[i].Slot = slots[i];
-            //items[i].Item = slots[i].GetItemInSlot();
-        }
-    }
+        OnChange?.Invoke(item, amount);
 
-    public bool Add(Item item)
-    {
         // Stacking
         for (int i = 0; i < slots.Length; i++)
         {
@@ -59,13 +50,26 @@ public class Inventory : MonoBehaviour
             if (itemInSlot == null)
             {
                 Spawn(item, slot);
-                items[i] = item;
+                itemsOLD[i] = item;
 
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void Remove(Item item, int amount = 1)
+    {
+        if (!items.ContainsKey(item)) 
+            return;
+
+        items[item] -= amount;
+
+        if (items[item] < 1)
+            items.Remove(item);
+
+        OnChange?.Invoke(item, amount);
     }
 
     public void Spawn(Item item, Slot slot)

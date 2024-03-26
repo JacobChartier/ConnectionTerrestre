@@ -46,7 +46,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (originalSlot.isEnable)
         {
             parentAfterDrag = gameObject.transform.parent;
-            transform.SetParent(transform.root);
+            transform.SetParent(transform.root.root);
             transform.SetAsLastSibling();
 
             GetComponentInChildren<Image>().raycastTarget = false;

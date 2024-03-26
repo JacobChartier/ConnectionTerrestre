@@ -116,6 +116,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar Selection"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""d2cbd824-b4b3-4cf5-92a7-9b4dd6a58120"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -316,6 +325,17 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""232b807a-8dad-419e-8ef1-4d0bec862ff9"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hotbar Selection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -402,6 +422,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
         m_Player_CloseMenu = m_Player.FindAction("Close Menu", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_HotbarSelection = m_Player.FindAction("Hotbar Selection", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_SplitStackInHalf = m_Menus.FindAction("SplitStackInHalf", throwIfNotFound: true);
@@ -478,6 +499,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_OpenInventory;
     private readonly InputAction m_Player_CloseMenu;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_HotbarSelection;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
@@ -492,6 +514,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
         public InputAction @CloseMenu => m_Wrapper.m_Player_CloseMenu;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @HotbarSelection => m_Wrapper.m_Player_HotbarSelection;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -531,6 +554,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @HotbarSelection.started += instance.OnHotbarSelection;
+            @HotbarSelection.performed += instance.OnHotbarSelection;
+            @HotbarSelection.canceled += instance.OnHotbarSelection;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -565,6 +591,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @HotbarSelection.started -= instance.OnHotbarSelection;
+            @HotbarSelection.performed -= instance.OnHotbarSelection;
+            @HotbarSelection.canceled -= instance.OnHotbarSelection;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -656,6 +685,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnOpenInventory(InputAction.CallbackContext context);
         void OnCloseMenu(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnHotbarSelection(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {
