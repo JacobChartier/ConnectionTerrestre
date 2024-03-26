@@ -16,11 +16,13 @@ public class bhvFlecheSelection : MonoBehaviour
     int choix = 0;
     public int max_choix = 0;
     float og_x;
+    float og_y;
 
     // Start is called before the first frame update
     void Start()
     {
         og_x = transform.position.x;
+        og_y = transform.position.y;
         gameObject.SetActive(false);
     }
 
@@ -61,6 +63,12 @@ public class bhvFlecheSelection : MonoBehaviour
 
     public void SetActive(bool value)
     {
+        if (value is true)
+        {
+            choix = 0;
+            transform.position = new Vector3(og_x, og_y);
+        }
+
         gameObject.SetActive(value);
     }
 }

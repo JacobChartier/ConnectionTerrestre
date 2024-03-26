@@ -82,6 +82,7 @@ public class BattleManager : MonoBehaviour
         {
             Debug.LogError("battleinfo player null");
             BattleInfo.player = new EntityStats();
+            BattleInfo.player.Health.Add(100);
         }
 
         if (BattleInfo.enemy == null)
@@ -93,10 +94,10 @@ public class BattleManager : MonoBehaviour
         controls = new PlayersControls();
         controls.Player.Enable();
 
-        if (BattleInfo.enemy.Attaques.Count == 0)
-            BattleInfo.enemy.Attaques.Add(new("test", 30, 15, 100, 1));
         if (BattleInfo.player.Attaques.Count == 0)
-            BattleInfo.player.Attaques.Add(new("test", 1, 1, 100, 100));
+            BattleInfo.player.Attaques.Add(new("Coup de poing", 15, 30, 100));
+        if (BattleInfo.enemy.Attaques.Count == 0)
+            BattleInfo.enemy.Attaques.Add(new(1, 1, 100, 10));
 
     }
 
@@ -284,8 +285,10 @@ public class BattleManager : MonoBehaviour
             if (monstre_est_attaqueur)
             {
                 // todo: feuille vitale
-                if (false)
+                if (BattleInfo.inventory.items.Find(x => x.Name == "Feuille vitale") != null)
                 {
+                    BattleInfo.player.Health.Current = (BattleInfo.player.Health.Max / 4);
+                    BattleInfo.inventory.items.Remove(BattleInfo.inventory.items.Find(x => x.Name == "Feuille vitale"));
                     return;
                 }
                 evenement_actuel = Evenement.DEFAITE_JOUEUR;
@@ -382,23 +385,23 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private InfoAttaque TrouverAttaque(int index, bool magique)
-    {
-        int counter = 0;
+    //private InfoAttaque TrouverAttaque(int index, bool magique)
+    //{
+    //    int counter = 0;
 
-        foreach (InfoAttaque i in BattleInfo.player.Attaques)
-        {
-            if (i.magique == magique)
-            {
-                if (counter == index)
-                    return i;
+    //    foreach (InfoAttaque i in BattleInfo.player.Attaques)
+    //    {
+    //        if (i.magique == magique)
+    //        {
+    //            if (counter == index)
+    //                return i;
 
-                counter++;
-            }
-        }
+    //            counter++;
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     private void CodeIntro()
     {
@@ -442,7 +445,6 @@ public class BattleManager : MonoBehaviour
 
         if (fuir_fail)
         {
-            // todo: ajouter animation fail au modèle joueur et le faire
 
             if (timer < 60) // mettre animation ici. tomber à terre peut-être??
                 return;

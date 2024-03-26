@@ -25,9 +25,9 @@ public class EntityStats : MonoBehaviour
     [Header("Combat Statistics")]
     public EntityStatistic Health = new EntityStatistic() { Base = 80, Min = 0, Max = 100 };
     public EntityStatistic Defense = new EntityStatistic() { Base = 10, Min = 0, Max = 100 };
-    public EntityStatistic MagicPoint = new EntityStatistic() { Base = 10, Min = 0, Max = 9999 };
-    public EntityStatistic Strength = new EntityStatistic() { Base = 10, Min = 0, Max = 9999 };
-    public EntityStatistic AttackSpeed = new EntityStatistic() { Base = 10, Min = 0, Max = 9999 };
+    public EntityStatistic MagicPoint = new EntityStatistic() { Base = 10, Min = 0, Max = 10 };
+    public EntityStatistic Strength = new EntityStatistic() { Base = 10, Min = 0, Max = 10 };
+    public EntityStatistic AttackSpeed = new EntityStatistic() { Base = 10, Min = 0, Max = 10 };
     public int Experience = 0; // fucking stupide entitystatistics veux pas fucking fonctionner stupide fucking reste pris à 0 j'hais les struct c'est tellement fucking stupide laisse ca comme int je m'en fous fuck cette stupide structure à chier
     public int Niveau = 0;
     public List<InfoAttaque> Attaques = new List<InfoAttaque>();
@@ -74,7 +74,7 @@ public struct EntityStatistic
     [HideInInspector] public float Current
     {
         get => _current;
-        private set
+        set
         {
             if (value > Max) _current = Max;
             if (value < Min) _current = Min;
@@ -106,7 +106,7 @@ public struct EntityStatistic
         set => _displayColor = value;
     }
 
-    public bool Add(float amount)
+    public bool Add(float amount)// ne fonctionne pas :)
     {
         if ((Current + amount) <= Max)
         {

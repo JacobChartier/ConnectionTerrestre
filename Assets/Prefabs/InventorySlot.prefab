@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8627451}
+  m_Color: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0.8627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -117,3 +117,5 @@ MonoBehaviour:
   isTooltipVisible: 1
   isDescriptionVisible: 1
   isOccupied: 0
+  default_color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  highlight_color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}

@@ -3,7 +3,7 @@
 namespace Assets.Scripts.Combat
 {
     // infos pour chaque attaque individuelle
-    public class InfoAttaque
+    public struct InfoAttaque
     {
         // nom de l'attaque. en ce moment, ceci est seulement important pour les attaques du joueur
         public string nom;
@@ -39,8 +39,7 @@ namespace Assets.Scripts.Combat
 
             this.contact_frame = parry_frame;
 
-            if (block_window < 0)
-                block_window = 0;
+            block_window = 0;
 
             if (anim_len < 0)
                 anim_len = 0;
@@ -60,8 +59,8 @@ namespace Assets.Scripts.Combat
 
             this.contact_frame = parry_frame;
 
-            if (block_window < 0)
-                block_window = 0;
+            block_window = 0;
+            cout_magique = 0;
 
             if (anim_len < 0)
                 anim_len = 0;
@@ -90,6 +89,9 @@ namespace Assets.Scripts.Combat
 
             this.anim_len = anim_len;
             this.damage = damage;
+            nom = "Attaque ennemi";
+            magique = false;
+            cout_magique = 0;
         }
     }
 

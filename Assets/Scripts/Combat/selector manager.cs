@@ -65,30 +65,28 @@ public class selectormanager : MonoBehaviour
         if (type == StartupType.ITEM)
         {
             int counter = 0;
-            fleche.max_choix = 8;
+            fleche.max_choix = BattleInfo.inventory.items.Count;
             foreach (Item i in BattleInfo.inventory.items)
             {
                 txt_liste.text += $"- {i.Name}\n";
                 if (++counter >= 8)
                     break;
             }
-            return true;
-
-            gameObject.SetActive(false);
-            return false;
         }
-
-        foreach (InfoAttaque i in BattleInfo.player.Attaques)
+        else
         {
-            if (i.magique && type == StartupType.MAGIQUE)
+            foreach (InfoAttaque i in BattleInfo.player.Attaques)
             {
-                txt_liste.text += $"- {i.nom}: {i.cout_magique} MP\n";
-                fleche.max_choix++;
-            }
-            else if (!i.magique && type == StartupType.PHYSIQUE)
-            {
-                txt_liste.text += $"- {i.nom}\n";
-                fleche.max_choix++;
+                if (i.magique && type == StartupType.MAGIQUE)
+                {
+                    txt_liste.text += $"- {i.nom}: {i.cout_magique} MP\n";
+                    fleche.max_choix++;
+                }
+                else if (!i.magique && type == StartupType.PHYSIQUE)
+                {
+                    txt_liste.text += $"- {i.nom}\n";
+                    fleche.max_choix++;
+                }
             }
         }
 

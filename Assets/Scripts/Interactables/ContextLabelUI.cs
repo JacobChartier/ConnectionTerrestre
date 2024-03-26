@@ -13,6 +13,7 @@ namespace Assets.Scripts.Interactables
         private void Awake()
         {
             Instance = this;
+            gameObject.SetActive(false);
         }
 
         private void Update()
