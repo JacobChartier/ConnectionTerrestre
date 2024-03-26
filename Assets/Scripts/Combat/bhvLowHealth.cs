@@ -26,7 +26,7 @@ public class bhvLowHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player_stats = GameObject.Find("BATTLE MANAGER").GetComponent<BattleManager>().stats_joueur;
+        player_stats = BattleInfo.player;
         tmp = GetComponent<TMP_Text>();
         img = GetComponent<Image>();
     }

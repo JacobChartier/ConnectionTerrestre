@@ -17,17 +17,16 @@ public class selectormanager : MonoBehaviour
     [SerializeField] TMP_Text txt_titre;
     [SerializeField] TMP_Text txt_liste;
     [SerializeField] Image img;
+    [SerializeField] bhvFlecheSelection fleche;
 
     private StartupType type;
     private int selection;
-    private List<InfoAttaque> attaques;
 
     // Start is called before the first frame update
     void Start()
     {
         img = GetComponent<Image>();
         gameObject.SetActive(false);
-        attaques = BattleInfo.player.Attaques;
         //// DEBUG
         //if (attaques.Count == 0)
         //{
@@ -61,22 +60,35 @@ public class selectormanager : MonoBehaviour
         }
 
         txt_liste.text = "";
+        fleche.max_choix = -1;
 
         if (type == StartupType.ITEM)
-        {//DEBUG
+        {
+            int counter = 0;
+            fleche.max_choix = 8;
+            foreach (Item i in BattleInfo.inventory.items)
+            {
+                txt_liste.text += $"- {i.Name}\n";
+                if (++counter >= 8)
+                    break;
+            }
+            return true;
+
             gameObject.SetActive(false);
             return false;
         }
 
-        foreach (InfoAttaque i in attaques)
+        foreach (InfoAttaque i in BattleInfo.player.Attaques)
         {
             if (i.magique && type == StartupType.MAGIQUE)
             {
                 txt_liste.text += $"- {i.nom}: {i.cout_magique} MP\n";
+                fleche.max_choix++;
             }
             else if (!i.magique && type == StartupType.PHYSIQUE)
             {
                 txt_liste.text += $"- {i.nom}\n";
+                fleche.max_choix++;
             }
         }
 

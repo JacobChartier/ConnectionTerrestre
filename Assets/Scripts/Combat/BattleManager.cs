@@ -49,8 +49,6 @@ public class BattleManager : MonoBehaviour
     public static bool down_pressed = false;
     public static bool down_held = false;
     public static bool up_held = false;
-    public EntityStats stats_joueur;
-    public EntityStats stats_monstre;
 
     Evenement evenement_actuel
     {
@@ -75,11 +73,23 @@ public class BattleManager : MonoBehaviour
     public bool essence_guerrier = false;
     public bool essence_magicien = false;
     public bool bouclier_temporaire = false;
-    private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = true; // debug!!
+    private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = false;
     private Inventory inventory;
 
     private void Awake()
     {
+        if (BattleInfo.player == null)
+        {
+            Debug.LogError("battleinfo player null");
+            BattleInfo.player = new EntityStats();
+        }
+
+        if (BattleInfo.enemy == null)
+        {
+            Debug.LogError("battleinfo enemy null");
+            BattleInfo.enemy = new EntityStats();
+        }
+
         controls = new PlayersControls();
         controls.Player.Enable();
 
@@ -87,6 +97,7 @@ public class BattleManager : MonoBehaviour
             BattleInfo.enemy.Attaques.Add(new("test", 30, 15, 100, 1));
         if (BattleInfo.player.Attaques.Count == 0)
             BattleInfo.player.Attaques.Add(new("test", 1, 1, 100, 100));
+
     }
 
     private void OnEnable()
@@ -110,12 +121,14 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stats_monstre.Attaques.Add(new(30, 15, 100, 1)); // debug
+        if (BattleInfo.enemy.Attaques.Count == 0)
+            BattleInfo.enemy.Attaques.Add(new(30, 15, 100, 1));
         evenement_actuel = Evenement.INTRO;
         camera_generale.Priority = 1;
         camera_option_joueur.Priority = 0;
         choix_combat.Active = false;
-        BattleInfo.enemy.Experience = 100;
+        if (BattleInfo.enemy.Experience < 10)
+            BattleInfo.enemy.Experience = 100;
     }
 
     // Update is called once per frame
@@ -373,7 +386,7 @@ public class BattleManager : MonoBehaviour
     {
         int counter = 0;
 
-        foreach (InfoAttaque i in stats_joueur.Attaques)
+        foreach (InfoAttaque i in BattleInfo.player.Attaques)
         {
             if (i.magique == magique)
             {
@@ -552,7 +565,6 @@ public class BattleManager : MonoBehaviour
 
         if (timer > LONGUEURE_ANIM_VICTOIRE)
         {
-            BattleInfo.player = BattleInfo.player;//fuck
             BattleInfo.inventory = inventory;
             SceneManager.LoadScene("World");
         }
