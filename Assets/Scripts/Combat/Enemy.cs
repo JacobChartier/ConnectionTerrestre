@@ -32,11 +32,14 @@ public class Enemy : InteractableObjectBase
 
     public override void Interact()
     {
+        GameManager.Instance.playerES.Health = GameObject.Find("Player").GetComponent<EntityStats>().Health;
+        GameManager.Instance.enemyES = GetComponent<EntityStats>();
+
         if (BattleInfo.player == null)
         {
             Debug.Log("player null");
-            BattleInfo.player = joueur;
         }
+
         BattleInfo.enemy = GetComponent<EntityStats>();
         BattleInfo.inventory = inventaire;
         SceneManager.LoadScene(2);

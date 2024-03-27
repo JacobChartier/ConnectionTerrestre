@@ -8,10 +8,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject prefab;
 
     public Slot[] slots;
-    public List<Item> itemsOLD;
+    public List<Item> items;
     public Item[] unauthorizedItems;
 
-    public static Dictionary<Item, int> items = new();
+    public static Dictionary<Item, int> itemsDictionary = new();
     public static event Action<Item, int> OnChange;
 
     private void Awake()
@@ -21,8 +21,8 @@ public class Inventory : MonoBehaviour
 
     public bool Add(Item item, int amount = 1)
     {
-        if (items.TryAdd(item, amount))
-            items[item] += amount;
+        if (itemsDictionary.TryAdd(item, amount))
+            itemsDictionary[item] += amount;
 
         OnChange?.Invoke(item, amount);
 
@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
             if (itemInSlot == null)
             {
                 Spawn(item, slot);
-                itemsOLD[i] = item;
+                items[i] = item;
 
                 return true;
             }
@@ -61,13 +61,13 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item, int amount = 1)
     {
-        if (!items.ContainsKey(item)) 
+        if (!itemsDictionary.ContainsKey(item)) 
             return;
 
-        items[item] -= amount;
+        itemsDictionary[item] -= amount;
 
-        if (items[item] < 1)
-            items.Remove(item);
+        if (itemsDictionary[item] < 1)
+            itemsDictionary.Remove(item);
 
         OnChange?.Invoke(item, amount);
     }

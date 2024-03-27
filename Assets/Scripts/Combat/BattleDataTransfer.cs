@@ -13,6 +13,7 @@ public class BattleDataTransfer : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
         instance.player_stats = player_stats;
         instance.enemy_stats = enemy_stats;
         instance.inventory = inventory;

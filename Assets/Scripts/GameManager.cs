@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    void Start()
+    public EntityStats playerES = new();
+    public EntityStats enemyES;
+
+    void Awake()
     {
         if (Instance == null)
             Instance = this;
