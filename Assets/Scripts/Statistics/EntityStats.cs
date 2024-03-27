@@ -35,19 +35,19 @@ public class EntityStats : MonoBehaviour
     [Header("Economy Statistics")]
     public EntityStatistic Coins = new EntityStatistic() { Base = 10, Min = 0 };
 
-    [Header("Enemy stats")]
-    private int exp_worth;
-    public int ExpWorth
-    {
-        get => exp_worth;
-        set
-        {
-            if (value < 0)
-                value = 0;
+    //[Header("Enemy stats")]
+    //private int exp_worth;
+    //public int ExpWorth
+    //{
+    //    get => exp_worth;
+    //    set
+    //    {
+    //        if (value < 0)
+    //            value = 0;
 
-            exp_worth = value;
-        }
-    }
+    //        exp_worth = value;
+    //    }
+    //}
 
     private void OnEnable()
     {

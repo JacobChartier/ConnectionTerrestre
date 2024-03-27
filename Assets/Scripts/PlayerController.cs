@@ -7,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    private const float LIM_XZ = 450;
+
     [SerializeField] private float speed = 1;
     Rigidbody rb;
 
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         MovePlayerRelativeToCamera();
+        FailSafe();
     }
 
     private void Move()
@@ -49,5 +52,36 @@ public class PlayerController : MonoBehaviour
 
         Vector3 cameraRelativeMovement = forwardRelativeToVerticalInput + rightRelativeToHorizontalInput;
         this.transform.Translate((cameraRelativeMovement * speed) * Time.deltaTime, Space.World);
+    }
+
+    private void FailSafe()
+    {
+        if (transform.position.y < -10)
+        {
+            //RaycastHit hit; //TODO: ça
+            //if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            //{
+            //    transform.position = hit.point + Vector3.up * 3;
+            //}
+            transform.position += Vector3.up * 100;
+        }
+
+        if (transform.position.x > LIM_XZ)
+        {
+            transform.position = new Vector3(LIM_XZ, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x < -LIM_XZ)
+        {
+            transform.position = new Vector3(-LIM_XZ, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.z > LIM_XZ)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, LIM_XZ);
+        }
+        else if (transform.position.z < -LIM_XZ)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -LIM_XZ);
+        }
     }
 }
