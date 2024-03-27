@@ -15,9 +15,12 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public bool isOccupied = false;
 
-    private void Update()
+    [SerializeField] Color default_color;
+    [SerializeField] Color highlight_color;
+
+    public void Start()
     {
-        
+        GetComponent<Image>().color = default_color;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -60,7 +63,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        this.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0.2f, 0.2f, 0.2f, 0.8627451f);
+        this.gameObject.GetComponent<UnityEngine.UI.Image>().color = highlight_color;
 
         if (isTooltipVisible && isOccupied)
         {
@@ -97,7 +100,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        this.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.8627451f);
+        this.gameObject.GetComponent<UnityEngine.UI.Image>().color = default_color;
 
         if (isTooltipVisible)
         {
