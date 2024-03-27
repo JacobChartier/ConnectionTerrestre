@@ -2136,8 +2136,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278829850}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2408371, y: 2.6280427, z: -1.7305536}
+  m_LocalRotation: {x: 0.16976704, y: 0.47122526, z: -0.09421611, w: 0.86037743}
+  m_LocalPosition: {x: 4.66, y: 2.87, z: -4.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3899,7 +3899,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -8571,7 +8571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4332867536944074726, guid: 7b2146ec22ddef040b499562087cbf62, type: 3}
       propertyPath: m_Color.r
-      value: 0.135
+      value: 0.019607844
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13238,6 +13238,26 @@ PrefabInstance:
     - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
       propertyPath: MagicPoint._base
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: Coins._displayColor
+      value: '#FFD700'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: Health._displayColor
+      value: '#FF2E2E'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429218412013428200, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: Defense._displayColor
+      value: '#213BFF'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487998106283863161, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: InteractionRegion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487998106283863161, guid: 01cae8ce2b3a8204aaacd5535758feab, type: 3}
+      propertyPath: DEBUG_enter_battle_on_C
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
