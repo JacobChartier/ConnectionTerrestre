@@ -9,7 +9,15 @@ public class BattleDataTransfer : MonoBehaviour
     [SerializeField] public EntityStats enemy_stats;
     [SerializeField] public Inventory inventory;
 
-    public static BattleDataTransfer instance = new BattleDataTransfer();
+    public static BattleDataTransfer instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {

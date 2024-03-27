@@ -37,8 +37,12 @@ public class Enemy : InteractableObjectBase
             Debug.Log("player null");
             BattleInfo.player = joueur;
         }
+        if (BattleInfo.inventory == null)
+        {
+            Debug.Log("inventaire null");
+            BattleInfo.inventory = inventaire;
+        }
         BattleInfo.enemy = GetComponent<EntityStats>();
-        BattleInfo.inventory = inventaire;
         SceneManager.LoadScene(2);
     }
 

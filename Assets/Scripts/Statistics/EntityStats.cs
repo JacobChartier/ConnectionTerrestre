@@ -57,6 +57,11 @@ public class EntityStats : MonoBehaviour
         Strength.Reset();
         AttackSpeed.Reset();
         Coins.Reset();
+
+        if (gameObject.name == "Player")
+        {
+            DontDestroyOnLoad(this);
+        }
     }
 }
 

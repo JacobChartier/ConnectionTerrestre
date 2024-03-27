@@ -38,6 +38,9 @@ namespace Assets.Scripts.Interactables
 
         public void HideContextLabel()
         {
+            if (this == null) // quand l'objet joueur est apporté dans le monde du combat, il essaye d'appeler cette fonction,
+                return;       // ce qui génère une erreure à chaque FixedUpdate. Ceci enlève cette erreure.
+
             gameObject.SetActive(false);
         }
     }
