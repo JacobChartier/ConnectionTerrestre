@@ -49,16 +49,16 @@ public abstract class Item : MonoBehaviour, IItemBase
         if (Icon == null)
         {
             Debug.LogWarning($"Unable to load the texture from <b>{this.GetType().Name} ({typeof(Item)})</b>.", Icon);
-            Icon = Resources.Load<Sprite>("Sprites/MissingTexture");
+            Icon = Resources.Load<Sprite>("Sprites/missing_sprite");
         }
 
-        this.transform.GetComponentInChildren<Image>().sprite = Icon;
+        transform.GetComponentInChildren<Image>().sprite = Icon;
 
         // Check is the mesh has loaded.
         if (Model == null)
         {
             Debug.LogWarning($"Unable to load the mesh from <b>{this.GetType().Name} ({typeof(Item)})</b>.", Model);
-            Model = Resources.Load<Mesh>("Mesh/MissingMesh");
+            Model = Resources.Load<Mesh>("Mesh/missing_mesh");
         }
     }
 

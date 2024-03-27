@@ -11,30 +11,21 @@ public class Inventory : MonoBehaviour
     public List<Item> items;
     public Item[] unauthorizedItems;
 
+    public static Dictionary<Item, int> itemsDictionary = new();
+    public static event Action<Item, int> OnChange;
+
     private void Awake()
     {
         prefab = Resources.Load<GameObject>("Prefabs/Items/inventory_item");
     }
 
-    private void OnEnable()
+    public bool Add(Item item, int amount = 1)
     {
-        //foreach (Slot slot in slots)
-        //{
-        //    slot.GetComponentInChildren<Draggable>().InitialiseItem();
-        //}
-    }
+        if (itemsDictionary.TryAdd(item, amount))
+            itemsDictionary[item] += amount;
 
-    private void Update()
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            //items[i].Slot = slots[i];
-            //items[i].Item = slots[i].GetItemInSlot();
-        }
-    }
+        OnChange?.Invoke(item, amount);
 
-    public bool Add(Item item)
-    {
         // Stacking
         for (int i = 0; i < slots.Length; i++)
         {
@@ -66,6 +57,19 @@ public class Inventory : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Remove(Item item, int amount = 1)
+    {
+        if (!itemsDictionary.ContainsKey(item)) 
+            return;
+
+        itemsDictionary[item] -= amount;
+
+        if (itemsDictionary[item] < 1)
+            itemsDictionary.Remove(item);
+
+        OnChange?.Invoke(item, amount);
     }
 
     public void Spawn(Item item, Slot slot)

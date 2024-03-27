@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using Assets.Scripts.Combat;
 
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Health)), Serializable]
 public class EntityStats : MonoBehaviour
 {
     public enum StatType
