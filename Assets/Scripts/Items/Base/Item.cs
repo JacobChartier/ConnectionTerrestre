@@ -72,8 +72,6 @@ public abstract class Item : MonoBehaviour, IItemBase
     /* Everything below this will be reworked and might not be working in the future. DO NOT USE */
     [Header("Will be reworked")]
 
-    // TODO: Change the tooltip generation system to only use one variable
-
     // TODO: Make a new price generator
     [HideInInspector] public int price;
 

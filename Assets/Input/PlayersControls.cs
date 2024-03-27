@@ -125,6 +125,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseSelectedItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a6ebc29-5e1c-48c3-a11e-cad5c52e0490"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -336,6 +345,17 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""Hotbar Selection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d883f56a-3efe-4e48-9c78-a5fbb1fefb78"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseSelectedItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -423,6 +443,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_CloseMenu = m_Player.FindAction("Close Menu", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_HotbarSelection = m_Player.FindAction("Hotbar Selection", throwIfNotFound: true);
+        m_Player_UseSelectedItem = m_Player.FindAction("UseSelectedItem", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_SplitStackInHalf = m_Menus.FindAction("SplitStackInHalf", throwIfNotFound: true);
@@ -500,6 +521,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CloseMenu;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_HotbarSelection;
+    private readonly InputAction m_Player_UseSelectedItem;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
@@ -515,6 +537,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @CloseMenu => m_Wrapper.m_Player_CloseMenu;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @HotbarSelection => m_Wrapper.m_Player_HotbarSelection;
+        public InputAction @UseSelectedItem => m_Wrapper.m_Player_UseSelectedItem;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -557,6 +580,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @HotbarSelection.started += instance.OnHotbarSelection;
             @HotbarSelection.performed += instance.OnHotbarSelection;
             @HotbarSelection.canceled += instance.OnHotbarSelection;
+            @UseSelectedItem.started += instance.OnUseSelectedItem;
+            @UseSelectedItem.performed += instance.OnUseSelectedItem;
+            @UseSelectedItem.canceled += instance.OnUseSelectedItem;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -594,6 +620,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @HotbarSelection.started -= instance.OnHotbarSelection;
             @HotbarSelection.performed -= instance.OnHotbarSelection;
             @HotbarSelection.canceled -= instance.OnHotbarSelection;
+            @UseSelectedItem.started -= instance.OnUseSelectedItem;
+            @UseSelectedItem.performed -= instance.OnUseSelectedItem;
+            @UseSelectedItem.canceled -= instance.OnUseSelectedItem;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -686,6 +715,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnCloseMenu(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnHotbarSelection(InputAction.CallbackContext context);
+        void OnUseSelectedItem(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {

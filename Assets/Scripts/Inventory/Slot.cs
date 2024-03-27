@@ -25,18 +25,26 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public void OnDrop(PointerEventData eventData)
     {
-        isOccupied = true;
 
         if (isEnable)
         {
             GameObject droppedItem = eventData.pointerDrag;
             Draggable item = droppedItem.GetComponent<Draggable>();
 
-            if (isOccupied || item.item.Name == GetItemInSlot().Name)
+            if (isOccupied && droppedItem.GetComponent<Item>().Name == GetItem().Name)
             {
                 item.parentAfterDrag = transform;
+                droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
+
             }
 
+            if (!isOccupied)
+            {
+                item.parentAfterDrag = transform;
+                droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
+            }
+
+            isOccupied = true;
             Draggable[] items = GetComponentsInChildren<Draggable>();
 
             if (items.Count() > 0)
@@ -51,14 +59,12 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
                 items[0].enabled = true;
             }
-            
-            droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
         }
     }
 
-    public Item GetItemInSlot()
+    public Item GetItem()
     {
-        return GetComponentInChildren<Draggable>().item;
+        return GetComponentInChildren<Item>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -133,7 +139,6 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
         return tooltip;
     }
-
 
     public string GenerateTooltipTitleString(Item item)
     {

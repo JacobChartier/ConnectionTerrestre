@@ -10,7 +10,7 @@ public class NormalHealthPotion : Item
         Model = Resources.Load<Mesh>("Meshes/Items/normal_health_potion");
 
         Name = "Health Potion";
-        Description = "Potion qui régénère 30% de ton HP maximal. Peut être utilisé en ou hors combat.";
+        Description = "Potion qui régénère 30% de ton <color=#FF2E2E>HP</color> maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.RARE;
         Category = Category.POTION;
@@ -18,6 +18,8 @@ public class NormalHealthPotion : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.Find("Player");
+
+        player.GetComponent<Health>().AddHealthPoint(player.GetComponent<EntityStats>().Health.Max * 0.30f);
     }
 }

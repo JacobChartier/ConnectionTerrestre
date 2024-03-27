@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -13,12 +14,17 @@ public class HeadUpDisplay : MonoBehaviour, IMenuHandler
         if (Instance == null)
             Instance = this;
 
+        UpdateUI();
+
         GameObject.Find("Player").GetComponent<Health>().onGainHealth.AddListener(UpdateUI);
         GameObject.Find("Player").GetComponent<Health>().onLostHealth.AddListener(UpdateUI);
     }
 
     public void UpdateUI()
     {
+        var healthText = GameObject.Find("Player Health");
+        healthText.GetComponent<TMP_Text>().text = $"{GameObject.Find("Player").GetComponent<EntityStats>().Health.Current} / {GameObject.Find("Player").GetComponent<EntityStats>().Health.Base}";
+
         var healthbar = GameObject.Find("Health Bar");
         healthbar.GetComponent<Slider>().value = GameObject.Find("Player").GetComponent<EntityStats>().Health.Current;
     }

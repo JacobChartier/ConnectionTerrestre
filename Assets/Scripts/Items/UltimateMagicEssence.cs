@@ -10,7 +10,7 @@ public class UltimateMagicEssence : Item
         Model = Resources.Load<Mesh>("Meshes/Items/ultimate_magic_essence");
 
         Name = "Magic Essence (Ultimate)";
-        Description = "Essence puissante qui régénère tout ton MP. Peut être utilisé en ou hors combat. Ne peut pas être acheté, est seulement laissé par des ennemis puissants.";
+        Description = "Essence puissante qui régénère tout ton <color=#00FFFF>MP</color>. Peut être utilisé en ou hors combat. Ne peut pas être acheté, est seulement laissé par des ennemis puissants.";
 
         Rarety = Rarety.LEGENDARY;
         Category = Category.ESSENCE;

@@ -10,7 +10,7 @@ public class StrongHealthPotion : Item
         Model = Resources.Load<Mesh>("Meshes/Items/strong_health_potion");
 
         Name = "Health Potion (Strong)";
-        Description = "Potion forte qui régénère 60% de ton HP maximal. Peut être utilisé en ou hors combat.";
+        Description = "Potion forte qui régénère 60% de ton <color=#FF2E2E>HP</color> maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.POTION;
@@ -18,6 +18,8 @@ public class StrongHealthPotion : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.Find("Player");
+
+        player.GetComponent<Health>().AddHealthPoint(player.GetComponent<EntityStats>().Health.Max * 0.60f);
     }
 }
