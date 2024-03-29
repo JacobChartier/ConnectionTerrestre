@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ShopUI : MenuHandler
 {
@@ -11,9 +12,12 @@ public class ShopUI : MenuHandler
     [SerializeField] private new TMP_Text name;
     [SerializeField] private TMP_Text category;
     [SerializeField] private TMP_Text rarety;
+
     [SerializeField] private TMP_Text description;
+    [SerializeField] private GameObject descSV;
+
     [SerializeField] private TMP_Text price;
-    [SerializeField] private Button purchaseButton;
+    [SerializeField] private UnityEngine.UI.Button purchaseButton;
 
     [SerializeField] public Item SelectedItem;
     [SerializeField] private Slot[] ShopInventory;
@@ -22,6 +26,8 @@ public class ShopUI : MenuHandler
     {
         ResetDescription();
         this.purchaseButton.onClick.AddListener(delegate { AddToInventory(); });
+
+        Canvas.ForceUpdateCanvases();
     }
 
     private void OnEnable()
@@ -31,20 +37,39 @@ public class ShopUI : MenuHandler
 
     private void ResetOutlines()
     {
-        foreach (var item in ShopInventory)
+        foreach (var slot in ShopInventory)
         {
-            item.GetComponent<Outline>().enabled = false;
+            slot.GetComponent<Outline>().enabled = false;
         }
     }
 
     public void SelectItem(Slot slot)
     {
-        SelectedItem = slot.GetComponentInChildren<Draggable>()?.item;
+        SelectedItem = slot.GetComponentInChildren<Item>();
+
+        if (SelectedItem is null)
+        {
+            ResetOutlines();
+            ResetDescription();
+
+            descSV.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+
+            return;
+        }
 
         ResetOutlines();
-        slot.GetComponent<Outline>().enabled = !slot.GetComponent<Outline>().enabled;
+        slot.GetComponent<Outline>().enabled = true;
 
         ShowDescription(SelectedItem);
+        DescriptionScrollBar();
+    }
+
+    private void DescriptionScrollBar()
+    {
+        description.ForceMeshUpdate();
+
+        var textHeight = description.GetRenderedValues().y;
+        descSV.GetComponent<RectTransform>().sizeDelta = new Vector2(0, textHeight);
     }
 
     private void AddToInventory()

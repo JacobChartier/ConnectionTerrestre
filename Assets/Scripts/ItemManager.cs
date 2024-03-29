@@ -142,6 +142,7 @@ public class ItemManager : MonoBehaviour
 
         // SHOP 
         CreateItem<Shield>(GameObject.Find("Shop Slot (0)").GetComponent<Slot>());
+        CreateItem<ExperiencePotion>(GameObject.Find("Shop Slot (1)").GetComponent<Slot>());
     }
     #endregion
 }

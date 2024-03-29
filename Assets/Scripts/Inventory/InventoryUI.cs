@@ -19,6 +19,14 @@ public class InventoryUI : MenuHandler
         Refresh(); 
     }
 
+    private void OnEnable()
+    {
+        if (shopUI.activeInHierarchy)
+        {
+            transform.localPosition = new Vector3(-160, transform.localPosition.y, transform.localPosition.z);
+        }
+    }
+
     public void Refresh()
     {
         this.coins.text = player.Coins.Current.ToString();
