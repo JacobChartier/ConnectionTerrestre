@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalMagicEssence : Item
@@ -18,6 +16,9 @@ public class NormalMagicEssence : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.Find("Player");
+        player.GetComponent<EntityStats>().MagicPoint.Add(player.GetComponent<EntityStats>().MagicPoint.Max * 0.30f);
+
+        Destroy(this.gameObject);
     }
 }

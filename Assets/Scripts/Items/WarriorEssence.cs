@@ -20,6 +20,7 @@ public class WarriorEssence : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        Debug.LogWarning($"Item use has not been implemented.", this);
+        Destroy(this.gameObject);
     }
 }

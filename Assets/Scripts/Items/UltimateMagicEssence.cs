@@ -18,6 +18,9 @@ public class UltimateMagicEssence : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.Find("Player");
+        player.GetComponent<EntityStats>().MagicPoint.Add(player.GetComponent<EntityStats>().MagicPoint.Max * 1.0f);
+
+        Destroy(this.gameObject);
     }
 }

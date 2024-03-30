@@ -18,6 +18,9 @@ public class StrongMagicEssence : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        var player = GameObject.Find("Player");
+        player.GetComponent<EntityStats>().MagicPoint.Add(player.GetComponent<EntityStats>().MagicPoint.Max * 0.60f);
+
+        Destroy(this.gameObject);
     }
 }
