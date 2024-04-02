@@ -19,6 +19,7 @@ public class Shield : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        if (Random.Range(0, 2) == 1)
+            Destroy(gameObject);
     }
 }

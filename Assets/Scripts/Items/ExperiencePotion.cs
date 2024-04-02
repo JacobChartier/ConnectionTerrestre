@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -21,6 +22,7 @@ public class ExperiencePotion : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        Debug.LogWarning($"Item use has not been implemented.", this);
+        Destroy(this.gameObject);
     }
 }
