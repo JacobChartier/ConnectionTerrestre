@@ -48,6 +48,8 @@ public class Enemy : InteractableObjectBase
             Debug.Log("inventaire null");
         }
 
+        InventoryLoader.Save(Player.Instance.inventory);
+
         BattleInfo.enemy = GetComponent<EntityStats>();
         //BattleInfo.inventory = inventaire;
         SceneManager.LoadScene(2);

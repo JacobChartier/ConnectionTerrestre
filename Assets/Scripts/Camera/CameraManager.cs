@@ -26,10 +26,10 @@ public class CameraManager : MonoBehaviour
         EnableFreeCameraMovement(true);
         FreezeCamera(false);
 
-        SceneManager.sceneLoaded += OnLevelLoaded;
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
-    public void OnLevelLoaded(Scene scene, LoadSceneMode mode)
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         playerVCam = GameObject.Find("vCam (1st Person View)").GetComponent<CinemachineVirtualCamera>();    // Set player vCam
 

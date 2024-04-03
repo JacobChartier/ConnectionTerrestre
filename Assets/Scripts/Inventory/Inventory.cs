@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
 
+    public string id;
     public Slot[] slots;
     public List<Item> items;
     public Item[] unauthorizedItems;
@@ -19,6 +20,12 @@ public class Inventory : MonoBehaviour
         prefab = Resources.Load<GameObject>("Prefabs/Items/inventory_item");
     }
 
+    public void EmptyInventory()
+    {
+        itemsDictionary.Clear();
+        items = new List<Item>();
+    }
+
     public bool Add(Item item, int amount = 1)
     {
         if (itemsDictionary.TryAdd(item, amount))
@@ -26,20 +33,20 @@ public class Inventory : MonoBehaviour
 
         OnChange?.Invoke(item, amount);
 
-        // Stacking
-        for (int i = 0; i < slots.Length; i++)
-        {
-            Slot slot = slots[i];
-            Draggable itemInSlot = slot.GetComponentInChildren<Draggable>();
+        //// Stacking
+        //for (int i = 0; i < slots.Length; i++)
+        //{
+        //    Slot slot = slots[i];
+        //    Draggable itemInSlot = slot?.GetComponentInChildren<Draggable>();
 
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.StackSize)
-            {
-                itemInSlot.count++;
-                //itemInSlot.RefreshCount();
+        //    if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.StackSize)
+        //    {
+        //        itemInSlot.count++;
+        //        //itemInSlot.RefreshCount();
 
-                return true;
-            }
-        }
+        //        return true;
+        //    }
+        //}
 
         // Check for an empty slot
         for (int i = 0; i < slots.Length; i++)

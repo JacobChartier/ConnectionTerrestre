@@ -33,7 +33,6 @@ namespace Assets.Scripts.Interactables
             Vector2 bgSize = GameObject.Find("Key").GetComponent<RectTransform>().sizeDelta = this.key.GetRenderedValues(true) + new Vector2(15, 15);
 
             this.text.transform.localPosition = new Vector2(bgSize.x + 30, this.text.transform.localPosition.y);
-
         }
 
         public void HideContextLabel()

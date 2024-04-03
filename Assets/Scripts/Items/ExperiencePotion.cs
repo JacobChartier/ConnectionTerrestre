@@ -8,6 +8,8 @@ public class ExperiencePotion : Item
 {
     protected override void Load()
     {
+        Id = 0;
+
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_experience_potion");
         Model = Resources.Load<Mesh>("Meshes/Items/normal_experience_potion");
 
