@@ -66,11 +66,20 @@ public class InventoryUI : MenuHandler
 
         foreach (var slot in Player.Instance.inventory.slots)
         {
+            if (slot.name.Contains("Hotbar Slot")) continue;
             Player.Instance.inventory.items.Remove(slot.GetItem());
 
             foreach (var item in slot.GetComponentsInChildren<Item>())
             {
+                Player.Instance.inventory.Remove(item.GetComponent<Item>());
                 ItemManager.Instance.items.Remove(item);
+                Destroy(item.gameObject);
+            }
+
+            foreach (Transform item in GameObject.Find("Items").gameObject.transform)
+            {
+                Player.Instance.inventory.Remove(item.GetComponent<Item>());
+                ItemManager.Instance.items.Remove(item.GetComponent<Item>());
                 Destroy(item.gameObject);
             }
         }

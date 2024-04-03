@@ -23,7 +23,7 @@ public class InventoryLoader
         {
             foreach (var item in items)
             {
-                Player.Instance.inventory.Spawn(items, GameObject.Find(item.slot).GetComponent<Slot>());
+                Player.Instance.inventory.Add(ItemManager.Instance.CreateItem(item.type).GetComponent<Item>());
             }
         }
     }
