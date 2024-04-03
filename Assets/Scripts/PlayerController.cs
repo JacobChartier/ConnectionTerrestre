@@ -24,13 +24,17 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         MovePlayerRelativeToCamera();
+    }
+
+    private void Update()
+    {
         FailSafe();
     }
 
     private void Move()
     {
         Vector2 move = InputManager.mouvementInput;
-        rb.velocity = new Vector3(((move.x * speed) * Time.deltaTime) / 20, rb.velocity.y, ((move.y * speed) * Time.deltaTime) / 20);
+        //rb.velocity = new Vector3(((move.x * speed) * Time.deltaTime) / 20, rb.velocity.y, ((move.y * speed) * Time.deltaTime) / 20);
     }
 
     private void MovePlayerRelativeToCamera()
@@ -52,17 +56,35 @@ public class PlayerController : MonoBehaviour
 
         Vector3 cameraRelativeMovement = forwardRelativeToVerticalInput + rightRelativeToHorizontalInput;
         this.transform.Translate((cameraRelativeMovement * speed) * Time.deltaTime, Space.World);
+
+        transform.rotation = Quaternion.identity; // répare un bug qui desync la rotation avec la caméra
     }
 
     private void FailSafe()
     {
+        Ray r = new Ray(transform.position, Vector3.down);
+        RaycastHit hit;
+
+        // si il y a du sol dessous le joueur
+        if (Physics.Raycast(r, out hit))
+        {
+            // si le joueur est dessous 
+            if (Physics.Raycast(r, out hit, 1))
+            {
+                transform.position = hit.point + Vector3.up * 1;
+            }
+        }
+        else
+        {
+            // mettre le joueur au sol dessus lui
+            if (Physics.Raycast(new Ray(transform.position + new Vector3(0, 100, 0), Vector3.down), out hit))
+            {
+                transform.position = hit.point + Vector3.up * 1;
+            }
+        }
+
         if (transform.position.y < -10)
         {
-            //RaycastHit hit; //TODO: ça
-            //if (Physics.Raycast(transform.position, Vector3.down, out hit))
-            //{
-            //    transform.position = hit.point + Vector3.up * 3;
-            //}
             transform.position += Vector3.up * 100;
         }
 
@@ -83,5 +105,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -LIM_XZ);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Ray r = new Ray(transform.position, Vector3.up);
+        Gizmos.DrawRay(r);
     }
 }

@@ -6,13 +6,13 @@ public static class BattleInfo
     public static EntityStats enemy;
     public static Inventory inventory;
 
-    public static void TransferData(EntityStats destination, Test data)
-    {
+    //public static void TransferData(EntityStats destination, Test data)
+    //{
 
-    }
+    //}
 }
 
-public class Test
-{
+//public class Test
+//{
 
-}
+//}
