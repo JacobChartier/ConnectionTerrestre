@@ -6,6 +6,8 @@ public class MagicianEssence : Item
 {
     protected override void Load()
     {
+        Id = 2;
+
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_magician_essence");
         Model = Resources.Load<Mesh>("Meshes/Items/normal_magician_essence");
 

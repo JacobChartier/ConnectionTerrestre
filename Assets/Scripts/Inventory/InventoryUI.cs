@@ -16,7 +16,7 @@ public class InventoryUI : MenuHandler
     {
         GetMenu<InventoryUI>().Refresh();
 
-        Refresh(); 
+        Refresh();
     }
 
     private void OnEnable()
@@ -43,10 +43,13 @@ public class InventoryUI : MenuHandler
         CameraManager.Instance?.EnableFreeCameraMovement(false);
 
         HeadUpDisplay.Instance?.Hide();
+
+        Player.Instance.LoadInventory();
     }
 
     public void Hide()
     {
+
         InputManager.controls?.Player.Enable();
         InputManager.controls?.Menus.Disable();
 
@@ -59,6 +62,27 @@ public class InventoryUI : MenuHandler
         HeadUpDisplay.Instance?.Show();
 
         this.gameObject.transform.localPosition = new Vector3(0, this.transform.localPosition.y, this.transform.localPosition.z);
+
+
+        foreach (var slot in Player.Instance.inventory.slots)
+        {
+            if (slot.name.Contains("Hotbar Slot")) continue;
+            Player.Instance.inventory.items.Remove(slot.GetItem());
+
+            foreach (var item in slot.GetComponentsInChildren<Item>())
+            {
+                Player.Instance.inventory.Remove(item.GetComponent<Item>());
+                ItemManager.Instance.items.Remove(item);
+                Destroy(item.gameObject);
+            }
+
+            foreach (Transform item in GameObject.Find("Items").gameObject.transform)
+            {
+                Player.Instance.inventory.Remove(item.GetComponent<Item>());
+                ItemManager.Instance.items.Remove(item.GetComponent<Item>());
+                Destroy(item.gameObject);
+            }
+        }
         this.transform.gameObject.SetActive(false);
     }
 }

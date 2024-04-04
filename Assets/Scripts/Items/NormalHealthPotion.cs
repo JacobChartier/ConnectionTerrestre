@@ -8,6 +8,8 @@ public class NormalHealthPotion : Item
 
     protected override void Load()
     {
+        Id = 3;
+
         prefab = Resources.Load<GameObject>("Prefabs/textprefab");
 
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_health_potion");

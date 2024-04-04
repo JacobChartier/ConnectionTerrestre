@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -19,6 +20,14 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        inventoryMenu = FindObjectOfType<InventoryUI>(true).gameObject;
+        shopMenu = FindObjectOfType<ShopUI>(true).gameObject;
     }
 
     public static PlayersControls controls;
@@ -37,12 +46,6 @@ public class InputManager : MonoBehaviour
 
         controls = new PlayersControls();
         controls.Player.Enable();
-    }
-
-    private void OnLevelWasLoaded(int level)
-    {
-        inventoryMenu = FindObjectOfType<InventoryUI>(true).gameObject;
-        shopMenu = FindObjectOfType<ShopUI>(true).gameObject;
     }
 
     private void Update()
@@ -73,7 +76,7 @@ public class InputManager : MonoBehaviour
 
     private void OpenInventory(InputAction.CallbackContext ctx)
     {
-        inventoryMenu.GetComponent<InventoryUI>().Show();
+        inventoryMenu.GetComponent<InventoryUI>()?.Show();
     }
 
     private void HideMenus(InputAction.CallbackContext ctx)

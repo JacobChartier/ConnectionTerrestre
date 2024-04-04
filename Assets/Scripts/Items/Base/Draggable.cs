@@ -22,6 +22,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void InitialiseItem()
     {
+        if (transform.parent.GetComponent<Slot>() == null) return;
+
         renderedItem = gameObject.transform.GetChild(0).gameObject;
         currentSlot = transform.GetComponentInParent<Slot>(true);
         originalSlot = transform.GetComponentInParent<Slot>(true);

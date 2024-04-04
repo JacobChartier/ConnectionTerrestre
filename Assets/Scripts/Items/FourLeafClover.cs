@@ -6,6 +6,8 @@ public class FourLeafClover : Item
 {
     protected override void Load()
     {
+        Id = 1;
+
         Icon = Resources.Load<Sprite>("Sprites/Items/four_leaf_clover");
         Model = Resources.Load<Mesh>("Meshes/Items/four_leaf_clover");
 

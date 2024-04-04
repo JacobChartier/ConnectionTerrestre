@@ -87,7 +87,7 @@ public class BattleManager : MonoBehaviour
 
         if (BattleInfo.enemy == null)
         {
-            Debug.LogError("battleinfo enemy null");
+            //Debug.LogError("battleinfo enemy null");
             BattleInfo.enemy = new EntityStats();
         }
 

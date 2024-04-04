@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public EntityStats playerES = new();
-    public EntityStats enemyES;
 
     void Awake()
     {
@@ -18,5 +16,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+
     }
 }

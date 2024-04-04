@@ -11,6 +11,8 @@ using static IItemBase;
 [Serializable]
 public abstract class Item : MonoBehaviour, IItemBase
 {
+    [field: SerializeField] public int Id { get; protected set; } = -1;
+
     [field: Header("Art")]
     [field: ReadOnly] public Sprite Icon { get; protected set; } = null;
     [field: ReadOnly] public Mesh Model { get; protected set; } = null;
@@ -69,6 +71,13 @@ public abstract class Item : MonoBehaviour, IItemBase
 
     }
 
+    public Slot GetSlot()
+    {
+        if (gameObject.GetComponentInParent<Slot>(true) == null)
+            return null;
+        else
+            return gameObject.GetComponentInParent<Slot>(true);
+    }
     /* Everything below this will be reworked and might not be working in the future. DO NOT USE */
     [Header("Will be reworked")]
 
