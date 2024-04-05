@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuHandler : MonoBehaviour
 {
     public static MenuHandler Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -15,5 +16,7 @@ public class MenuHandler : MonoBehaviour
     {
         return FindObjectOfType<T>(true);
     }
+
+
 }
 

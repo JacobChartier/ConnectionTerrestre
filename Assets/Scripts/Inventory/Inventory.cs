@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
         items = new List<Item>();
     }
 
-    public bool Add(Item item, int amount = 1)
+    public bool Add(Item item, int amount = 1, Slot slot = null)
     {
         if (itemsDictionary.TryAdd(item, amount))
             itemsDictionary[item] += amount;
@@ -48,19 +48,27 @@ public class Inventory : MonoBehaviour
         //    }
         //}
 
-        // Check for an empty slot
-        for (int i = 0; i < slots.Length; i++)
+        if (slot == null)
         {
-            Slot slot = slots[i];
-            Draggable itemInSlot = slot.GetComponentInChildren<Draggable>();
-
-            if (itemInSlot == null)
+            // Check for an empty slot
+            for (int i = 0; i < slots.Length; i++)
             {
-                Spawn(item, slot);
-                items[i] = item;
+                Slot slotInArray = slots[i];
+                Draggable itemInSlot = slotInArray.GetComponentInChildren<Draggable>();
 
-                return true;
+                if (itemInSlot == null)
+                {
+                    Spawn(item, slotInArray);
+                    items[i] = item;
+
+                    return true;
+                }
             }
+        }
+        else
+        {
+            Spawn(item, slot);
+            return true;
         }
 
         return false;
@@ -68,7 +76,7 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item, int amount = 1)
     {
-        if (!itemsDictionary.ContainsKey(item)) 
+        if (!itemsDictionary.ContainsKey(item))
             return;
 
         itemsDictionary[item] -= amount;

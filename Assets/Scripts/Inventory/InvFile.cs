@@ -21,7 +21,7 @@ public static class InvFile
             sw.WriteLine();
             sw.WriteLine($"\tITEM_TYPE: {item.GetType()}");
 
-            sw.WriteLine($"\t\tSLOT: {(item.GetSlot() == null ? $"UNKNOW_SLOT" : item.GetSlot().name)}");
+            sw.WriteLine($"\t\tSLOT_ID: {(item.GetSlot() == null ? $"UNKNOW_SLOT" : item.GetSlotID())}");
         }
 
         sw.Close();
@@ -32,41 +32,55 @@ public static class InvFile
         List<RetrievedItems> items = new List<RetrievedItems>();
         var lines = File.ReadAllLines(path);
 
-        foreach (var line in lines)
+        for (int i = 0; i < lines.Length; i++)
         {
-            string s_type = default, slot = "";
+            string s_type = default, s_slotID = default;
+            int slot = -2;
             System.Type type = default;
 
             RetrievedItems retrievedItems = new RetrievedItems();
 
-            if (line.ToString().Contains("ITEM_TYPE"))
+            if (lines[i].ToString().Contains("ITEM_TYPE"))
             {
-                var start = line.ToString().IndexOf(":") + 1;
+                var start = lines[i].ToString().IndexOf(":") + 1;
 
-                s_type = line.ToString().Substring(start, (line.ToString().Length - start));
+                s_type = lines[i].ToString().Substring(start, (lines[i].ToString().Length - start));
 
                 type = System.Type.GetType(s_type);
 
                 retrievedItems.type = type;
-            }
 
-            if (line.ToString().Contains("SLOT"))
-            {
-                var start = line.ToString().IndexOf(":") + 1;
+                if (lines[i + 1].ToString().Contains("SLOT_ID"))
+                {
+                    var start2 = lines[i + 1].ToString().IndexOf(":") + 1;
 
-                slot = line.ToString().Substring(start, (line.ToString().Length - start));
+                    s_slotID = lines[i + 1].ToString().Substring(start2, (lines[i + 1].ToString().Length - start2));
 
-                if (slot == "UNKNOW_SLOT")
-                    slot = "";
-                
-                retrievedItems.slot = slot;
+                    retrievedItems.slotID = int.Parse(s_slotID);
+                    Debug.Log($"<color=#FF0000>{retrievedItems.slotID}</color>");
+
+                    if (retrievedItems.slotID < 0)
+                        continue;
+
+                    retrievedItems.slotID = slot;
+                }
             }
 
             if (type != null)
             {
                 var item = ItemManager.Instance.CreateItem(type);
+                var slotToUse = default(Slot);
 
-                inventory.Add(item.GetComponent<Item>());
+                foreach (var s in inventory.slots)
+                {
+                    if (retrievedItems.slotID == s.ID)
+                    {
+                        slotToUse = s.GetComponent<Slot>();
+                        Debug.Log(slotToUse.name);
+                    }
+                }
+
+                inventory.Add(item.GetComponent<Item>(), 1, slotToUse);
             }
 
             items.Add(retrievedItems);
@@ -80,5 +94,5 @@ public static class InvFile
 public class RetrievedItems
 {
     public System.Type type;
-    public string slot;
+    public int slotID;
 }
