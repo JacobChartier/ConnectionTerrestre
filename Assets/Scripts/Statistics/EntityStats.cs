@@ -33,7 +33,7 @@ public class EntityStats : MonoBehaviour
     public List<InfoAttaque> Attaques = new List<InfoAttaque>();
 
     [Header("Economy Statistics")]
-    public EntityStatistic Coins = new EntityStatistic() { Base = 10, Min = 0 };
+    public int Coins = 0; // coins n'est pas float, alors pas un entity stat.
 
     //[Header("Enemy stats")]
     //private int exp_worth;
@@ -56,11 +56,30 @@ public class EntityStats : MonoBehaviour
         MagicPoint.Reset();
         Strength.Reset();
         AttackSpeed.Reset();
-        Coins.Reset();
+        //Coins.Reset();
 
         if (gameObject.name == "Player")
         {
             DontDestroyOnLoad(this);
+        }
+    }
+
+    // À NE SEULEMENT UTILISER QUAND UN ENEMI EST INITIALIZÉ!!!! NE JAMAIS UTILISER POUR JOUEUR OU APRÈS L'INITIALIZATION DE L'ENNEMI
+    // cette fonction existe car il n'est pas possible de remplacer une classe avec une autre, encore moins un monobehavior
+    // les structs se copient par valeur et non par référence (struct my beloved)
+    public void SetStats(EntityStats_struct stats)
+    {
+        Health.Current = stats.Health;
+        MagicPoint.Current = stats.MagicPoint;
+        Defense.Current = stats.Defense;
+        AttackSpeed.Current = stats.AttackSpeed;
+        Strength.Current = stats.Strength;
+        Coins = stats.Coins;
+        Experience = stats.Experience;
+        Attaques.Clear();
+        foreach (InfoAttaque a in stats.Attaques)
+        {
+            Attaques.Add(a);
         }
     }
 }
@@ -142,5 +161,29 @@ public struct EntityStatistic
     public void Reset()
     {
         Current = Base;
+    }
+}
+
+public struct EntityStats_struct
+{
+    public float Health;
+    public float MagicPoint;
+    public float Defense;
+    public float Strength;
+    public float AttackSpeed;
+    public int Experience;
+    public int Coins;
+    public List<InfoAttaque> Attaques;
+
+    public EntityStats_struct(float health, float magic, float defense, float strength, float speed, int exp, int coins, List<InfoAttaque> attaques)
+    {
+        this.Health = health;
+        this.MagicPoint = magic;
+        this.Defense = defense;
+        this.AttackSpeed = speed;
+        this.Strength = strength;
+        this.Experience = exp;
+        this.Coins = coins;
+        this.Attaques = attaques;
     }
 }

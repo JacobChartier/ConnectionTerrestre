@@ -29,7 +29,7 @@ public class InventoryUI : MenuHandler
 
     public void Refresh()
     {
-        this.coins.text = player.Coins.Current.ToString();
+        this.coins.text = player.Coins.ToString();
     }
 
     public void Show()

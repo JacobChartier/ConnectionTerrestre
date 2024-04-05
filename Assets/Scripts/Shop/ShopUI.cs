@@ -151,7 +151,7 @@ public class ShopUI : MenuHandler
                 this.price.text = $"<b><color=#17FF3E>FREE</color></b>";
                 break;
             default:
-                this.price.text = (item.price > playerStats.Coins.Current) ? $"<b><color=#FF0000>{item.price}</color></b>" : $"<b><color=#FFFFFF>{item.price}</color></b>";
+                this.price.text = (item.price > playerStats.Coins) ? $"<b><color=#FF0000>{item.price}</color></b>" : $"<b><color=#FFFFFF>{item.price}</color></b>";
                 break;
         }
     }

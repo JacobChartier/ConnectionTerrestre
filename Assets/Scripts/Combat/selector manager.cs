@@ -20,7 +20,7 @@ public class selectormanager : MonoBehaviour
     [SerializeField] bhvFlecheSelection fleche;
 
     private StartupType type;
-    private int selection;
+    //private int selection;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,7 @@ public class selectormanager : MonoBehaviour
     {
         this.type = type;
         gameObject.SetActive(true);
-        selection = 0;
+        //selection = 0;
 
         switch (type)
         {

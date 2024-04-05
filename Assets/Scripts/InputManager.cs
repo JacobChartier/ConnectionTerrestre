@@ -34,6 +34,7 @@ public class InputManager : MonoBehaviour
 
     public static Vector2 mouvementInput;
     public static Vector2 rotationInput;
+    public static bool jumpInput;
     public static float scrollWheelInput;
     [field: ReadOnly] public float scrollWheelInput_t;
 
@@ -59,6 +60,9 @@ public class InputManager : MonoBehaviour
 
         controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
         controls.Player.Rotation.canceled += ctx => rotationInput = ctx.ReadValue<Vector2>();
+
+        controls.Player.Sauter.performed += ctx => jumpInput = ctx.ReadValueAsButton();
+        controls.Player.Sauter.canceled += ctx => jumpInput = ctx.ReadValueAsButton();
 
         controls.Player.HotbarSelection.performed += ctx => scrollWheelInput = ctx.ReadValue<float>();
         controls.Player.HotbarSelection.canceled += ctx => scrollWheelInput = ctx.ReadValue<float>();

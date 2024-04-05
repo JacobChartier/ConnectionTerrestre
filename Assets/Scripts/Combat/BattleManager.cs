@@ -552,6 +552,10 @@ public class BattleManager : MonoBehaviour
             timer--;
             BattleInfo.player.Experience++;
             BattleInfo.enemy.Experience--;
+            if (BattleInfo.enemy.Experience % 4 == 0)
+            {
+                BattleInfo.player.Coins++;
+            }
 
             bhvxptextprefab xp = Instantiate(prefab_text_xp, GameObject.Find("Canvas").transform).GetComponent<bhvxptextprefab>();
             xp.Init(false, joueur_transform);
@@ -578,9 +582,9 @@ public class BattleManager : MonoBehaviour
 
         BattleInfo.player.Niveau++;
         BattleInfo.player.Health.Max *= UPGRADE_SPEED;
-        BattleInfo.player.AttackSpeed.Max *= UPGRADE_SPEED;
+        BattleInfo.player.AttackSpeed.Current *= UPGRADE_SPEED;
         BattleInfo.player.MagicPoint.Max *= UPGRADE_SPEED;
-        BattleInfo.player.Defense.Max *= UPGRADE_SPEED;
-        BattleInfo.player.Strength.Max *= UPGRADE_SPEED;
+        BattleInfo.player.Defense.Current *= UPGRADE_SPEED;
+        BattleInfo.player.Strength.Current *= UPGRADE_SPEED;
     }
 }

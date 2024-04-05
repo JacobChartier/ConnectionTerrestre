@@ -58,7 +58,7 @@ public class OldItem : ScriptableObject
 
     //public bool Purchase(EntityStats player)
     //{
-    //    if (price <= player.Coins.Current)
+    //    if (price <= player.Coins)
     //    {
     //        player.Coins.Remove(price);
 

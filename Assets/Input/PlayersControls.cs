@@ -134,6 +134,15 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sauter"",
+                    ""type"": ""Button"",
+                    ""id"": ""20277c0e-a304-48be-94cc-f9af3b4d77fc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -356,6 +365,17 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""action"": ""UseSelectedItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b63e783c-4a69-495b-84f4-2eeca3d0defb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sauter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -444,6 +464,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_HotbarSelection = m_Player.FindAction("Hotbar Selection", throwIfNotFound: true);
         m_Player_UseSelectedItem = m_Player.FindAction("UseSelectedItem", throwIfNotFound: true);
+        m_Player_Sauter = m_Player.FindAction("Sauter", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_SplitStackInHalf = m_Menus.FindAction("SplitStackInHalf", throwIfNotFound: true);
@@ -522,6 +543,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_HotbarSelection;
     private readonly InputAction m_Player_UseSelectedItem;
+    private readonly InputAction m_Player_Sauter;
     public struct PlayerActions
     {
         private @PlayersControls m_Wrapper;
@@ -538,6 +560,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @HotbarSelection => m_Wrapper.m_Player_HotbarSelection;
         public InputAction @UseSelectedItem => m_Wrapper.m_Player_UseSelectedItem;
+        public InputAction @Sauter => m_Wrapper.m_Player_Sauter;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -583,6 +606,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @UseSelectedItem.started += instance.OnUseSelectedItem;
             @UseSelectedItem.performed += instance.OnUseSelectedItem;
             @UseSelectedItem.canceled += instance.OnUseSelectedItem;
+            @Sauter.started += instance.OnSauter;
+            @Sauter.performed += instance.OnSauter;
+            @Sauter.canceled += instance.OnSauter;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -623,6 +649,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @UseSelectedItem.started -= instance.OnUseSelectedItem;
             @UseSelectedItem.performed -= instance.OnUseSelectedItem;
             @UseSelectedItem.canceled -= instance.OnUseSelectedItem;
+            @Sauter.started -= instance.OnSauter;
+            @Sauter.performed -= instance.OnSauter;
+            @Sauter.canceled -= instance.OnSauter;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -716,6 +745,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnHotbarSelection(InputAction.CallbackContext context);
         void OnUseSelectedItem(InputAction.CallbackContext context);
+        void OnSauter(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {

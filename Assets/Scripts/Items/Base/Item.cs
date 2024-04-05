@@ -91,9 +91,9 @@ public abstract class Item : MonoBehaviour, IItemBase
 
     public bool Purchase(EntityStats player)
     {
-        if (price <= player.Coins.Current)
+        if (price <= player.Coins)
         {
-            player.Coins.Remove(price);
+            player.Coins -= price;
             MenuHandler.Instance.GetMenu<InventoryUI>().Refresh();
 
             return true;

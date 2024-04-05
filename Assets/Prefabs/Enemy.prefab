@@ -45,12 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  id: 
   slots: []
   items:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  unauthorizedItems: []
 --- !u!1 &5232206196503295794
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +215,8 @@ MonoBehaviour:
     _max: 0
     _min: 0
     _displayColor: 
+  Experience: 0
+  Niveau: 0
   Coins:
     _base: 10
     _current: 0
@@ -254,6 +258,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 0}
   text: Combat
+  collision: {fileID: 0}
+  joueur: {fileID: 0}
+  inventaire: {fileID: 0}
 --- !u!136 &6809268338041731000
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private const float LIM_XZ = 450;
+    private const float POWER_JUMP = 5;
 
     [SerializeField] private float speed = 1;
     Rigidbody rb;
@@ -35,6 +36,19 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 move = InputManager.mouvementInput;
         //rb.velocity = new Vector3(((move.x * speed) * Time.deltaTime) / 20, rb.velocity.y, ((move.y * speed) * Time.deltaTime) / 20);
+
+        // sauter
+        RaycastHit r;
+        Physics.Raycast(transform.position, Vector3.down, out r);
+
+        //Debug.Log(Mathf.Abs(transform.position.y - r.point.y));
+        if (Mathf.Abs(transform.position.y - r.point.y) - 1.0f < 1.0f)
+        {
+            if (InputManager.jumpInput)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, POWER_JUMP, rb.velocity.z);
+            }
+        }
     }
 
     private void MovePlayerRelativeToCamera()
