@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [field: SerializeField] public int ID { get; private set; } = -1;
     public bool isEnable = true;
 
     public bool isTooltipVisible = true;

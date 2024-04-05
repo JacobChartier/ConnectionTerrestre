@@ -100,7 +100,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Close Menu"",
+                    ""name"": ""Pause Menu"",
                     ""type"": ""Button"",
                     ""id"": ""a4db98a7-a6c9-40b8-a9c5-f3e16d31fb50"",
                     ""expectedControlType"": ""Button"",
@@ -320,7 +320,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Close Menu"",
+                    ""action"": ""Pause Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -440,7 +440,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         m_Player_selectionhaut = m_Player.FindAction("selection haut", throwIfNotFound: true);
         m_Player_selectionbas = m_Player.FindAction("selection bas", throwIfNotFound: true);
         m_Player_OpenInventory = m_Player.FindAction("Open Inventory", throwIfNotFound: true);
-        m_Player_CloseMenu = m_Player.FindAction("Close Menu", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("Pause Menu", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_HotbarSelection = m_Player.FindAction("Hotbar Selection", throwIfNotFound: true);
         m_Player_UseSelectedItem = m_Player.FindAction("UseSelectedItem", throwIfNotFound: true);
@@ -518,7 +518,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_selectionhaut;
     private readonly InputAction m_Player_selectionbas;
     private readonly InputAction m_Player_OpenInventory;
-    private readonly InputAction m_Player_CloseMenu;
+    private readonly InputAction m_Player_PauseMenu;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_HotbarSelection;
     private readonly InputAction m_Player_UseSelectedItem;
@@ -534,7 +534,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         public InputAction @selectionhaut => m_Wrapper.m_Player_selectionhaut;
         public InputAction @selectionbas => m_Wrapper.m_Player_selectionbas;
         public InputAction @OpenInventory => m_Wrapper.m_Player_OpenInventory;
-        public InputAction @CloseMenu => m_Wrapper.m_Player_CloseMenu;
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @HotbarSelection => m_Wrapper.m_Player_HotbarSelection;
         public InputAction @UseSelectedItem => m_Wrapper.m_Player_UseSelectedItem;
@@ -571,9 +571,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @OpenInventory.started += instance.OnOpenInventory;
             @OpenInventory.performed += instance.OnOpenInventory;
             @OpenInventory.canceled += instance.OnOpenInventory;
-            @CloseMenu.started += instance.OnCloseMenu;
-            @CloseMenu.performed += instance.OnCloseMenu;
-            @CloseMenu.canceled += instance.OnCloseMenu;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -611,9 +611,9 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
             @OpenInventory.started -= instance.OnOpenInventory;
             @OpenInventory.performed -= instance.OnOpenInventory;
             @OpenInventory.canceled -= instance.OnOpenInventory;
-            @CloseMenu.started -= instance.OnCloseMenu;
-            @CloseMenu.performed -= instance.OnCloseMenu;
-            @CloseMenu.canceled -= instance.OnCloseMenu;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -712,7 +712,7 @@ public partial class @PlayersControls: IInputActionCollection2, IDisposable
         void OnSelectionhaut(InputAction.CallbackContext context);
         void OnSelectionbas(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
-        void OnCloseMenu(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnHotbarSelection(InputAction.CallbackContext context);
         void OnUseSelectedItem(InputAction.CallbackContext context);
