@@ -15549,7 +15549,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6470284587203772646}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 1000
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -16101,7 +16101,6 @@ SceneRoots:
   - {fileID: 941023652}
   - {fileID: 1307071380}
   - {fileID: 534962399}
-  - {fileID: 1458701693}
   - {fileID: 1603648770}
   - {fileID: 278829853}
   - {fileID: 1641761794}
@@ -16115,3 +16114,4 @@ SceneRoots:
   - {fileID: 2659753940517410487}
   - {fileID: 630703866}
   - {fileID: 857426513}
+  - {fileID: 2216634267195346564}

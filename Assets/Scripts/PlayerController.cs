@@ -7,7 +7,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    private const float LIM_XZ = 450;
+    private const float LIM_X_POS = 450;
+    private const float LIM_X_NEG = -450;
+    private const float LIM_Z_POS = 450;
+    private const float LIM_Z_NEG = -1450;
     private const float POWER_JUMP = 5;
 
     [SerializeField] private float speed = 1;
@@ -103,22 +106,22 @@ public class PlayerController : MonoBehaviour
             transform.position += Vector3.up * 100;
         }
 
-        if (transform.position.x > LIM_XZ)
+        if (transform.position.x > LIM_X_POS)
         {
-            transform.position = new Vector3(LIM_XZ, transform.position.y, transform.position.z);
+            transform.position = new Vector3(LIM_X_POS, transform.position.y, transform.position.z);
         }
-        else if (transform.position.x < -LIM_XZ)
+        else if (transform.position.x < LIM_X_NEG)
         {
-            transform.position = new Vector3(-LIM_XZ, transform.position.y, transform.position.z);
+            transform.position = new Vector3(LIM_X_NEG, transform.position.y, transform.position.z);
         }
 
-        if (transform.position.z > LIM_XZ)
+        if (transform.position.z > LIM_Z_POS)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, LIM_XZ);
+            transform.position = new Vector3(transform.position.x, transform.position.y, LIM_Z_POS);
         }
-        else if (transform.position.z < -LIM_XZ)
+        else if (transform.position.z < LIM_Z_NEG)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -LIM_XZ);
+            transform.position = new Vector3(transform.position.x, transform.position.y, LIM_Z_NEG);
         }
     }
 
