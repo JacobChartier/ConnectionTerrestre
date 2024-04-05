@@ -78,6 +78,16 @@ public abstract class Item : MonoBehaviour, IItemBase
         else
             return gameObject.GetComponentInParent<Slot>(true);
     }
+
+    public int GetSlotID()
+    {
+        if (gameObject.GetComponentInParent<Slot>(true) == null)
+            return -1;
+        else
+            return gameObject.GetComponentInParent<Slot>(true).ID;
+    }
+
+
     /* Everything below this will be reworked and might not be working in the future. DO NOT USE */
     [Header("Will be reworked")]
 

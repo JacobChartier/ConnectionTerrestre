@@ -49,7 +49,6 @@ public class InventoryUI : MenuHandler
 
     public void Hide()
     {
-
         InputManager.controls?.Player.Enable();
         InputManager.controls?.Menus.Disable();
 

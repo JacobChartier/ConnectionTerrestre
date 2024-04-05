@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraRelativeMovement = forwardRelativeToVerticalInput + rightRelativeToHorizontalInput;
         this.transform.Translate((cameraRelativeMovement * speed) * Time.deltaTime, Space.World);
 
-        // répare un bug qui desync la rotation avec la caméra
+        // rï¿½pare un bug qui desync la rotation avec la camï¿½ra
         transform.rotation = Quaternion.identity;
     }
 
