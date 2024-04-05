@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    private const float LIM_XZ = 450;
+    private const float LIM_XZ = 10000;
 
     [SerializeField] private float speed = 1;
     Rigidbody rb;
