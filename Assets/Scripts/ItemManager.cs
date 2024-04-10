@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -78,14 +79,14 @@ public class ItemManager : MonoBehaviour
 
         Draggable draggableCompoment = itemObject.AddComponent<Draggable>();
         draggableCompoment.item = itemComponent;
-
         //Droppable droppableComponent = itemObject.AddComponent<Droppable>();
         //droppableComponent.item = itemComponent;
 
         // Instantiate the prefabs
-        var inventoryObject = Instantiate(Resources.Load("Prefabs/Items/inventory_item"), itemObject.transform);
+        GameObject inventoryObject = Instantiate((GameObject)Resources.Load("Prefabs/Items/inventory_item"), itemObject.transform);
         inventoryObject.name = "Inventory Item";
 
+        draggableCompoment.countText = inventoryObject.GetComponentInChildren<TMP_Text>(true);
         //var droppedObject = Instantiate(Resources.Load("Prefabs/Items/dropped_item"), itemObject.transform);
         //droppedObject.name = "Dropped Item";
 
@@ -98,8 +99,6 @@ public class ItemManager : MonoBehaviour
             itemObject.transform.SetParent(slot.gameObject.transform);
 
         draggableCompoment.InitialiseItem();
-
-        Player.Instance.inventory.items.Add(itemComponent);
 
         return itemObject;
     }

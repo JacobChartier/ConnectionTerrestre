@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
+using System.Reflection;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
-using static IItemBase;
 
 [Serializable]
 public abstract class Item : MonoBehaviour, IItemBase
@@ -87,6 +83,29 @@ public abstract class Item : MonoBehaviour, IItemBase
             return gameObject.GetComponentInParent<Slot>(true).ID;
     }
 
+    public override string ToString()
+    {
+        return GetModifiedData();
+    }
+
+    public string GetModifiedData()
+    {
+        string result = string.Empty;
+
+        PropertyInfo[] properties = GetType().GetProperties();
+        foreach (var property in properties)
+        {
+            var baseValue = property.GetValue(this, null);
+            var defaultValue = Activator.CreateInstance(property.PropertyType);
+
+            if (!baseValue.Equals(defaultValue))
+            {
+                result += $"{property.Name.ToUpper()}: {baseValue}, ";
+            }
+        }
+
+        return result.TrimEnd(',', ' '); // Trim trailing comma and space
+    }
 
     /* Everything below this will be reworked and might not be working in the future. DO NOT USE */
     [Header("Will be reworked")]

@@ -1,30 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public static class InvFile
-{
+{ 
     public static void Save(string path, Inventory inventory)
     {
-        FileStream fs = new(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-        StreamWriter sw = new(fs);
-
-        fs.SetLength(0);
-        sw.WriteLine($"INVENTORY: {inventory.id}");
-
-        foreach (var item in inventory.items)
+        using (StreamWriter sw = new StreamWriter(path))
         {
-            if (item.GetSlot().name == null)
-                continue;
+            // Header
+            sw.WriteLine($"# This file has been automatically generated on {DateTime.Today:yyyy-MM-dd} at {DateTime.Now:HH:mm:ss}.\n# It contains inventory data for entity \"{inventory.id}\".\n");
 
-            sw.WriteLine();
-            sw.WriteLine($"\tITEM_TYPE: {item.GetType()}");
+            // Saved Data
+            sw.WriteLine($"INVENTORY_ID: \"{inventory.id}\"");
+            foreach (var item in inventory.items)
+            {
+                sw.WriteLine($"\t{item.ToString()}");
+            }
 
-            sw.WriteLine($"\t\tSLOT_ID: {(item.GetSlot() == null ? $"UNKNOW_SLOT" : item.GetSlotID())}");
+            // Footer
+            sw.WriteLine($"");
         }
-
-        sw.Close();
     }
 
     public static List<RetrievedItems> Load(string path, Inventory inventory)
@@ -34,59 +30,41 @@ public static class InvFile
 
         for (int i = 0; i < lines.Length; i++)
         {
-            string s_type = default, s_slotID = default;
+            string s_type = default;
             int slot = -2;
             System.Type type = default;
 
             RetrievedItems retrievedItems = new RetrievedItems();
 
-            if (lines[i].ToString().Contains("ITEM_TYPE"))
-            {
-                var start = lines[i].ToString().IndexOf(":") + 1;
+            //if (lines[i].ToString().Contains("TYPE"))
+            //{
+            //    s_type = ReadData<string>("TYPE", lines[i]);
+            //    retrievedItems.type = System.Type.GetType(s_type);
 
-                s_type = lines[i].ToString().Substring(start, (lines[i].ToString().Length - start));
 
-                type = System.Type.GetType(s_type);
-
-                retrievedItems.type = type;
-
-                if (lines[i + 1].ToString().Contains("SLOT_ID"))
-                {
-                    var start2 = lines[i + 1].ToString().IndexOf(":") + 1;
-
-                    s_slotID = lines[i + 1].ToString().Substring(start2, (lines[i + 1].ToString().Length - start2));
-
-                    retrievedItems.slotID = int.Parse(s_slotID);
-                    Debug.Log($"<color=#FF0000>{retrievedItems.slotID}</color>");
-
-                    if (retrievedItems.slotID < 0)
-                        continue;
-
-                    retrievedItems.slotID = slot;
-                }
-            }
+            //    retrievedItems.slotID = ReadData<int>("SLOT_ID", lines[i + 1]);
+            //    Debug.Log($"<color=#00FF00>{retrievedItems.type}</color> {{{retrievedItems.slotID}}}");
+            //}
 
             if (type != null)
             {
-                var item = ItemManager.Instance.CreateItem(type);
-                var slotToUse = default(Slot);
-
-                foreach (var s in inventory.slots)
-                {
-                    if (retrievedItems.slotID == s.ID)
-                    {
-                        slotToUse = s.GetComponent<Slot>();
-                        Debug.Log(slotToUse.name);
-                    }
-                }
-
-                inventory.Add(item.GetComponent<Item>(), 1, slotToUse);
+                items.Add(retrievedItems);
             }
-
-            items.Add(retrievedItems);
         }
 
         return items;
+    }
+
+    private static T ReadData<T>(string data, string line)
+    {
+        int start = (line.IndexOf(':') + 1);
+        int length = (line.Length - start);
+
+        T output;
+        string s_value = line.Substring(start, length);
+
+        output = (T)Convert.ChangeType(s_value, typeof(T));
+        return output;
     }
 }
 
@@ -95,4 +73,5 @@ public class RetrievedItems
 {
     public System.Type type;
     public int slotID;
+    public int quantity;
 }

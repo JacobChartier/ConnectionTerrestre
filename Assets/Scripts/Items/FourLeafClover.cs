@@ -27,6 +27,10 @@ public class FourLeafClover : Item
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        RemainingUses--;
+
+        if (RemainingUses < 1)
+            Destroy(gameObject);
+
     }
 }

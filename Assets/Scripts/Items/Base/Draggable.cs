@@ -15,7 +15,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public TMP_Text countText;
     public Slider durability;
 
-    [HideInInspector] public int count;
+    public int count;
 
     public Transform parentAfterDrag;
     public Slot originalSlot;
@@ -75,5 +75,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         transform.position = parentAfterDrag.transform.position;
+
+        countText.text = count.ToString();
     }
 }

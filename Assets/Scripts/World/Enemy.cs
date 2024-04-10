@@ -161,6 +161,7 @@ public class Enemy : MonoBehaviour
     {
         //GameManager.Instance.playerES.Health = GameObject.Find("Player").GetComponent<EntityStats>().Health;
         //GameManager.Instance.enemyES = GetComponent<EntityStats>();
+        InventoryLoader.Save(Player.Instance.inventory);
 
         if (BattleInfo.player == null)
         {
@@ -174,8 +175,6 @@ public class Enemy : MonoBehaviour
             DontDestroyOnLoad(inventaire);
             Debug.Log("inventaire null");
         }
-
-        InventoryLoader.Save(Player.Instance.inventory);
 
         BattleInfo.enemy = GetComponent<EntityStats>();
         //BattleInfo.inventory = inventaire;
