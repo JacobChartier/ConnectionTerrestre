@@ -62,7 +62,6 @@ public class InventoryUI : MenuHandler
 
         this.gameObject.transform.localPosition = new Vector3(0, this.transform.localPosition.y, this.transform.localPosition.z);
 
-
         foreach (var slot in Player.Instance.inventory.slots)
         {
             if (slot.name.Contains("Hotbar Slot")) continue;
@@ -75,7 +74,9 @@ public class InventoryUI : MenuHandler
                 Destroy(item.gameObject);
             }
 
-            foreach (Transform item in GameObject.Find("Items").gameObject.transform)
+            if (GameObject.Find("Items")?.gameObject == null) return;
+
+            foreach (Transform item in GameObject.Find("Items")?.gameObject.transform)
             {
                 Player.Instance.inventory.Remove(item.GetComponent<Item>());
                 ItemManager.Instance.items.Remove(item.GetComponent<Item>());

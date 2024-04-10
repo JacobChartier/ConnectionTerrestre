@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [field: SerializeField] public int ID { get; private set; } = -1;
+    [field: SerializeField] public int ID = -1;
     public bool isEnable = true;
 
     public bool isTooltipVisible = true;
@@ -19,14 +19,19 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     [SerializeField] Color default_color;
     [SerializeField] Color highlight_color;
 
-    public void Start()
+    public void Awake()
     {
         GetComponent<Image>().color = default_color;
+
+        var start = this.name.ToString().IndexOf('(') + 1;
+        var s_ID = this.name.ToString().Substring(start, this.name.Length - start - 1);
+
+        if (!int.TryParse(s_ID, out ID))
+            Debug.LogWarning($"Unable to generate an ID for slot: {this.name}", this);
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-
         if (isEnable)
         {
             GameObject droppedItem = eventData.pointerDrag;
@@ -37,6 +42,8 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 item.parentAfterDrag = transform;
                 droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
 
+                droppedItem.gameObject.SetActive(false);
+                this.transform.GetChild(0).GetComponent<Draggable>().count++;
             }
 
             if (!isOccupied)
@@ -61,6 +68,13 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 items[0].enabled = true;
             }
         }
+    }
+
+    public bool IsIDTheSame(int id)
+    {
+        if (this.ID == id) return true;
+
+        return false;
     }
 
     public Item GetItem()

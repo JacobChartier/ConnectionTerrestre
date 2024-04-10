@@ -16,22 +16,14 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
-        InputManager.controls.Player.PauseMenu.performed += PauseMenu_performed;
-        InputManager.controls.Player.PauseMenu.canceled -= PauseMenu_performed;
+        InputManager.controls.Player.PauseMenu.canceled += PauseMenu_performed;
 
         InputManager.controls.Menus.Close.performed += Close_performed;
-        InputManager.controls.Menus.Close.canceled -= Close_performed;
     }
 
-    private void Close_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        MenuHandler.Instance.GetMenu<PauseMenuUI>().Hide();
-    }
+    private void Close_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => MenuHandler.Instance.GetMenu<PauseMenuUI>().Hide();
 
-    private void PauseMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        MenuHandler.Instance.GetMenu<PauseMenuUI>().Show();
-    }
+    private void PauseMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => MenuHandler.Instance.GetMenu<PauseMenuUI>().Show();
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {

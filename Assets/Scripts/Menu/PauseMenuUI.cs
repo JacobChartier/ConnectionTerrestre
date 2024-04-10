@@ -7,11 +7,12 @@ public class PauseMenuUI : MenuHandler
     public void Show()
     {
         gameObject.SetActive(true);
-        Time.timeScale = 0;
         CameraManager.Instance.FreezeCamera(true);
+        CameraManager.Instance.EnableFreeCameraMovement(false);
 
         InputManager.controls.Player.Disable();
         InputManager.controls.Menus.Enable();
+        Time.timeScale = 0;
     }
 
     public void Hide()
@@ -21,6 +22,7 @@ public class PauseMenuUI : MenuHandler
         InputManager.controls.Menus.Disable();
 
         CameraManager.Instance.FreezeCamera(false);
+        CameraManager.Instance.EnableFreeCameraMovement(true);
         gameObject.SetActive(false);
     }
 }

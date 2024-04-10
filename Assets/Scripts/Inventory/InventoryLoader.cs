@@ -12,19 +12,26 @@ public class InventoryLoader
 
     public static void Save(Inventory inventory)
     {
-        InvFile.Save($"{persistent_data_path}/{inventory.id}.inv", inventory);
+        InvFile.Save($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
     }
 
     public static void Load(Inventory inventory)
     {
-        var items = InvFile.Load($"{persistent_data_path}/{inventory.id}.inv", inventory);
+        inventory.items.Clear();
 
-        if (SceneManager.GetSceneByName("World").isLoaded)
+        var items = InvFile.Load($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
+
+        foreach (var item in items)
         {
-            foreach (var item in items)
-            {
-                Player.Instance.inventory.Add(ItemManager.Instance.CreateItem(item.type).GetComponent<Item>());
-            }
+            Debug.Log($"<color=#FF00FF>{item.type}</color> {{SlotID: {item.slotID}}}");
+
+            foreach (var slot in inventory.slots)
+                if (slot.IsIDTheSame(item.slotID))
+                {
+                    Debug.Log($"<color=#FF0000>{item.type}</color> {{SlotID: {item.slotID}}}");
+                    inventory.Add(ItemManager.Instance.CreateItem(item.type, slot).GetComponent<Item>(), slot: slot);
+                    continue;
+                }
         }
     }
 }

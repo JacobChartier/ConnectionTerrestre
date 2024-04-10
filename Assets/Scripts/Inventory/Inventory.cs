@@ -28,11 +28,6 @@ public class Inventory : MonoBehaviour
 
     public bool Add(Item item, int amount = 1, Slot slot = null)
     {
-        if (itemsDictionary.TryAdd(item, amount))
-            itemsDictionary[item] += amount;
-
-        OnChange?.Invoke(item, amount);
-
         //// Stacking
         //for (int i = 0; i < slots.Length; i++)
         //{
@@ -47,6 +42,8 @@ public class Inventory : MonoBehaviour
         //        return true;
         //    }
         //}
+
+        items.Add(item);
 
         if (slot == null)
         {
