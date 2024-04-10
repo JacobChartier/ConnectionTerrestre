@@ -1,62 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 public static class InvFile
-{
+{ 
     public static void Save(string path, Inventory inventory)
     {
-        //Debug.Log($"Saving <b>inventory ({inventory.id})</b> to <b>{path}</b>");
-
-        //FileStream fs = new(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-        //StreamWriter stw = new(fs);
-
-        //fs.SetLength(0);
-        //stw.WriteLine($"INVENTORY: {inventory.id}");
-
-        //foreach (var item in inventory.items)
-        //{
-        //    if (item.GetSlot().name == null)
-        //        continue;
-
-        //    string line = "\t";
-
-        //    line += $"ITEM: {item.GetType()}";
-        //    CreateInvString('|', "eiwfnoe", "efubie");
-
-        //    stw.WriteLine();
-
-        //    stw.WriteLine($"\t\tSLOT_ID: {(item.GetSlot() == null ? $"UNKNOW_SLOT" : item.GetSlotID())}");
-
-        //    Debug.Log($"<b>[SAVED DATA]</b> <color=#FF00FF>{item.Name}</color>");
-        //}
-
-        //stw.Close();
-        //fs.Close();
-
         using (StreamWriter sw = new StreamWriter(path))
         {
-            // File header
-            //sw.WriteLine($"# This file has been automatically generated on {DateTime.Today:yyyy-MM-dd} at {DateTime.Now:HH:mm:ss}.\n# It contains inventory data for entity \"{inventory.id}\".\n");
+            // Header
+            sw.WriteLine($"# This file has been automatically generated on {DateTime.Today:yyyy-MM-dd} at {DateTime.Now:HH:mm:ss}.\n# It contains inventory data for entity \"{inventory.id}\".\n");
 
+            // Saved Data
             sw.WriteLine($"INVENTORY_ID: \"{inventory.id}\"");
+            foreach (var item in inventory.items)
+            {
+                sw.WriteLine($"\t{item.ToString()}");
+            }
+
+            // Footer
+            sw.WriteLine($"");
         }
     }
-
-    //private static string CreateInvString(char devider, params string[] args)
-    //{
-    //    //string output = "";
-    //    //foreach (var item in args)
-    //    //    if (item == devider)
-
-    //    //    output += item.ToString();
-        
-    //    //return output;
-    //}
 
     public static List<RetrievedItems> Load(string path, Inventory inventory)
     {
