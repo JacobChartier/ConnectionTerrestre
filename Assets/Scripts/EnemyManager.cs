@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -21,12 +23,15 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Combat"))
+            return;
+
         // unload les ennemis trop loin du joueur
         for (int i = 0; i < enemies.Count; i++)
         {

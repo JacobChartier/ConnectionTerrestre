@@ -31,7 +31,6 @@ public class Player : MonoBehaviour
         }
 
         DontDestroyOnLoad(Instance);
-        DontDestroyOnLoad(GameObject.Find("vCam (1st Person View)"));
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 

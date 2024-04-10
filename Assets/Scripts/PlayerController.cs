@@ -105,6 +105,13 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += Vector3.up * 100;
         }
+        else if (transform.position.y > 200) // répare le bug où le joueur (du overworld) monte durant le combat...
+        {
+            if (Physics.Raycast(r, out hit))
+            {
+                transform.position = hit.point + Vector3.up * 1;
+            }
+        }
 
         if (transform.position.x > LIM_X_POS)
         {
