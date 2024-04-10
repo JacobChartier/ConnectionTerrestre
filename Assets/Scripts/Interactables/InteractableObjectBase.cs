@@ -9,7 +9,7 @@ public abstract class InteractableObjectBase : MonoBehaviour, IInteractable
     private void Start()
     {
     }
-
+    
     public abstract void Interact();
 
     public abstract void ShowContextLabel();

@@ -1,12 +1,8 @@
-using Assets.Scripts.Interactables;
 using Assets.Scripts.Combat;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum EnemyType
 {
@@ -20,7 +16,7 @@ public enum EnemyType
     BOSS4
 }
 
-public class Enemy : InteractableObjectBase
+public class Enemy : MonoBehaviour
 {
     // F U C K   I T   W E   B A L L
     private List<EntityStats_struct> DATA_LIST = new(Enum.GetValues(typeof(EnemyType)).Length)
@@ -92,7 +88,7 @@ public class Enemy : InteractableObjectBase
     [Header("Interaction label")]
     [SerializeField] private GameObject label;
     [SerializeField] private string text;
-    [SerializeField] private CapsuleCollider collision;
+    [SerializeField] private CapsuleCollider CC;
 
     [Header("Info pour combat")]
     [SerializeField] private EntityStats joueur;
@@ -106,6 +102,7 @@ public class Enemy : InteractableObjectBase
     {
         EM = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
         SR = GetComponent<SpriteRenderer>();
+        CC = GetComponent<CapsuleCollider>();
 
         // ??? serializefield ne fonctionne pas correctement dans les prefabs et je ne sais pas pourquoi...
         joueur = GameObject.Find("Player").GetComponent<EntityStats>();
@@ -139,7 +136,7 @@ public class Enemy : InteractableObjectBase
                 break;
         }
 
-        if (!EM.BossExists && false /* joueur à une tour inutilisée */)// TODO
+        if (!EM.BossExists && TourManager.current_tour >= 0)
         {
             type += (int)EnemyType.BOSS1;
         }
@@ -152,15 +149,15 @@ public class Enemy : InteractableObjectBase
         GetComponent<EntityStats>().SetStats(DATA_LIST[(int)type]);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.collider.name != "Player")
+        if (collision.gameObject.name != "Player collision")
             return;
 
-        Interact();
+        CombatCommence();
     }
 
-    public override void Interact()
+    public void CombatCommence()
     {
         //GameManager.Instance.playerES.Health = GameObject.Find("Player").GetComponent<EntityStats>().Health;
         //GameManager.Instance.enemyES = GetComponent<EntityStats>();
@@ -186,18 +183,30 @@ public class Enemy : InteractableObjectBase
         SceneManager.LoadScene(2);
     }
 
-    public override void ShowContextLabel()
-    {
-        ContextLabelUI.Instance.ShowContextLabel("E", "Enter Combat");
-    }
+    //public override void ShowContextLabel()
+    //{
+    //    ContextLabelUI.Instance.ShowContextLabel("E", "Enter Combat");
+    //}
 
     private void OnDestroy()
     {
+        if (type >= EnemyType.BOSS1)
+        {
+            EM.BossExists = false;
+        }
+
         EM.RemoveEnemyFromList(this);
     }
 
     public bool IsBoss()
     {
         return type >= EnemyType.BOSS1;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0, 1, 1, 0.5f);
+        Gizmos.DrawSphere(CC.center + transform.position, CC.radius);
+        Gizmos.DrawLine(transform.position, GameObject.Find("Player").transform.position);
     }
 }

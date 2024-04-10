@@ -48,10 +48,10 @@ public class EnemyManager : MonoBehaviour
 
         if (Random.value * 100 <= POURCENTAGE_CHANCE_ENEMY_SPAWN)
         {
-            Debug.Log("enemy spawn!!!!");
+            //Debug.Log("enemy spawn!!!!");
             Vector3 position_enemi = player.position;
 
-            // position ennemi + nombre hasard de 100 à 200, positif ou négatif (deux axes)
+            // position joueur + nombre hasard de 100 à 200, positif ou négatif (deux axes)
             position_enemi += Vector3.right * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
             position_enemi += Vector3.forward * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
 
@@ -73,5 +73,23 @@ public class EnemyManager : MonoBehaviour
         }
 
         enemies.Remove(enemy);
+    }
+
+    public void SpawnBoss()
+    {
+        BossExists = true;
+        Vector3 position_enemi = player.position;
+
+        // position joueur + nombre hasard de 100 à 200, positif ou négatif (deux axes)
+        position_enemi += Vector3.right * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
+        position_enemi += Vector3.forward * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
+
+        if (!Physics.Raycast(position_enemi + Vector3.up * 100, Vector3.down, out RaycastHit r))
+            return;
+
+        position_enemi = new Vector3(position_enemi.x, r.point.y + 1, position_enemi.z);
+
+        Enemy e = Instantiate(PREFAB_ENEMY, position_enemi, Quaternion.identity).GetComponent<Enemy>();
+        enemies.Add(e);
     }
 }

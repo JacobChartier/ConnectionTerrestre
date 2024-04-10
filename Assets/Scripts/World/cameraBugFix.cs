@@ -13,5 +13,6 @@ public class cameraBugFix : MonoBehaviour
         Vcam = GetComponent<CinemachineVirtualCamera>();
         Vcam.Follow = GameObject.Find("Player").transform;
         Vcam.Priority++;
+        //Vcam.m_Lens.NearClipPlane = 0.6f; // pour ne pas voir le modèle du joueur
     }
 }

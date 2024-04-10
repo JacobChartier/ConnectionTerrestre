@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour
     private const float POWER_JUMP = 5;
 
     [SerializeField] private float speed = 1;
-    Rigidbody rb;
+    private Rigidbody rb;
+    private Vector3 safePos;
 
     [SerializeField] private float verticalInput;
     [SerializeField] private float horizontalInput;
+
+    //[SerializeField] private List<BoxCollider> OOB;
 
     void Start()
     {
@@ -130,6 +133,20 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, LIM_Z_NEG);
         }
+
+        //Bounds test;
+        //foreach (BoxCollider BC in OOB)
+        //{
+        //    test = new Bounds(BC.center, BC.size);
+        //    if (test.Contains(transform.position))
+        //    {
+        //        transform.position = safePos;
+        //    }
+        //    else
+        //    {
+        //        safePos = transform.position;
+        //    }
+        //}
     }
 
     private void OnDrawGizmos()
