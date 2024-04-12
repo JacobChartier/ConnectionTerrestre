@@ -16,6 +16,9 @@ public class EnemyManager : MonoBehaviour
     [Space]
     [Header("joueur")]
     [SerializeField] private Transform player;
+    [Space]
+    [Header("Couleure")]
+    [SerializeField] public Material material;
 
     List<Enemy> enemies = new();
     public bool BossExists = false;
@@ -31,6 +34,11 @@ public class EnemyManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Combat"))
             return;
+
+        if (player == null) // >:(
+        {
+            player = GameObject.Find("Player").transform;
+        }
 
         // unload les ennemis trop loin du joueur
         for (int i = 0; i < enemies.Count; i++)
@@ -69,6 +77,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (enemy.IsBoss())
         {
+            Tour.current_tour = -1;
             BossExists = false;
         }
 
@@ -77,17 +86,30 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnBoss()
     {
-        BossExists = true;
-        Vector3 position_enemi = player.position;
-
-        // position joueur + nombre hasard de 100 à 200, positif ou négatif (deux axes)
-        position_enemi += Vector3.right * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
-        position_enemi += Vector3.forward * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
-
-        if (!Physics.Raycast(position_enemi + Vector3.up * 100, Vector3.down, out RaycastHit r))
+        Debug.Log("BOSS!!!");
+        if (BossExists)
             return;
 
-        position_enemi = new Vector3(position_enemi.x, r.point.y + 1, position_enemi.z);
+        // mets l'ennemi au millieu de la tour
+        Tour tour = null;
+        GameObject[] tours = GameObject.FindGameObjectsWithTag("Tour");
+        foreach (GameObject t in tours)
+        {
+            if (Vector3.Distance(player.position, t.transform.position) < 100)
+            {
+                tour = t.GetComponent<Tour>();
+                break;
+            }
+        }
+        Vector3 position_enemi = tour.transform.position;
+
+        // position joueur + nombre hasard de 30 à 50, positif ou négatif (deux axes)
+        //position_enemi += Vector3.right * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
+        //position_enemi += Vector3.forward * (Random.value * 30 + 20) * (Random.value < 0.5f ? 1 : -1);
+
+        Physics.Raycast(position_enemi + Vector3.up * 100, Vector3.down, out RaycastHit r);
+
+        position_enemi = new Vector3(position_enemi.x, r.point.y + 3, position_enemi.z);
 
         Enemy e = Instantiate(PREFAB_ENEMY, position_enemi, Quaternion.identity).GetComponent<Enemy>();
         enemies.Add(e);

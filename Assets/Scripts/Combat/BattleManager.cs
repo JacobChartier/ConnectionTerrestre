@@ -2,6 +2,7 @@ using Assets.Scripts.Combat;
 using Cinemachine;
 using System;
 using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class BattleManager : MonoBehaviour
     }
 
     const int FRAMES_AVANT_ATTAQUE = 80;
+    const float LEVEL_UP_SPEED = 2f;
 
     [SerializeField] GameObject prefab_text_dommages;
     [SerializeField] GameObject prefab_text_xp;
@@ -276,6 +278,10 @@ public class BattleManager : MonoBehaviour
         }
 
         dommages = MathF.Round(dommages, MidpointRounding.AwayFromZero);
+
+        // safety check
+        if (dommages <= 0)
+            dommages = 1;
 
         bhvdamagetextprefab damage_text = Instantiate(prefab_text_dommages, GameObject.Find("Canvas").transform).GetComponent<bhvdamagetextprefab>();
         damage_text.Init(dommages, position_defendant);
@@ -545,6 +551,30 @@ public class BattleManager : MonoBehaviour
             camera_generale.Priority = 0;
             camera_option_joueur.Priority = 0;
             camera_joueur_fuit.Priority = 1;
+
+            if (BattleInfo.enemy.enemyType >= EnemyType.BOSS1)
+            {
+                Unity.Mathematics.Random rng = new Unity.Mathematics.Random();
+                switch (BattleInfo.enemy.enemyType)
+                {
+                    case EnemyType.BOSS1:
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Hache solide", 20, 50, 20));
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Magie Terreste", 50, 55, 25 + rng.NextInt(-5, 5), 10));
+                        break;
+                    case EnemyType.BOSS2:
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Épée standard", 40, 50, 25));
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Boule de feu", 50, 51, 30, 30));
+                        break;
+                    case EnemyType.BOSS3:
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Épée du magicien", 40, 42, 35));
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Retour de la connection terreste", 30, 35, (int)(50 + BattleInfo.player.MagicPoint.Current / 50), 50));
+                        break;
+                    case EnemyType.BOSS4:
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("L'épée du vainqueur", 50, 70, 9999));
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Le dernier recours", 100, 100, int.MaxValue, (int)(BattleInfo.player.MagicPoint.Max + 1)));
+                        break;
+                }
+            }
         }
 
         if (timer == 100 && BattleInfo.enemy.Experience > 0)
@@ -552,15 +582,16 @@ public class BattleManager : MonoBehaviour
             timer--;
             BattleInfo.player.Experience++;
             BattleInfo.enemy.Experience--;
-            if (BattleInfo.enemy.Experience % 4 == 0)
+            if (BattleInfo.enemy.Coins > 0)
             {
                 BattleInfo.player.Coins++;
+                BattleInfo.enemy.Coins--;
             }
 
             bhvxptextprefab xp = Instantiate(prefab_text_xp, GameObject.Find("Canvas").transform).GetComponent<bhvxptextprefab>();
             xp.Init(false, joueur_transform);
 
-            if (BattleInfo.player.Experience >= Mathf.Pow(2.0f, BattleInfo.player.Niveau + 4))
+            if (BattleInfo.player.Experience >= Mathf.Pow(LEVEL_UP_SPEED, BattleInfo.player.Niveau + 4))
             {
                 Debug.Log(BattleInfo.player.Experience);
                 bhvxptextprefab lvl = Instantiate(prefab_text_xp, GameObject.Find("Canvas").transform).GetComponent<bhvxptextprefab>();
@@ -586,5 +617,8 @@ public class BattleManager : MonoBehaviour
         BattleInfo.player.AttackSpeed.Current *= UPGRADE_SPEED;
         BattleInfo.player.Defense.Current *= UPGRADE_SPEED;
         BattleInfo.player.Strength.Current *= UPGRADE_SPEED;
+
+        BattleInfo.player.MagicPoint.Current = BattleInfo.player.MagicPoint.Max;
+        //BattleInfo.player.Health.Current = BattleInfo.player.Health.Max;
     }
 }

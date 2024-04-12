@@ -2477,6 +2477,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tour #3
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_TagString
+      value: Tour
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 66caa09fe531cb24d86d2d3dc66b284c, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -2736,8 +2764,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278829850}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -83.4, y: 26.8, z: -188.2}
+  m_LocalRotation: {x: 0.16976704, y: 0.47122526, z: -0.09421611, w: 0.86037743}
+  m_LocalPosition: {x: -71.09, y: 28.44, z: -189.90001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6050,6 +6078,14 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
       propertyPath: m_Name
       value: Tour #1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
+      propertyPath: m_TagString
+      value: Tour
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
       propertyPath: m_LocalScale.x
@@ -11506,6 +11542,7 @@ MonoBehaviour:
   DISTANCE_ENEMY_UNLOAD: 100
   PREFAB_ENEMY: {fileID: 5882584736917987593, guid: 72d728215300c044e882de6667f9cb55, type: 3}
   player: {fileID: 4851534798876644005}
+  material: {fileID: 2100000, guid: 6f1a3abc3e476eb4f823f1ab4687b4ed, type: 2}
   BossExists: 0
 --- !u!4 &1429233489
 Transform:
@@ -11598,7 +11635,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 304104386}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1468923280
 MonoBehaviour:
@@ -12827,7 +12864,7 @@ Transform:
   m_GameObject: {fileID: 1641761792}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -83.4, y: 26.3, z: -188.2}
+  m_LocalPosition: {x: -235.8, y: 290.6, z: 10.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14328,6 +14365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tour #0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -14906,6 +14947,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tour #2
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
+      propertyPath: m_TagString
+      value: Tour
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -14924,7 +14973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 42.5
+      value: 46.4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 68b893b671e51ac44bb404bdffabe995, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16399,6 +16448,7 @@ MonoBehaviour:
     _displayColor: 
   Experience: 0
   Niveau: 0
+  enemyType: 0
   Coins: 0
 --- !u!114 &1443858190114376383
 MonoBehaviour:
@@ -16532,10 +16582,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1683766071232539578, guid: a9e0e9a0f8dedff44a49dc9586d33452, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 843771751}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9e0e9a0f8dedff44a49dc9586d33452, type: 3}
 --- !u!114 &3914883049894665565
 MonoBehaviour:
@@ -16853,7 +16900,7 @@ Transform:
   m_GameObject: {fileID: 6470284587203772646}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -83.4, y: 26.3, z: -188.2}
+  m_LocalPosition: {x: -235.8, y: 290.6, z: 10.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17028,6 +17075,6 @@ SceneRoots:
   - {fileID: 139644248}
   - {fileID: 492148646}
   - {fileID: 570747598}
-  - {fileID: 857426513}
-  - {fileID: 2216634267195346564}
   - {fileID: 254949715}
+  - {fileID: 2659753940517410487}
+  - {fileID: 1468923279}
