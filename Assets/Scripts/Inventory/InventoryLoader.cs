@@ -13,6 +13,11 @@ public class InventoryLoader
 
     public static void Save(Inventory inventory)
     {
+        inventory.items.Clear();
+
+        foreach (var slot in Player.Instance.inventory.slots)
+            inventory.items.Add(slot.GetItem());
+
         InvFile.Save($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
         Debug.Log($"Saving inventory data to: <b>{persistent_data_path}/{inventory.id}{FILE_FORMAT}</b>");
     }
@@ -34,7 +39,7 @@ public class InventoryLoader
                     var itemCreated = ItemManager.Instance.CreateItem(item.type, slot, item.RemainingUses);
                     inventory.items.Add(itemCreated.GetComponent<Item>());
 
-                    if (slot.transform.childCount > 2)
+                    if (slot.transform.childCount > 1)
                         UnityEngine.Object.Destroy(itemCreated);
 
                     continue;

@@ -73,7 +73,6 @@ public class InputManager : MonoBehaviour
         controls.Player.OpenInventory.performed += OpenInventory;
 
         controls.Menus.Close.performed += HideMenus;
-        controls.Menus.Close.canceled += HideMenus;
 
         controls.Menus.SplitStackInHalf.performed += ctx => mouseButtonInput = MouseButton.RIGHT;
         controls.Menus.TakeOneItemFromStack.performed += ctx => mouseButtonInput = MouseButton.MIDDLE;

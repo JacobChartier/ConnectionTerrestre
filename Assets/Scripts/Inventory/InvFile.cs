@@ -18,10 +18,21 @@ public static class InvFile
         sw.WriteLine($"INVENTORY_ID: \"{inventory.id}\"");
 
         foreach (var item in inventory.items)
-            sw.WriteLine($"{SerializeItem(item, inventory)}");
+            if (item != null)
+                sw.WriteLine($"{SerializeItem(item, inventory)}");
 
         // Footer
-        sw.WriteLine($"\n# {inventory.items.Count.ToString()} items saved for entity \"{inventory.id}\".");
+        sw.WriteLine($"\n# {GetNumberOfItemsSaved(inventory).ToString()} items saved for entity \"{inventory.id}\".");
+    }
+
+    private static int GetNumberOfItemsSaved(Inventory inventory)
+    {
+        int count = 0;
+        foreach (var item in inventory.items)
+            if (item != null)
+                count++;
+
+        return count;
     }
 
     private static string SerializeItem(Item item, Inventory inventory)
@@ -35,7 +46,7 @@ public static class InvFile
         if (item.GetSlotID() > -1)
             output += $"SlotID: {item.GetSlotID().ToString()}, ";
 
-        if (item.RemainingUses != 5)
+        if (item.IsBreakable)
             output += $"RemainingUses: {item.RemainingUses.ToString()}, ";
 
         output = output.TrimEnd(',', ' ');
@@ -68,9 +79,9 @@ public static class InvFile
                 if (line.Contains("SlotID"))
                 {
                     start = line.IndexOf("SlotID:") + 8;
-                    length = 1;
+                    length = 2;
 
-                    item.slotID = int.Parse(line.Substring(start, length).Trim());
+                    item.slotID = int.Parse(line.Substring(start, length).Trim(',', ' '));
                 }
 
                 // Read RemainingUses
@@ -79,7 +90,7 @@ public static class InvFile
                     start = line.IndexOf("RemainingUses:") + 15;
                     length = 1;
 
-                    item.RemainingUses = int.Parse(line.Substring(start, length).Trim());
+                    item.RemainingUses = int.Parse(line.Substring(start, length).Trim(',', ' '));
                 }
 
                 // Add the deserialized item to the list
