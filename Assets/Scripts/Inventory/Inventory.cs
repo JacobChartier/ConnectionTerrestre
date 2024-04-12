@@ -28,21 +28,6 @@ public class Inventory : MonoBehaviour
 
     public bool Add(Item item, int amount = 1, Slot slot = null)
     {
-        //// Stacking
-        //for (int i = 0; i < slots.Length; i++)
-        //{
-        //    Slot slot = slots[i];
-        //    Draggable itemInSlot = slot?.GetComponentInChildren<Draggable>();
-
-        //    if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < item.StackSize)
-        //    {
-        //        itemInSlot.count++;
-        //        //itemInSlot.RefreshCount();
-
-        //        return true;
-        //    }
-        //}
-
         items.Add(item);
 
         if (slot == null)

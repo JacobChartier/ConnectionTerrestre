@@ -71,7 +71,6 @@ public class InputManager : MonoBehaviour
         controls.Player.HotbarSelection.canceled += ctx => scrollWheelInput_t = ctx.ReadValue<float>();
 
         controls.Player.OpenInventory.performed += OpenInventory;
-        controls.Player.OpenInventory.canceled += OpenInventory;
 
         controls.Menus.Close.performed += HideMenus;
         controls.Menus.Close.canceled += HideMenus;

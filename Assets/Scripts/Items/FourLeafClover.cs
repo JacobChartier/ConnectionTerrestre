@@ -21,8 +21,6 @@ public class FourLeafClover : Item
 
         IsBreakable = true;
         MaxUses = 5;
-
-        RemainingUses = MaxUses;
     }
 
     public override void Use()

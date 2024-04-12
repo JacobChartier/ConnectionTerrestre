@@ -62,7 +62,7 @@ public class ItemManager : MonoBehaviour
         return Instance.CreateItem(typeof(T), slot);
     }
 
-    public GameObject CreateItem(System.Type type, Slot slot = null)
+    public GameObject CreateItem(System.Type type, Slot slot = null, int remainingUses = 5)
     {
         // Create the Items GameObject is it doesn't already exist.
         if (!GameObject.Find("Items"))
@@ -76,6 +76,7 @@ public class ItemManager : MonoBehaviour
 
         // Add the components
         Item itemComponent = (Item)itemObject.AddComponent(type);
+        itemComponent.RemainingUses = remainingUses;
 
         Draggable draggableCompoment = itemObject.AddComponent<Draggable>();
         draggableCompoment.item = itemComponent;

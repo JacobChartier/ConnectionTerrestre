@@ -45,58 +45,54 @@ public static class InvFile
         return output;
     }
 
-    private static Item DeserializeItem(string line)
-    {
-        return default;
-    }
-
     public static List<DeserializedItem> Load(string path, Inventory inventory)
     {
         List<DeserializedItem> items = new();
         var lines = File.ReadAllLines(path);
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach (var line in lines)
         {
-            string s_type = default;
-            int slot = -2;
-            System.Type type = default;
+            int start, length;
 
-            DeserializedItem retrievedItems = new DeserializedItem();
-
-            if (lines[i].ToString().Contains("TYPE"))
+            if (line.Contains("ITEM"))
             {
-                s_type = ReadData<string>("TYPE", lines[i]);
-                retrievedItems.type = System.Type.GetType(s_type);
+                DeserializedItem item = new();
 
+                // Read ITEM
+                start = line.IndexOf("ITEM:") + 6;
+                length = line.IndexOf('{') - start;
 
-                retrievedItems.slotID = ReadData<int>("SLOT_ID", lines[i + 1]);
-                UnityEngine.Debug.Log($"<color=#00FF00>{retrievedItems.type}</color> {{{retrievedItems.slotID}}}");
-            }
+                item.type = System.Type.GetType(line.Substring(start, length).Trim());
 
-            if (type != null)
-            {
-                items.Add(retrievedItems);
+                // Read SlotID
+                if (line.Contains("SlotID"))
+                {
+                    start = line.IndexOf("SlotID:") + 8;
+                    length = 1;
+
+                    item.slotID = int.Parse(line.Substring(start, length).Trim());
+                }
+
+                // Read RemainingUses
+                if (line.Contains("RemainingUses"))
+                {
+                    start = line.IndexOf("RemainingUses:") + 15;
+                    length = 1;
+
+                    item.RemainingUses = int.Parse(line.Substring(start, length).Trim());
+                }
+
+                // Add the deserialized item to the list
+                items.Add(item);
             }
         }
 
         return items;
     }
-
-    private static T ReadData<T>(string data, string line)
-    {
-        int start = (line.IndexOf(':') + 1);
-        int length = (line.Length - start);
-
-        T output;
-        string s_value = line.Substring(start, length);
-
-        output = (T)Convert.ChangeType(s_value, typeof(T));
-        return output;
-    }
 }
 
 [Serializable]
-public struct DeserializedItem
+public class DeserializedItem
 {
     public System.Type type;
     public int slotID;
