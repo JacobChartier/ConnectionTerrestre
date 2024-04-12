@@ -49,6 +49,8 @@ public class InventoryUI : MenuHandler
 
     public void Hide()
     {
+        InventoryLoader.Save(Player.Instance.inventory);
+
         InputManager.controls?.Player.Enable();
         InputManager.controls?.Menus.Disable();
 
@@ -65,7 +67,7 @@ public class InventoryUI : MenuHandler
         foreach (var slot in Player.Instance.inventory.slots)
         {
             if (slot.name.Contains("Hotbar Slot")) continue;
-            Player.Instance.inventory.items.Remove(slot.GetItem());
+            //Player.Instance.inventory.items.Remove(slot.GetItem());
 
             foreach (var item in slot.GetComponentsInChildren<Item>())
             {

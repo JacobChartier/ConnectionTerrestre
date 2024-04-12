@@ -10,7 +10,7 @@ public class HotbarUI : MonoBehaviour
 {
     [SerializeField] private Slot[] slots = new Slot[10];
     [SerializeField] private Slot selectedSlot = null;
-    [SerializeField] private TMP_Text itemNameLabel;
+    //[SerializeField] private TMP_Text itemNameLabel;
 
     private Color initialColor = new Color(0.01960784f, 0.01960784f, 0.01960784f, 0.8627451f);
     private Color selectionColor = new Color(0.135f, 0.135f, 0.135f, 0.8627451f);
@@ -54,17 +54,17 @@ public class HotbarUI : MonoBehaviour
             PreviousSlot();
         }
 
-        if(selectedSlot.GetComponentInChildren<Item>() != null)
-        {
-            itemNameLabel.text = "";
+        //if(selectedSlot.GetComponentInChildren<Item>() != null)
+        //{
+        //    itemNameLabel.text = "";
 
-            itemNameLabel = selectedSlot.gameObject.GetComponentInChildren<TMP_Text>();
-            itemNameLabel.text = selectedSlot.GetItem().Name;
-        }
-        else
-        {
-            itemNameLabel.text = "";
-        }
+        //    itemNameLabel = selectedSlot.gameObject.GetComponentInChildren<TMP_Text>();
+        //    itemNameLabel.text = selectedSlot.GetItem().Name;
+        //}
+        //else
+        //{
+        //    itemNameLabel.text = "";
+        //}
     }
 
     private void NextSlot()

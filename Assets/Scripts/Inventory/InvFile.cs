@@ -1,77 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using UnityEditor.ShaderGraph.Internal;
 
 public static class InvFile
-{ 
+{
     public static void Save(string path, Inventory inventory)
     {
-        using (StreamWriter sw = new StreamWriter(path))
-        {
-            // Header
-            sw.WriteLine($"# This file has been automatically generated on {DateTime.Today:yyyy-MM-dd} at {DateTime.Now:HH:mm:ss}.\n# It contains inventory data for entity \"{inventory.id}\".\n");
+        using StreamWriter sw = new(path);
 
-            // Saved Data
-            sw.WriteLine($"INVENTORY_ID: \"{inventory.id}\"");
-            foreach (var item in inventory.items)
-            {
-                sw.WriteLine($"\t{item.ToString()}");
-            }
+        // Header
+        sw.WriteLine($"# This file has been generated on {DateTime.Today:yyyy-MM-dd} at {DateTime.Now:HH:mm:ss}.\n# It contains inventory data for entity \"{inventory.id}\".\n");
 
-            // Footer
-            sw.WriteLine($"");
-        }
+        // Data
+        sw.WriteLine($"INVENTORY_ID: \"{inventory.id}\"");
+
+        foreach (var item in inventory.items)
+            if (item != null)
+                sw.WriteLine($"{SerializeItem(item, inventory)}");
+
+        // Footer
+        sw.WriteLine($"\n# {GetNumberOfItemsSaved(inventory).ToString()} items saved for entity \"{inventory.id}\".");
     }
 
-    public static List<RetrievedItems> Load(string path, Inventory inventory)
+    private static int GetNumberOfItemsSaved(Inventory inventory)
     {
-        List<RetrievedItems> items = new List<RetrievedItems>();
+        int count = 0;
+        foreach (var item in inventory.items)
+            if (item != null)
+                count++;
+
+        return count;
+    }
+
+    private static string SerializeItem(Item item, Inventory inventory)
+    {
+        string output = "\t";
+
+        output += $"ITEM: {item.GetType().ToString()} ";
+
+        output += "{ ";
+
+        if (item.GetSlotID() > -1)
+            output += $"SlotID: {item.GetSlotID().ToString()}, ";
+
+        if (item.IsBreakable)
+            output += $"RemainingUses: {item.RemainingUses.ToString()}, ";
+
+        output = output.TrimEnd(',', ' ');
+
+        output += " }";
+
+        return output;
+    }
+
+    public static List<DeserializedItem> Load(string path, Inventory inventory)
+    {
+        List<DeserializedItem> items = new();
         var lines = File.ReadAllLines(path);
 
-        for (int i = 0; i < lines.Length; i++)
+        foreach (var line in lines)
         {
-            string s_type = default;
-            int slot = -2;
-            System.Type type = default;
+            int start, length;
 
-            RetrievedItems retrievedItems = new RetrievedItems();
-
-            //if (lines[i].ToString().Contains("TYPE"))
-            //{
-            //    s_type = ReadData<string>("TYPE", lines[i]);
-            //    retrievedItems.type = System.Type.GetType(s_type);
-
-
-            //    retrievedItems.slotID = ReadData<int>("SLOT_ID", lines[i + 1]);
-            //    Debug.Log($"<color=#00FF00>{retrievedItems.type}</color> {{{retrievedItems.slotID}}}");
-            //}
-
-            if (type != null)
+            if (line.Contains("ITEM"))
             {
-                items.Add(retrievedItems);
+                DeserializedItem item = new();
+
+                // Read ITEM
+                start = line.IndexOf("ITEM:") + 6;
+                length = line.IndexOf('{') - start;
+
+                item.type = System.Type.GetType(line.Substring(start, length).Trim());
+
+                // Read SlotID
+                if (line.Contains("SlotID"))
+                {
+                    start = line.IndexOf("SlotID:") + 8;
+                    length = 2;
+
+                    item.slotID = int.Parse(line.Substring(start, length).Trim(',', ' '));
+                }
+
+                // Read RemainingUses
+                if (line.Contains("RemainingUses"))
+                {
+                    start = line.IndexOf("RemainingUses:") + 15;
+                    length = 1;
+
+                    item.RemainingUses = int.Parse(line.Substring(start, length).Trim(',', ' '));
+                }
+
+                // Add the deserialized item to the list
+                items.Add(item);
             }
         }
 
         return items;
     }
-
-    private static T ReadData<T>(string data, string line)
-    {
-        int start = (line.IndexOf(':') + 1);
-        int length = (line.Length - start);
-
-        T output;
-        string s_value = line.Substring(start, length);
-
-        output = (T)Convert.ChangeType(s_value, typeof(T));
-        return output;
-    }
 }
 
 [Serializable]
-public class RetrievedItems
+public class DeserializedItem
 {
     public System.Type type;
     public int slotID;
-    public int quantity;
+    public int RemainingUses;
 }

@@ -30,6 +30,14 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             Debug.LogWarning($"Unable to generate an ID for slot: {this.name}", this);
     }
 
+    private void Update()
+    {
+        if (GetItem() == null)
+            isOccupied = false;
+        else
+            isOccupied = true;
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         if (isEnable)
@@ -79,7 +87,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public Item GetItem()
     {
-        return GetComponentInChildren<Item>();
+        return GetComponentInChildren<Item>(true);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -124,9 +132,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         this.gameObject.GetComponent<UnityEngine.UI.Image>().color = default_color;
 
         if (isTooltipVisible)
-        {
             Tooltip.Instance.Hide();
-        }
     }
 
     private string GenerateTooltipString(Item item)
