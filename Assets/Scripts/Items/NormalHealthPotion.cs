@@ -8,8 +8,6 @@ public class NormalHealthPotion : Item
 
     protected override void Load()
     {
-        Id = 3;
-
         prefab = Resources.Load<GameObject>("Prefabs/textprefab");
 
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_health_potion");
@@ -24,16 +22,39 @@ public class NormalHealthPotion : Item
         Price = GeneratePrice(4, 9);
     }
 
-    public override void Use()
+    public override void Use(Scenes scene)
     {
         var player = GameObject.Find("Player");
-        var hpAdded = player.GetComponent<EntityStats>().Health.Max * 0.30f;
-        player.GetComponent<Health>().AddHealthPoint(hpAdded);
+        var value = player.GetComponent<EntityStats>().Health.Max * 0.30f;
+
+        player.GetComponent<Health>().AddHealthPoint(value);
+
+        switch (scene)
+        {
+            case Scenes.WORLD:
+                UseInWorld(player, value);
+                break;
+
+            case Scenes.COMBAT:
+                UseInCombat(player, value);
+                break;
+        }
+
+        InventoryLoader.Delete(Player.Instance.inventory, this);
+        Destroy(this.gameObject);
+    }
+
+    private void UseInWorld(GameObject player, float value)
+    {
+        if (player == null) return;
 
         var obj = Instantiate(prefab, new Vector2(GameObject.Find("Player Health").transform.position.x, GameObject.Find("Player Health").transform.position.y), Quaternion.identity, GameObject.Find("Menu").transform);
-        obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{hpAdded} HP");
+        obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{value} HP");
+    }
 
-        Player.Instance.inventory.Remove(this);
-        Destroy(this.gameObject);
+    private void UseInCombat(GameObject player, float value)
+    {
+        if (player == null) return;
+
     }
 }

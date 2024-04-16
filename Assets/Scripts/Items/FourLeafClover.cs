@@ -6,8 +6,6 @@ public class FourLeafClover : Item
 {
     protected override void Load()
     {
-        Id = 1;
-
         Icon = Resources.Load<Sprite>("Sprites/Items/four_leaf_clover");
         Model = Resources.Load<Mesh>("Meshes/Items/four_leaf_clover");
 
@@ -25,15 +23,41 @@ public class FourLeafClover : Item
         Price = GeneratePrice(18, 27);
     }
 
-    public override void Use()
+    public override void Use(Scenes scene)
     {
+        var player = GameObject.Find("Player");
+        var value = 0.50f;
+
         RemainingUses--;
+        InventoryLoader.Update(Player.Instance.inventory, this);
+
+        switch (scene)
+        {
+            case Scenes.WORLD:
+                UseInWorld(player, value);
+                break;
+
+            case Scenes.COMBAT:
+                UseInCombat(player, value);
+                break;
+        }
 
         if (RemainingUses < 1)
         {
-            base.Use();
-            Destroy(gameObject);
+            InventoryLoader.Delete(Player.Instance.inventory, this);
+            Destroy(this.gameObject);
         }
+    }
+
+    private void UseInWorld(GameObject player, float value)
+    {
+        if (player == null) return;
+
+    }
+
+    private void UseInCombat(GameObject player, float value)
+    {
+        if (player == null) return;
 
     }
 }

@@ -18,11 +18,37 @@ public class StrongMagicEssence : Item
         Price = GeneratePrice(10, 17);
     }
 
-    public override void Use()
+    public override void Use(Scenes scene)
     {
         var player = GameObject.Find("Player");
-        player.GetComponent<EntityStats>().MagicPoint.Add(player.GetComponent<EntityStats>().MagicPoint.Max * 0.60f);
+        var value = player.GetComponent<EntityStats>().MagicPoint.Max * 0.60f;
 
+        player.GetComponent<EntityStats>().MagicPoint.Add(value);
+
+        switch (scene)
+        {
+            case Scenes.WORLD:
+                UseInWorld(player, value);
+                break;
+
+            case Scenes.COMBAT:
+                UseInCombat(player, value);
+                break;
+        }
+
+        InventoryLoader.Delete(Player.Instance.inventory, this);
         Destroy(this.gameObject);
+    }
+
+    private void UseInWorld(GameObject player, float value)
+    {
+        if (player == null) return;
+
+    }
+
+    private void UseInCombat(GameObject player, float value)
+    {
+        if (player == null) return;
+
     }
 }

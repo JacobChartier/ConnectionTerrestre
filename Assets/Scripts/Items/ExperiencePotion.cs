@@ -8,8 +8,6 @@ public class ExperiencePotion : Item
 {
     protected override void Load()
     {
-        Id = 0;
-
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_experience_potion");
         Model = Resources.Load<Mesh>("Meshes/Items/normal_experience_potion");
 
@@ -24,9 +22,41 @@ public class ExperiencePotion : Item
         Price = GeneratePrice(4, 9);
     }
 
-    public override void Use()
+    public override void Use(Scenes scene)
     {
-        Debug.LogWarning($"Item use has not been implemented.", this);
-        Destroy(this.gameObject);
+        var player = GameObject.Find("Player");
+        var value = 0.30f;
+
+        RemainingUses--;
+        InventoryLoader.Update(Player.Instance.inventory, this);
+
+        switch (scene)
+        {
+            case Scenes.WORLD:
+                UseInWorld(player, value);
+                break;
+
+            case Scenes.COMBAT:
+                UseInCombat(player, value);
+                break;
+        }
+
+        if (RemainingUses < 1)
+        {
+            InventoryLoader.Delete(Player.Instance.inventory, this);
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void UseInWorld(GameObject player, float value)
+    {
+        if (player == null) return;
+
+    }
+
+    private void UseInCombat(GameObject player, float value)
+    {
+        if (player == null) return;
+
     }
 }

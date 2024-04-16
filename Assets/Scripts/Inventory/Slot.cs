@@ -60,6 +60,8 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
             }
 
+            InventoryLoader.Update(Player.Instance.inventory, item.item);
+
             isOccupied = true;
             Draggable[] items = GetComponentsInChildren<Draggable>();
 

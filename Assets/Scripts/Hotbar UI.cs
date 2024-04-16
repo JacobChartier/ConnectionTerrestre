@@ -92,7 +92,7 @@ public class HotbarUI : MonoBehaviour
     {
         if (selectedSlot.GetComponentInChildren<Item>() == null) return;
 
-        selectedSlot.GetItem().Use();
+        selectedSlot.GetItem().Use(Scenes.WORLD);
         HeadUpDisplay.Instance.UpdateUI();
     }
 }

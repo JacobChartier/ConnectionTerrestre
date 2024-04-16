@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,16 @@ public class InventoryLoader
 
         InvFile.Save($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
         Debug.Log($"Saving inventory data to: <b>{persistent_data_path}/{inventory.id}{FILE_FORMAT}</b>");
+    }
+
+    public static void Update(Inventory inventory, Item item)
+    {
+        InvFile.Update($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory, item);
+    }
+
+    public static void Delete(Inventory inventory, Item item)
+    {
+        InvFile.Delete($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", item);
     }
 
     public static void Load(Inventory inventory)

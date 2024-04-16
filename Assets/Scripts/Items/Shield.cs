@@ -19,9 +19,40 @@ public class Shield : Item
         Price = GeneratePrice(10, 17);
     }
 
-    public override void Use()
+    public override void Use(Scenes scene)
     {
+        var player = GameObject.Find("Player");
+        var value = player.GetComponent<EntityStats>().Defense.Max * 0.15f;
+
+        player.GetComponent<EntityStats>().Defense.Multiplier += value;
+
+        switch (scene)
+        {
+            case Scenes.WORLD:
+                UseInWorld(player, value);
+                break;
+
+            case Scenes.COMBAT:
+                UseInCombat(player, value);
+                break;
+        }
+
         if (Random.Range(0, 2) == 1)
-            Destroy(gameObject);
+        {
+            InventoryLoader.Delete(Player.Instance.inventory, this);
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void UseInWorld(GameObject player, float value)
+    {
+        if (player == null) return;
+
+    }
+
+    private void UseInCombat(GameObject player, float value)
+    {
+        if (player == null) return;
+
     }
 }

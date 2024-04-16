@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEditor.ShaderGraph.Internal;
@@ -43,6 +44,9 @@ public static class InvFile
 
         output += "{ ";
 
+        if (item.Id != null)
+            output += $"UUID: {item.Id}, ";
+
         if (item.GetSlotID() > -1)
             output += $"SlotID: {item.GetSlotID().ToString()}, ";
 
@@ -54,6 +58,37 @@ public static class InvFile
         output += " }";
 
         return output;
+    }
+
+    public static void Update(string path, Inventory inventory, Item item)
+    {
+        string[] lines = File.ReadAllLines(path);
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i].Contains($"ITEM: {item.GetType()}") && 
+                lines[i].Contains($"{item.Id}"))
+            {
+                lines[i] = SerializeItem(item, inventory);
+                break;
+            }
+        }
+
+        File.WriteAllLines(path, lines);
+    }
+
+    public static void Delete(string path, Item item)
+    {
+        string[] lines = File.ReadAllLines(path);
+        int index = Array.FindIndex(lines, line => line.Contains($"UUID: {item.Id}"));
+
+        if (index != -1)
+        {
+            List<string> updatedLines = new List<string>(lines);
+            updatedLines.RemoveAt(index);
+
+            File.WriteAllLines(path, updatedLines);
+        }
     }
 
     public static List<DeserializedItem> Load(string path, Inventory inventory)
@@ -75,10 +110,19 @@ public static class InvFile
 
                 item.type = System.Type.GetType(line.Substring(start, length).Trim());
 
+                // Read UUID
+                if (line.Contains("UUID"))
+                {
+                    start = line.IndexOf("UUID:") + "UUID:".Length + 1;
+                    length = line.IndexOf(',') - start;
+
+                    item.UUID = line.Substring(start, length).Trim(',', ' ');
+                }
+
                 // Read SlotID
                 if (line.Contains("SlotID"))
                 {
-                    start = line.IndexOf("SlotID:") + 8;
+                    start = line.IndexOf("SlotID:") + "SlotID:".Length + 1;
                     length = 2;
 
                     item.slotID = int.Parse(line.Substring(start, length).Trim(',', ' '));
@@ -87,7 +131,7 @@ public static class InvFile
                 // Read RemainingUses
                 if (line.Contains("RemainingUses"))
                 {
-                    start = line.IndexOf("RemainingUses:") + 15;
+                    start = line.IndexOf("RemainingUses:") + "RemainingUses:".Length + 1;
                     length = 1;
 
                     item.RemainingUses = int.Parse(line.Substring(start, length).Trim(',', ' '));
@@ -106,6 +150,7 @@ public static class InvFile
 public class DeserializedItem
 {
     public System.Type type;
+    public string UUID;
     public int slotID;
     public int RemainingUses;
 }

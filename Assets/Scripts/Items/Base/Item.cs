@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [Serializable]
 public abstract class Item : MonoBehaviour, IItemBase
 {
-    [field: SerializeField] public int Id { get; protected set; } = -1;
+    [field: SerializeField] public string Id { get; protected set; } = System.Guid.NewGuid().ToString();
 
     [field: Header("Art")]
     [field: ReadOnly] public Sprite Icon { get; protected set; } = null;
@@ -64,16 +64,14 @@ public abstract class Item : MonoBehaviour, IItemBase
         }
     }
 
-    public virtual void Use()
-    {
-        Player.Instance.inventory.Remove(this);
-        InventoryLoader.Save(Player.Instance.inventory);
-    }
+    public virtual void Use() 
+    { }
+
+    public virtual void Use(Scenes scene) 
+    { }
 
     protected virtual void Load()
-    {
-
-    }
+    { }
 
     public Slot GetSlot()
     {
@@ -127,6 +125,16 @@ public enum Rarety
     RARE,
     EPIC,
     LEGENDARY,
+
+    INVALID = -1,
+    DEBUG = -2
+}
+
+public enum Scenes
+{
+    WORLD,
+    COMBAT,
+    ANY,
 
     INVALID = -1,
     DEBUG = -2

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class WeakHealthPotion : Item
 {
@@ -23,15 +24,39 @@ public class WeakHealthPotion : Item
         Price = GeneratePrice(2, 5);
     }
 
-    public override void Use()
+    public override void Use(Scenes scene)
     {
         var player = GameObject.Find("Player");
-        var hpAdded = player.GetComponent<EntityStats>().Health.Max * 0.15f;
-        player.GetComponent<Health>().AddHealthPoint(hpAdded);
+        var value = player.GetComponent<EntityStats>().Health.Max * 0.15f;
+
+        player.GetComponent<Health>().AddHealthPoint(value);
+
+        switch (scene)
+        {
+            case Scenes.WORLD:
+                UseInWorld(player, value);
+                break;
+
+            case Scenes.COMBAT:
+                UseInCombat(player, value);
+                break;
+        }
+
+        InventoryLoader.Delete(Player.Instance.inventory, this);
+        Destroy(this.gameObject);
+    }
+
+    private void UseInWorld(GameObject player, float value)
+    {
+        if (player == null) return;
 
         var obj = Instantiate(prefab, new Vector2(GameObject.Find("Player Health").transform.position.x, GameObject.Find("Player Health").transform.position.y), Quaternion.identity, GameObject.Find("Menu").transform);
-        obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{hpAdded} HP");
+        obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{value} HP");
+    }
 
-        Destroy(this.gameObject);
+    private void UseInCombat(GameObject player, float value)
+    {
+        if (player == null) return;
+
     }
 }

@@ -92,7 +92,7 @@ public class ItemManager : MonoBehaviour
         System.Type type = Inventory.GenerateRandomItem();
         //playerInventory.Add(type);
 
-        items.ElementAt(0).Use();
+        items.ElementAt(0).Use(Scenes.WORLD);
     }
 
     public void ClearAllItemFromPlayerInventory()

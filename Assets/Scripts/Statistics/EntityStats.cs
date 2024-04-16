@@ -65,7 +65,7 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    // À NE SEULEMENT UTILISER QUAND UN ENEMI EST INITIALIZÉ!!!! NE JAMAIS UTILISER POUR JOUEUR OU APRÈS L'INITIALIZATION DE L'ENNEMI
+    // À NE SEULEMENT UTILISER QUAND UN ENEMI EST INITIALIZÉ!!!! NE JAMAIS UTILISER POUR JOUEUR OU APRÈS L'INITIALISATION DE L'ENNEMI
     // cette fonction existe car il n'est pas possible de remplacer une classe avec une autre, encore moins un monobehavior
     // les structs se copient par valeur et non par référence (struct my beloved)
     public void SetStats(EntityStats_struct stats)
@@ -108,6 +108,16 @@ public struct EntityStatistic
         }
     }
 
+    [SerializeField] private float _multiplier;
+    [HideInInspector] public float Multiplier
+    {
+        get => _multiplier;
+        set
+        {
+            _multiplier = value;
+        }
+    }
+
     [Space]
     [SerializeField] private float _max;
     [HideInInspector] public float Max
@@ -133,9 +143,9 @@ public struct EntityStatistic
 
     public bool Add(float amount)// ne fonctionne pas :)
     {
-        if ((Current + amount) <= Max)
+        if ((Current + (amount * Multiplier)) <= Max)
         {
-            Current += amount;
+            Current += (amount * Multiplier);
             return true;
         }
         else
