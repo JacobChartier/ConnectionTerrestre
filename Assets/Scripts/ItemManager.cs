@@ -17,7 +17,10 @@ public class ItemManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
-            Destroy(this);
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         SceneManager.sceneLoaded += CreateItems;
 

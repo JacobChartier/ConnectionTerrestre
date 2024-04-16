@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class EnemyManager : MonoBehaviour
 {
+    private static EnemyManager instance;
+
     [Header("constantes")]
     [SerializeField] private int ENEMY_LIMIT = 4;
     [SerializeField] private float POURCENTAGE_CHANCE_ENEMY_SPAWN = 0.5f;
@@ -26,7 +28,16 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     // Update is called once per frame
@@ -86,7 +97,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnBoss()
     {
-        Debug.Log("BOSS!!!");
+        //Debug.Log("BOSS!!!");
         if (BossExists)
             return;
 

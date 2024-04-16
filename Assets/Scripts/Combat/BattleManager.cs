@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour
     }
 
     const int FRAMES_AVANT_ATTAQUE = 80;
-    const float LEVEL_UP_SPEED = 2f;
+    const float LEVEL_UP_SPEED = 1.5f;
 
     [SerializeField] GameObject prefab_text_dommages;
     [SerializeField] GameObject prefab_text_xp;
@@ -75,8 +75,9 @@ public class BattleManager : MonoBehaviour
     public bool essence_guerrier = false;
     public bool essence_magicien = false;
     public bool bouclier_temporaire = false;
-    private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = false;
     private Inventory inventory;
+    private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = false;
+    private bool DEBUG_ENEMY_1HP = true;
 
     private void Awake()
     {
@@ -132,6 +133,12 @@ public class BattleManager : MonoBehaviour
         choix_combat.Active = false;
         if (BattleInfo.enemy.Experience < 10)
             BattleInfo.enemy.Experience = 100;
+
+        if (DEBUG_ENEMY_1HP)
+        {
+            BattleInfo.enemy.enemyType = EnemyType.BOSS4;
+            BattleInfo.enemy.Health.Current = 1;
+        }
     }
 
     // Update is called once per frame
@@ -554,12 +561,11 @@ public class BattleManager : MonoBehaviour
 
             if (BattleInfo.enemy.enemyType >= EnemyType.BOSS1)
             {
-                Unity.Mathematics.Random rng = new Unity.Mathematics.Random();
                 switch (BattleInfo.enemy.enemyType)
                 {
                     case EnemyType.BOSS1:
                         BattleInfo.player.Attaques.Add(new InfoAttaque("Hache solide", 20, 50, 20));
-                        BattleInfo.player.Attaques.Add(new InfoAttaque("Magie Terreste", 50, 55, 25 + rng.NextInt(-5, 5), 10));
+                        BattleInfo.player.Attaques.Add(new InfoAttaque("Magie Terreste", 50, 55, 25 + UnityEngine.Random.Range(-5, 5), 10));
                         break;
                     case EnemyType.BOSS2:
                         BattleInfo.player.Attaques.Add(new InfoAttaque("Épée standard", 40, 50, 25));
@@ -602,6 +608,12 @@ public class BattleManager : MonoBehaviour
 
         if (timer > LONGUEURE_ANIM_VICTOIRE)
         {
+            if (BattleInfo.enemy.enemyType == EnemyType.BOSS4)
+            {
+                SceneManager.LoadScene("Fin du jeu");
+                return;
+            }
+
             BattleInfo.inventory = inventory;
             SceneManager.LoadScene("World");
         }
@@ -609,7 +621,7 @@ public class BattleManager : MonoBehaviour
 
     private void LevelUpStats()
     {
-        const float UPGRADE_SPEED = 1.1f; // testing? what testing?
+        const float UPGRADE_SPEED = 1.1f; // no testing whoops
 
         BattleInfo.player.Niveau++;
         BattleInfo.player.Health.Max = (int)(BattleInfo.player.Health.Max * UPGRADE_SPEED);
@@ -619,6 +631,6 @@ public class BattleManager : MonoBehaviour
         BattleInfo.player.Strength.Current *= UPGRADE_SPEED;
 
         BattleInfo.player.MagicPoint.Current = BattleInfo.player.MagicPoint.Max;
-        //BattleInfo.player.Health.Current = BattleInfo.player.Health.Max;
+        BattleInfo.player.Health.Current = BattleInfo.player.Health.Max;
     }
 }

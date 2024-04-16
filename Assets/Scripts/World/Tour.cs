@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Tour : MonoBehaviour
 {
+    private static Dictionary<int, Tour> instances = new();
+
     [SerializeField] private const int NUM_TOURS = 4;
 
     [SerializeField] private UnityEvent JoueurDansTour;
@@ -18,7 +20,16 @@ public class Tour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (!instances.TryGetValue(TOUR_ID, out Tour _))
+        {
+            DontDestroyOnLoad(gameObject);
+            instances.Add(TOUR_ID, this);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         Col = GetComponent<Collider>();
     }
 
