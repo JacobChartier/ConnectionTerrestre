@@ -77,7 +77,7 @@ public class BattleManager : MonoBehaviour
     public bool bouclier_temporaire = false;
     private Inventory inventory;
     private bool DEBUG_PLAYER_ALWAYS_GOES_FIRST = false;
-    private bool DEBUG_ENEMY_1HP = true;
+    private bool DEBUG_ENEMY_1HP = false;
 
     private void Awake()
     {
