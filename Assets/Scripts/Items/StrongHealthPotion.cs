@@ -9,11 +9,13 @@ public class StrongHealthPotion : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/strong_health_potion");
         Model = Resources.Load<Mesh>("Meshes/Items/strong_health_potion");
 
-        Name = "Health Potion (Strong)";
+        Name = "Potion de Vie (Forte)";
         Description = "Potion forte qui régénère 60% de ton <color=#FF2E2E>HP</color> maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.POTION;
+
+        Price = GeneratePrice(10, 17);
     }
 
     public override void Use()

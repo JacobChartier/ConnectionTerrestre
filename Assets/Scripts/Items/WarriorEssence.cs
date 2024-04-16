@@ -9,13 +9,15 @@ public class WarriorEssence : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_warrior_essence");
         Model = Resources.Load<Mesh>("Meshes/Items/normal_warrior_essence");
 
-        Name = "Warrior Essence";
+        Name = "Essence de Guerrier";
         Description = "Les attaques physiques deviennent 30% plus fortes. Ne peux pas être utilisé hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.ESSENCE;
 
         IsUsableOnlyInCombat = true;
+
+        Price = GeneratePrice(10, 17);
     }
 
     public override void Use()

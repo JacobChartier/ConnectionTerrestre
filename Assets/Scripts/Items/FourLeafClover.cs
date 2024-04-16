@@ -11,8 +11,8 @@ public class FourLeafClover : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/four_leaf_clover");
         Model = Resources.Load<Mesh>("Meshes/Items/four_leaf_clover");
 
-        Name = "Four Leaf Clover";
-        Description = "Augmente de 50% la <color=#FFD700>monnaie</color> et expérience que le joueur reçoit lors de la défaite d’un ennemi. Cet item peut seulement être utilisé hors combat. L'effet dure 5 utilisations.";
+        Name = "Trèfle à Quatre Feuilles";
+        Description = "Augmente de 50% la <color=#FFD700>monnaie</color> et l'<color=#91FF00>expérience</color> que le joueur reçoit lors de la défaite d’un ennemi. Cet item peut seulement être utilisé hors combat. L'effet dure 5 utilisations.";
 
         Rarety = Rarety.LEGENDARY;
         Category = Category.LEAF;
@@ -21,6 +21,8 @@ public class FourLeafClover : Item
 
         IsBreakable = true;
         MaxUses = 5;
+
+        Price = GeneratePrice(18, 27);
     }
 
     public override void Use()
@@ -28,7 +30,10 @@ public class FourLeafClover : Item
         RemainingUses--;
 
         if (RemainingUses < 1)
+        {
+            base.Use();
             Destroy(gameObject);
+        }
 
     }
 }

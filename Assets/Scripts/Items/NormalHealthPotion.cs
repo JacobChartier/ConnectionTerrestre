@@ -15,11 +15,13 @@ public class NormalHealthPotion : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_health_potion");
         Model = Resources.Load<Mesh>("Meshes/Items/normal_health_potion");
 
-        Name = "Health Potion";
+        Name = "Potion de Vie";
         Description = "Potion qui régénère 30% de ton <color=#FF2E2E>HP</color> maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.RARE;
         Category = Category.POTION;
+
+        Price = GeneratePrice(4, 9);
     }
 
     public override void Use()
@@ -31,6 +33,7 @@ public class NormalHealthPotion : Item
         var obj = Instantiate(prefab, new Vector2(GameObject.Find("Player Health").transform.position.x, GameObject.Find("Player Health").transform.position.y), Quaternion.identity, GameObject.Find("Menu").transform);
         obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{hpAdded} HP");
 
+        Player.Instance.inventory.Remove(this);
         Destroy(this.gameObject);
     }
 }

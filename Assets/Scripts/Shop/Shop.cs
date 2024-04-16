@@ -40,6 +40,8 @@ public class Shop : InteractableObjectBase
 
         inventoryMenu.gameObject.transform.localPosition = new Vector3(-160, inventoryMenu.transform.localPosition.y, inventoryMenu.transform.localPosition.z);
         inventoryMenu.GetComponent<InventoryUI>().Show();
+
+        InventoryLoader.Load(inventory);
     }
 
     public override void ShowContextLabel()

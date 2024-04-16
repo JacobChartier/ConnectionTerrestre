@@ -14,11 +14,13 @@ public class WeakHealthPotion : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/weak_health_potion");
         Model = Resources.Load<Mesh>("Meshes/Items/weak_health_potion");
 
-        Name = "Health Potion (Weak)";
+        Name = "Potion de Vie (Faible)";
         Description = "Potion faible qui régénère 15% de ton <color=#FF2E2E>HP</color> maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.COMMON;
         Category = Category.POTION;
+
+        Price = GeneratePrice(2, 5);
     }
 
     public override void Use()

@@ -147,15 +147,15 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             tooltip += "<br>";
 
         if (item.IsBreakable)
-            tooltip += $"<br><color=#505050>Utilisations restantes: {(item.RemainingUses < (item.MaxUses / 3) ? $"<color=#FF0000>{item.RemainingUses}</color>" : $"{item.RemainingUses}")}/{item.MaxUses}</color>";
+            tooltip += $"<br><color=#707070>Utilisations restantes: {(item.RemainingUses <= (item.MaxUses / 2) ? $"<color=#FF0000>{item.RemainingUses}</color>" : $"{item.RemainingUses}")}/{item.MaxUses}</color>";
 
         // Use Only In
 
         if (item.IsUsableOnlyInCombat)
-            tooltip += "<br><color=#FF0F0F>Peut seulement être utilisé dans le monde de combat.</color>";
+            tooltip += "<br><color=#FF3030>Ne peut pas être utilisé hors du mode combat.</color>";
 
         if (item.IsUsableOnlyInOverworld)
-            tooltip += "<br><color=#FF0F0F>Peut seulement être utilisé en dehors du monde de combat.</color>";
+            tooltip += "<br><color=#FF3030>Ne peut pas être utilisé en mode combat.</color>";
 
 
         return tooltip;

@@ -27,7 +27,10 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-
+        if (arg0 == SceneManager.GetSceneByName("World"))
+            Player.Instance.LoadInventory(true);
+        else 
+            Player.Instance.LoadInventory();
     }
 
     public void SwitchToMainMenu()

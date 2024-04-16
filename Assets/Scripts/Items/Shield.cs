@@ -10,11 +10,13 @@ public class Shield : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/shield");
         Model = Resources.Load<Mesh>("Meshes/Items/shield");
 
-        Name = "Shield";
+        Name = "Bouclier";
         Description = "Si utilisé en combat, ta <color=#213BFF>défense</color> est augmentée pendant au moins 3 tours. Pour chaque tour après le 3e en effet, le bouclier a 50% de chance de briser. <br><br>Si utilisé hors combat, pour un certain temps, si tu entre en combat, l’effet du bouclier sera automatiquement appliqué sur toi.";
 
         Rarety = Rarety.EPIC;
         Category = Category.SHIELD;
+        
+        Price = GeneratePrice(10, 17);
     }
 
     public override void Use()

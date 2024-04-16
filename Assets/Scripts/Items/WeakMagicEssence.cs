@@ -10,11 +10,13 @@ public class WeakMagicEssence : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/weak_magic_essence");
         Model = Resources.Load<Mesh>("Meshes/Items/weak_magic_essence");
 
-        Name = "Magic Essence (Weak)";
+        Name = "Essence Magique (Faible)";
         Description = "Essence faible qui régénère 15% de ton <color=#00FFFF>MP</color> maximal. Peut être utilisé en ou hors combat.";
 
         Rarety = Rarety.COMMON;
         Category = Category.ESSENCE;
+
+        Price = GeneratePrice(2, 5);
     }
 
     public override void Use()

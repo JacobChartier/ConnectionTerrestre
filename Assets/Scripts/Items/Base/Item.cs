@@ -34,6 +34,10 @@ public abstract class Item : MonoBehaviour, IItemBase
     [field: ReadOnly, SerializeField] public int MaxUses { get; protected set; } = 5;
     [field: SerializeField] public int RemainingUses { get; set; } = 5;
 
+    [field: Space]
+    [field: ReadOnly, SerializeField] public bool IsBuyable { get; protected set; } = true;
+    [field: SerializeField] public int Price { get; set; } = 0;
+
     protected void Start()
     {
         Load();
@@ -60,7 +64,11 @@ public abstract class Item : MonoBehaviour, IItemBase
         }
     }
 
-    public abstract void Use();
+    public virtual void Use()
+    {
+        Player.Instance.inventory.Remove(this);
+        InventoryLoader.Save(Player.Instance.inventory);
+    }
 
     protected virtual void Load()
     {
@@ -83,12 +91,6 @@ public abstract class Item : MonoBehaviour, IItemBase
             return gameObject.GetComponentInParent<Slot>(true).ID;
     }
 
-    /* Everything below this will be reworked and might not be working in the future. DO NOT USE */
-    [Header("Will be reworked")]
-
-    // TODO: Make a new price generator
-    [HideInInspector] public int price;
-
     public int GeneratePrice(int min, int max)
     {
         return UnityEngine.Random.Range(min, max);
@@ -96,9 +98,9 @@ public abstract class Item : MonoBehaviour, IItemBase
 
     public bool Purchase(EntityStats player)
     {
-        if (price <= player.Coins)
+        if (Price <= player.Coins)
         {
-            player.Coins -= price;
+            player.Coins -= Price;
             MenuHandler.Instance.GetMenu<InventoryUI>().Refresh();
 
             return true;

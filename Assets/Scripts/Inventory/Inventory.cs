@@ -71,7 +71,10 @@ public class Inventory : MonoBehaviour
 
     public void Spawn(Item item, Slot slot)
     {
-        GameObject itemGameObject = ItemManager.Instance.CreateItem(item.GetType(), slot);
+        if (slot != null)
+            ItemManager.Instance.CreateItem(item.GetType(), slot);
+        else
+            ItemManager.Instance.CreateItem(item.GetType());
     }
 
     #region Debug Stuff

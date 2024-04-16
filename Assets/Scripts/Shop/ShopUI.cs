@@ -145,13 +145,13 @@ public class ShopUI : MenuHandler
 
     private void ShowPrice(Item item)
     {
-        switch (item.price)
+        switch (item.Price)
         {
             case 0:
                 this.price.text = $"<b><color=#17FF3E>FREE</color></b>";
                 break;
             default:
-                this.price.text = (item.price > playerStats.Coins) ? $"<b><color=#FF0000>{item.price}</color></b>" : $"<b><color=#FFFFFF>{item.price}</color></b>";
+                this.price.text = (item.Price > playerStats.Coins) ? $"<b><color=#FF0000>{item.Price}</color></b>" : $"<b><color=#FFFFFF>{item.Price}</color></b>";
                 break;
         }
     }

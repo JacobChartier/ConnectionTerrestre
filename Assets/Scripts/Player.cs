@@ -63,6 +63,39 @@ public class Player : MonoBehaviour
         InventoryLoader.Load(inventory);
     }
 
+    public void LoadInventory(bool onlyLoadHotbar)
+    {
+        if (!onlyLoadHotbar)
+        {
+            inventory = gameObject.GetComponentInChildren<Inventory>(true);
+            inventory.slots = new Slot[30];
+
+            for (int i = 0; i < 30; i++)
+            {
+                if (i < 10)
+                    inventory.slots[i] = GameObject.Find($"Hotbar Slot ({i})").GetComponent<Slot>();
+
+                if (i >= 10 && i < 30)
+                    inventory.slots[i] = GameObject.Find($"Inventory Slot ({i})").GetComponent<Slot>();
+            }
+
+            InventoryLoader.Load(inventory);
+        }
+        else
+        {
+            inventory = gameObject.GetComponentInChildren<Inventory>(true);
+            inventory.slots = new Slot[10];
+
+            for (int i = 0; i < 30; i++)
+            {
+                if (i < 10)
+                    inventory.slots[i] = GameObject.Find($"Hotbar Slot ({i})").GetComponent<Slot>();
+            }
+
+            InventoryLoader.Load(inventory);
+        }
+    }
+
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         inventory = gameObject.GetComponentInChildren<Inventory>();

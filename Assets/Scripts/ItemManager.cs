@@ -31,30 +31,12 @@ public class ItemManager : MonoBehaviour
         items.Clear();
         playerInventory.EmptyInventory();
 
+        if (scene == SceneManager.GetSceneByName("World"))
+            InventoryLoader.Load(Player.Instance.inventory);
 
-        //// Potions
-        //CreateItem<ExperiencePotion>();
+        if (scene == SceneManager.GetSceneByName("Combat"))
+            InventoryLoader.Load(Player.Instance.inventory);
 
-        //CreateItem<WeakHealthPotion>();
-        //CreateItem<NormalHealthPotion>();
-        //CreateItem<StrongHealthPotion>();
-        //CreateItem<UltimateHealthPotion>();
-
-        //// Essences
-        //CreateItem<MagicianEssence>();
-        //CreateItem<WarriorEssence>();
-
-        //CreateItem<WeakMagicEssence>();
-        //CreateItem<NormalMagicEssence>();
-        //CreateItem<StrongMagicEssence>();
-        //CreateItem<UltimateMagicEssence>();
-
-        //// Leaves
-        //CreateItem<VitalLeaf>();
-        //CreateItem<FourLeafClover>();
-
-        //// Shields
-        //CreateItem<Shield>();
     }
 
     public static GameObject CreateItem<T>(Slot slot = null) where T : Item, new()

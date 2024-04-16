@@ -11,13 +11,15 @@ public class MagicianEssence : Item
         Icon = Resources.Load<Sprite>("Sprites/Items/normal_magician_essence");
         Model = Resources.Load<Mesh>("Meshes/Items/normal_magician_essence");
 
-        Name = "Magician Essence";
+        Name = "Essence de Magicien";
         Description = "Les attaques magiques deviennent 30% plus fortes. Ne peux pas être utilisé hors combat.";
 
         Rarety = Rarety.EPIC;
         Category = Category.ESSENCE;
 
         IsUsableOnlyInCombat = true;
+
+        Price = GeneratePrice(10, 17);
     }
 
     public override void Use()

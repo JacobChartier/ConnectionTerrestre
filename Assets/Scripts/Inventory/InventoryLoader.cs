@@ -15,7 +15,7 @@ public class InventoryLoader
     {
         inventory.items.Clear();
 
-        foreach (var slot in Player.Instance.inventory.slots)
+        foreach (var slot in inventory.slots)
             inventory.items.Add(slot.GetItem());
 
         InvFile.Save($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
@@ -34,7 +34,15 @@ public class InventoryLoader
             Debug.Log($"<color=#FF00FF>{item.type}</color> {{SlotID: {item.slotID}}}");
 
             foreach (var slot in inventory.slots)
-                if (slot.IsIDTheSame(item.slotID))
+            {
+                if (inventory.slots[item.slotID] == null)
+                {
+                    var itemCreated = ItemManager.Instance.CreateItem(item.type, remainingUses: item.RemainingUses);
+                    inventory.items.Add(itemCreated.GetComponent<Item>());
+
+                    break;
+                }
+                else if (slot.IsIDTheSame(item.slotID))
                 {
                     var itemCreated = ItemManager.Instance.CreateItem(item.type, slot, item.RemainingUses);
                     inventory.items.Add(itemCreated.GetComponent<Item>());
@@ -44,6 +52,9 @@ public class InventoryLoader
 
                     continue;
                 }
+
+                continue;
+            }
         }
     }
 }

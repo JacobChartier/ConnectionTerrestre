@@ -65,11 +65,12 @@ public class selectormanager : MonoBehaviour
         if (type == StartupType.ITEM)
         {
             int counter = 0;
-            fleche.max_choix = BattleInfo.inventory.items.Count;
-            foreach (Item i in BattleInfo.inventory.items)
+
+            fleche.max_choix = Player.Instance.inventory.items.Count;
+            foreach (Item i in Player.Instance.inventory.items)
             {
                 txt_liste.text += $"- {i.Name}\n";
-                if (++counter >= 8)
+                if (++counter >= Player.Instance.inventory.items.Count)
                     break;
             }
         }
