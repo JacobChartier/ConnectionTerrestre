@@ -95,13 +95,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Inventory inventaire;
 
     private EnemyManager EM;
-    private SpriteRenderer SR;
+    //private SpriteRenderer SR;
+    [SerializeField] private static Material material;
     public EnemyType type = default;
 
     private void Awake()
     {
         EM = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
-        SR = GetComponent<SpriteRenderer>();
+        material = EM.material;
+        //SR = GetComponent<SpriteRenderer>();
         CC = GetComponent<CapsuleCollider>();
 
         // ??? serializefield ne fonctionne pas correctement dans les prefabs et je ne sais pas pourquoi...
@@ -113,36 +115,52 @@ public class Enemy : MonoBehaviour
             Destroy(this);
             throw new InvalidProgramException("DATA_LIST doit contenir autant d'information qu'il y a de types ennemis.");
         }
+
+        if (BattleInfo.player == null)
+        {
+            BattleInfo.player = joueur;
+        }
+
+        if (BattleInfo.inventory == null)
+        {
+            BattleInfo.inventory = inventaire;
+            DontDestroyOnLoad(inventaire);
+        }
     }
 
     private void Start()
     {
-        switch (joueur.Attaques.Count)
+        // _SCLERACOLOR est la propriété shader utilisé par le squelette
+        switch (BattleInfo.player.Attaques.Count)
         {
             case 0 or 1 or 2:
                 type = EnemyType.DEFAULT;
+                material.SetColor("_SCLERACOLOR", Color.white);
                 break;
-            case 3:
+            case 3 or 4:
                 type = EnemyType.JAUNE;
-                SR.color = Color.yellow;
+                material.SetColor("_SCLERACOLOR", Color.yellow);
+
                 break;
-            case 4:
+            case 5 or 6:
                 type = EnemyType.ROUGE;
-                SR.color = Color.red;
+                material.SetColor("_SCLERACOLOR", Color.red);
                 break;
             default:
                 type = EnemyType.BLEU;
-                SR.color = Color.blue;
+                material.SetColor("_SCLERACOLOR", Color.blue);
                 break;
         }
 
-        if (!EM.BossExists && TourManager.current_tour >= 0)
+        if (!EM.BossExists && Tour.current_tour >= 0)
         {
+            EM.BossExists = true;
             type += (int)EnemyType.BOSS1;
         }
 
-        if (type >= EnemyType.BOSS1)
+        if (IsBoss())
         {
+            Debug.Log("big trouble in little china");
             transform.localScale *= 3;
         }
 
@@ -162,23 +180,16 @@ public class Enemy : MonoBehaviour
         //GameManager.Instance.playerES.Health = GameObject.Find("Player").GetComponent<EntityStats>().Health;
         //GameManager.Instance.enemyES = GetComponent<EntityStats>();
         //InventoryLoader.Save(Player.Instance.inventory);
+        //InventoryLoader.Save(Player.Instance.inventory);
+        GetComponent<EntityStats>().enemyType = type;
 
-        if (BattleInfo.player == null)
-        {
-            BattleInfo.player = joueur;
-            Debug.Log("player null");
-        }
-
-        if (BattleInfo.inventory == null)
-        {
-            BattleInfo.inventory = inventaire;
-            DontDestroyOnLoad(inventaire);
-            Debug.Log("inventaire null");
-        }
-
+        //Debug.Log(BattleInfo.enemy.Experience + "c");
         BattleInfo.enemy = GetComponent<EntityStats>();
-        //BattleInfo.inventory = inventaire;
-        Destroy(gameObject);
+        Debug.Log(BattleInfo.enemy.Experience + "d");
+
+        BattleInfo.inventory = inventaire;
+        DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
         SceneManager.LoadScene(2);
     }
 

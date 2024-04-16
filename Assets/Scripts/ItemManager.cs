@@ -35,7 +35,7 @@ public class ItemManager : MonoBehaviour
             InventoryLoader.Load(Player.Instance.inventory);
 
         if (scene == SceneManager.GetSceneByName("Combat"))
-            InventoryLoader.Load(Player.Instance.inventory);
+            InventoryLoader.Load(LoadMode.COMBAT_FULL, Player.Instance.inventory);
 
     }
 

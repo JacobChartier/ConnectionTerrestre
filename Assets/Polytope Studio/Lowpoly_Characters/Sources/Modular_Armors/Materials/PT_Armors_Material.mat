@@ -2,22 +2,36 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PT_Armors_Material
   m_Shader: {fileID: 4800000, guid: 66cf399cd52203c4685e11681d535f09, type: 3}
-  m_ShaderKeywords: BOOLEAN_DB96F4EA_ON _CAPE_KEY1 _FLATCOLORS_ON _GLOSSYREFLECTIONS_OFF
-    _KEYWORD0_ON _METALICOFF_ON _METALICON_ON _SMOOTHNESSOFF_ON _SMOOTHNESSON_ON
-    _SPECULARHIGHLIGHTS_OFF _TOGGLESWITCH0_ON _TOGGLESWITCH1_ON
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - BOOLEAN_DB96F4EA_ON
+  - _CAPE_KEY1
+  - _FLATCOLORS_ON
+  - _GLOSSYREFLECTIONS_OFF
+  - _KEYWORD0_ON
+  - _METALICOFF_ON
+  - _METALICON_ON
+  - _SMOOTHNESSOFF_ON
+  - _SMOOTHNESSON_ON
+  - _SPECULARHIGHLIGHTS_OFF
+  - _TOGGLESWITCH0_ON
+  - _TOGGLESWITCH1_ON
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -65,6 +79,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _EYESSMOOTHNESS: 0.7
     - _GEMS1SMOOTHNESS: 1
@@ -109,6 +124,6 @@ Material:
     - _METAL2COLOR: {r: 0.4674706, g: 0.4677705, b: 0.5188679, a: 0}
     - _METAL3COLOR: {r: 0.4383232, g: 0.4383232, b: 0.4716981, a: 0}
     - _SCARSCOLOR: {r: 0.8490566, g: 0.5037117, b: 0.3884835, a: 0}
-    - _SCLERACOLOR: {r: 0.9056604, g: 0.8159487, b: 0.8159487, a: 0}
+    - _SCLERACOLOR: {r: 1, g: 1, b: 1, a: 1}
     - _SKINCOLOR: {r: 2.02193, g: 1.0081, b: 0.6199315, a: 0}
   m_BuildTextureStacks: []

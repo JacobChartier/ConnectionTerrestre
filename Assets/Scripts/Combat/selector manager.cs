@@ -69,6 +69,8 @@ public class selectormanager : MonoBehaviour
             fleche.max_choix = Player.Instance.inventory.items.Count;
             foreach (Item i in Player.Instance.inventory.items)
             {
+                if (i.IsUsableOnlyInOverworld) continue;
+
                 txt_liste.text += $"- {i.Name}\n";
                 if (++counter >= Player.Instance.inventory.items.Count)
                     break;

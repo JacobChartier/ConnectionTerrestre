@@ -24,13 +24,14 @@ public class EntityStats : MonoBehaviour
 
     [Header("Combat Statistics")]
     public EntityStatistic Health = new EntityStatistic() { Base = 80, Min = 0, Max = 100 };
-    public EntityStatistic Defense = new EntityStatistic() { Base = 10, Min = 0, Max = 100 };
+    public EntityStatistic Defense = new EntityStatistic() { Base = 3, Min = 0, Max = 100 };
     public EntityStatistic MagicPoint = new EntityStatistic() { Base = 10, Min = 0, Max = 10 };
     public EntityStatistic Strength = new EntityStatistic() { Base = 10, Min = 0, Max = 10 };
     public EntityStatistic AttackSpeed = new EntityStatistic() { Base = 10, Min = 0, Max = 10 };
     public int Experience = 0; // fucking stupide entitystatistics veux pas fucking fonctionner stupide fucking reste pris à 0 j'hais les struct c'est tellement fucking stupide laisse ca comme int je m'en fous fuck cette stupide structure à chier
     public int Niveau = 0;
     public List<InfoAttaque> Attaques = new List<InfoAttaque>();
+    public EnemyType enemyType = EnemyType.DEFAULT; // seulement utilisé par ennemis
 
     [Header("Economy Statistics")]
     public int Coins = 0; // coins n'est pas float, alors pas un entity stat.
