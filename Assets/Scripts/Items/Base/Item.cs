@@ -96,6 +96,8 @@ public abstract class Item : MonoBehaviour, IItemBase
 
     public bool Purchase(EntityStats player)
     {
+        if (Price == -1) return false;
+
         if (Price <= player.Coins)
         {
             player.Coins -= Price;

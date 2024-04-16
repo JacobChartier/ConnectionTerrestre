@@ -45,10 +45,13 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             GameObject droppedItem = eventData.pointerDrag;
             Draggable item = droppedItem.GetComponent<Draggable>();
 
+            if (droppedItem.GetComponentInParent<Slot>()?.isEnable == false) return;
+
             if (isOccupied && droppedItem.GetComponent<Item>().Name == GetItem().Name)
             {
                 item.parentAfterDrag = transform;
                 droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
+
 
                 droppedItem.gameObject.SetActive(false);
                 this.transform.GetChild(0).GetComponent<Draggable>().count++;
@@ -58,9 +61,10 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             {
                 item.parentAfterDrag = transform;
                 droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
+
             }
 
-            InventoryLoader.Update(Player.Instance.inventory, item.item);
+            InventoryLoader.Update(Player.Instance.inventory, GetItem());
 
             isOccupied = true;
             Draggable[] items = GetComponentsInChildren<Draggable>();

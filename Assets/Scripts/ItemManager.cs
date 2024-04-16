@@ -8,7 +8,7 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance;
     public List<Item> items = new List<Item>();
-    public List<System.Type> types = new List<System.Type>();
+    public static List<System.Type> types = new();
 
     public Inventory playerInventory;
 
@@ -130,6 +130,30 @@ public class ItemManager : MonoBehaviour
         // SHOP 
         CreateItem<Shield>(GameObject.Find("Shop Slot (0)").GetComponent<Slot>());
         CreateItem<ExperiencePotion>(GameObject.Find("Shop Slot (1)").GetComponent<Slot>());
+    }
+    
+    public void CreateEightRandomItems()
+    {
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (0)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (1)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (2)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (3)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (4)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (5)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (6)").GetComponent<Slot>());
+        CreateItem(GenerateRandomItem(), GameObject.Find("Hotbar Slot (7)").GetComponent<Slot>());
+    }
+
+
+    public System.Type GenerateRandomItem()
+    {
+        System.Random rand = new System.Random();
+
+        int randomIndex = rand.Next(types.Count);
+        System.Type randomType = types[randomIndex];
+
+        Debug.Log(randomType.Name);
+        return randomType;
     }
     #endregion
 }

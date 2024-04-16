@@ -18,6 +18,7 @@ public class Shop : InteractableObjectBase
 
     private void Start()
     {
+        LoadShop();
         CameraManager.Instance?.cameras.Add(shopVCAM);
 
         for (int i = 0; i < inventory.slots.Length; i++)
@@ -27,6 +28,15 @@ public class Shop : InteractableObjectBase
             //generatedItem.price = generatedItem.GeneratePrice(5, 15);
             //inventory.Add(generatedItem);
         }
+    }
+
+
+    private void LoadShop()
+    {
+        inventory.slots = shopMenu.GetComponent<ShopUI>().ShopInventory;
+        inventory.id = $"shop-0{Random.Range(1, 10)}";
+
+        InventoryLoader.Load(inventory);
     }
 
     public override void Interact()
@@ -42,6 +52,12 @@ public class Shop : InteractableObjectBase
         inventoryMenu.GetComponent<InventoryUI>().Show();
 
         InventoryLoader.Load(inventory);
+        shopMenu.GetComponent<ShopUI>().SelectItem(shopMenu.GetComponent<ShopUI>().ShopInventory[7]);
+        var debugItem = shopMenu.GetComponent<ShopUI>().ShopInventory[7].GetComponentInChildren<DebugItem>(true);
+        debugItem.Description += $"INVENTORY_TYPE: Shop\n";
+        debugItem.Description += $"INVENTORY_ID: {inventory.id}\n";
+        debugItem.Description += $"\nNUMBER_OF_ITEM: {inventory.items.Count - 1}\n";
+        debugItem.Price = -1;
     }
 
     public override void ShowContextLabel()

@@ -10,6 +10,7 @@ public static class InvFile
 {
     public static void Save(string path, Inventory inventory)
     {
+        var savedItemsCounter = 0;
         using StreamWriter sw = new(path);
 
         // Header
@@ -20,17 +21,21 @@ public static class InvFile
 
         foreach (var item in inventory.items)
             if (item != null)
+            {
                 sw.WriteLine($"{SerializeItem(item, inventory)}");
+                savedItemsCounter++;
+            }
 
         // Footer
-        sw.WriteLine($"\n# {GetNumberOfItemsSaved(inventory).ToString()} items saved for entity \"{inventory.id}\".");
+        sw.WriteLine($"\n# {savedItemsCounter} items saved for entity \"{inventory.id}\".");
     }
 
-    private static int GetNumberOfItemsSaved(Inventory inventory)
+    private static int GetNumberOfItemsSaved(string[] invFileData)
     {
         int count = 0;
-        foreach (var item in inventory.items)
-            if (item != null)
+
+        foreach (var lines in invFileData)
+            if (lines.Contains("ITEM"))
                 count++;
 
         return count;
@@ -66,7 +71,7 @@ public static class InvFile
 
         for (int i = 0; i < lines.Length; i++)
         {
-            if (lines[i].Contains($"ITEM: {item.GetType()}") && 
+            if (lines[i].Contains($"ITEM: {item.GetType()}") &&
                 lines[i].Contains($"{item.Id}"))
             {
                 lines[i] = SerializeItem(item, inventory);
@@ -77,7 +82,7 @@ public static class InvFile
         File.WriteAllLines(path, lines);
     }
 
-    public static void Delete(string path, Item item)
+    public static void Delete(string path, Item item, Inventory inventory)
     {
         string[] lines = File.ReadAllLines(path);
         int index = Array.FindIndex(lines, line => line.Contains($"UUID: {item.Id}"));
@@ -86,6 +91,8 @@ public static class InvFile
         {
             List<string> updatedLines = new List<string>(lines);
             updatedLines.RemoveAt(index);
+
+            updatedLines[^1] = $"# {GetNumberOfItemsSaved(updatedLines.ToArray()).ToString()} items saved for entity \"{inventory.id}\".";
 
             File.WriteAllLines(path, updatedLines);
         }

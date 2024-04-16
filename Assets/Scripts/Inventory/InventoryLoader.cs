@@ -30,7 +30,7 @@ public class InventoryLoader
 
     public static void Delete(Inventory inventory, Item item)
     {
-        InvFile.Delete($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", item);
+        InvFile.Delete($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", item, inventory);
     }
 
     public static void Load(Inventory inventory)

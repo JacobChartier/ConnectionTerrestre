@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,7 +21,7 @@ public class ShopUI : MenuHandler
     [SerializeField] private UnityEngine.UI.Button purchaseButton;
 
     [SerializeField] public Item SelectedItem;
-    [SerializeField] private Slot[] ShopInventory;
+    [SerializeField] public Slot[] ShopInventory;
 
     void Start()
     {
@@ -33,6 +34,17 @@ public class ShopUI : MenuHandler
     private void OnEnable()
     {
         CameraManager.Instance.EnableFreeCameraMovement(false);
+    }
+
+    private void OnDisable()
+    {
+        ResetDescription();
+        ResetOutlines();
+
+        foreach (var slot in ShopInventory)
+        {
+            Destroy(slot.GetComponentInChildren<Item>()?.gameObject);
+        }
     }
 
     private void ResetOutlines()
@@ -105,7 +117,7 @@ public class ShopUI : MenuHandler
                 break;
 
             default:
-                this.rarety.text = $"<color=#FFFFFF>{item.Rarety}</color>";
+                this.rarety.text = $"<color=#FFFFFF>R: {item.Rarety}</color>";
                 break;
         }
 
@@ -128,12 +140,8 @@ public class ShopUI : MenuHandler
                 this.category.text = "<color=#1C9C02>Clover</color>";
                 break;
 
-            case Category.DEBUG:
-                this.category.text = "<color=#FFFFFF>Other</color>";
-                break;
-
             default:
-                this.category.text = $"<color=#FFFFFF>{item.Category}</color>";
+                this.category.text = $"<color=#FFFFFF>C: {item.Category}</color>";
                 break;
         }
 

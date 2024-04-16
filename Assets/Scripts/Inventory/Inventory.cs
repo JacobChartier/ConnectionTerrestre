@@ -82,8 +82,8 @@ public class Inventory : MonoBehaviour
     {
         System.Random rand = new System.Random();
 
-        int randomIndex = rand.Next(ItemManager.Instance.types.Count);
-        System.Type randomType = ItemManager.Instance.types[randomIndex];
+        int randomIndex = rand.Next(ItemManager.types.Count);
+        System.Type randomType = ItemManager.types[randomIndex];
 
         return randomType;
     }
