@@ -35,6 +35,8 @@ public class InventoryLoader
 
     public static void Load(Inventory inventory)
     {
+        if (inventory == null) return;
+
         inventory.items.Clear();
 
         var items = InvFile.Load($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
@@ -46,7 +48,7 @@ public class InventoryLoader
 
             foreach (var slot in inventory.slots)
             {
-                if (inventory.slots[item.slotID] == null)
+                if (slot == null)
                 {
                     var itemCreated = ItemManager.Instance.CreateItem(item.type, remainingUses: item.RemainingUses);
                     inventory.items.Add(itemCreated.GetComponent<Item>());

@@ -28,11 +28,11 @@ public class VitalLeaf : Item
         switch (scene)
         {
             case Scenes.WORLD:
-                UseInWorld(player, value);
+                WorldBehaviour(player, value);
                 break;
 
             case Scenes.COMBAT:
-                UseInCombat(player, value);
+                CombatBehaviour(player, value);
                 break;
         }
 
@@ -40,13 +40,13 @@ public class VitalLeaf : Item
         Destroy(this.gameObject);
     }
 
-    private void UseInWorld(GameObject player, float value)
+    protected override void WorldBehaviour(GameObject player, params object[] param)
     {
         if (player == null) return;
 
     }
 
-    private void UseInCombat(GameObject player, float value)
+    protected override void CombatBehaviour(GameObject player, params object[] param)
     {
         if (player == null) return;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [field: SerializeField] public int ID = -1;
     public bool isEnable = true;
@@ -40,6 +40,8 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (Input.GetKey(KeyCode.LeftShift)) return;
+
         if (isEnable)
         {
             GameObject droppedItem = eventData.pointerDrag;
@@ -94,6 +96,14 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     public Item GetItem()
     {
         return GetComponentInChildren<Item>(true);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left && Input.GetKey(KeyCode.LeftShift) && isOccupied)
+        {
+            Player.Instance.inventory.ChangeSlot(GetItem().gameObject, Player.Instance.inventory);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -169,6 +179,8 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public string GenerateTooltipTitleString(Item item)
     {
+        if (item == null) return default;
+
         string tooltip = $"<size=+5><b>{item.Name}";
 
         switch (item.Rarety)

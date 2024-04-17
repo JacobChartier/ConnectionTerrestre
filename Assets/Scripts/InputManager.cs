@@ -17,7 +17,10 @@ public class InputManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
+        {
             Destroy(gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(gameObject);
 
@@ -37,8 +40,6 @@ public class InputManager : MonoBehaviour
     public static bool jumpInput;
     public static float scrollWheelInput;
     [field: ReadOnly] public float scrollWheelInput_t;
-
-    public static MouseButton mouseButtonInput;
 
     private void Awake()
     {
@@ -74,25 +75,16 @@ public class InputManager : MonoBehaviour
 
         controls.Menus.Close.performed += HideMenus;
 
-        controls.Menus.SplitStackInHalf.performed += ctx => mouseButtonInput = MouseButton.RIGHT;
-        controls.Menus.TakeOneItemFromStack.performed += ctx => mouseButtonInput = MouseButton.MIDDLE;
     }
 
     private void OpenInventory(InputAction.CallbackContext ctx)
     {
-        inventoryMenu.GetComponent<InventoryUI>()?.Show();
+        inventoryMenu?.GetComponent<InventoryUI>().Show();
     }
 
     private void HideMenus(InputAction.CallbackContext ctx)
     {
-        inventoryMenu.GetComponent<InventoryUI>()?.Hide();
-        shopMenu.GetComponent<ShopUI>()?.Hide();
+        inventoryMenu?.GetComponent<InventoryUI>().Hide();
+        shopMenu?.GetComponent<ShopUI>().Hide();
     }
-}
-
-public enum MouseButton
-{
-    LEFT,
-    MIDDLE,
-    RIGHT
 }

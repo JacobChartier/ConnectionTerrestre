@@ -77,6 +77,55 @@ public class Inventory : MonoBehaviour
             ItemManager.Instance.CreateItem(item.GetType());
     }
 
+    public void ChangeSlot(GameObject item, Inventory inventory)
+    {
+        if (item.GetComponent<Item>().GetSlotID() <= 9)
+        {
+            for (int i = 10; i < inventory.slots.Length; i++)
+            {
+                if (!inventory.slots[i].isOccupied)
+                {
+                    item.transform.SetParent(inventory.slots[i].transform, false);
+                    break;
+                }
+                else
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        if (!inventory.slots[j].isOccupied && j < item.GetComponent<Item>().GetSlotID())
+                        {
+                            item.transform.SetParent(inventory.slots[j].transform, false);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        else if (item.GetComponent<Item>().GetSlotID() > 9)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (!inventory.slots[i].isOccupied)
+                {
+                    item.transform.SetParent(inventory.slots[i].transform, false);
+                    break;
+                }
+                else
+                {
+                    for (int j = 10; j < inventory.slots.Length; j++)
+                    {
+                        if (!inventory.slots[j].isOccupied && j < item.GetComponent<Item>().GetSlotID())
+                        {
+                            item.transform.SetParent(inventory.slots[j].transform, false);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     #region Debug Stuff
     public static System.Type GenerateRandomItem()
     {

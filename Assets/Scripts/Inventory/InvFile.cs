@@ -71,8 +71,7 @@ public static class InvFile
 
         for (int i = 0; i < lines.Length; i++)
         {
-            if (lines[i].Contains($"ITEM: {item.GetType()}") &&
-                lines[i].Contains($"{item.Id}"))
+            if (lines[i].Contains($"ITEM: {item?.GetType()}") && lines[i].Contains($"{item?.Id}"))
             {
                 lines[i] = SerializeItem(item, inventory);
                 break;

@@ -64,13 +64,20 @@ public abstract class Item : MonoBehaviour, IItemBase
         }
     }
 
-    public virtual void Use() 
-    { }
-
-    public virtual void Use(Scenes scene) 
-    { }
-
     protected virtual void Load()
+    { }
+
+    [Obsolete]
+    public virtual void Use()
+    { }
+
+    public virtual void Use(Scenes scene)
+    { }
+
+    protected virtual void WorldBehaviour(GameObject player, params object[] param)
+    { }
+
+    protected virtual void CombatBehaviour(GameObject player, params object[] param)
     { }
 
     public Slot GetSlot()

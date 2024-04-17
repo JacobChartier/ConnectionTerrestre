@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -34,11 +35,11 @@ public class WeakHealthPotion : Item
         switch (scene)
         {
             case Scenes.WORLD:
-                UseInWorld(player, value);
+                WorldBehaviour(player, value);
                 break;
 
             case Scenes.COMBAT:
-                UseInCombat(player, value);
+                CombatBehaviour(player, value);
                 break;
         }
 
@@ -46,15 +47,15 @@ public class WeakHealthPotion : Item
         Destroy(this.gameObject);
     }
 
-    private void UseInWorld(GameObject player, float value)
+    protected override void WorldBehaviour(GameObject player, params object[] param)
     {
         if (player == null) return;
 
         var obj = Instantiate(prefab, new Vector2(GameObject.Find("Player Health").transform.position.x, GameObject.Find("Player Health").transform.position.y), Quaternion.identity, GameObject.Find("Menu").transform);
-        obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{value} HP");
+        obj.GetComponent<TextAnimation>().StartAnimation(Random.Range(0.5f, 1.5f), $"+{param.ElementAt(0)} HP");
     }
 
-    private void UseInCombat(GameObject player, float value)
+    protected override void CombatBehaviour(GameObject player, params object[] param)
     {
         if (player == null) return;
 
