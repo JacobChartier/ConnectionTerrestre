@@ -63,7 +63,6 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler, IPointerE
             {
                 item.parentAfterDrag = transform;
                 droppedItem.transform.position = new Vector2(transform.position.x, gameObject.transform.position.y);
-
             }
 
             InventoryLoader.Update(Player.Instance.inventory, GetItem());

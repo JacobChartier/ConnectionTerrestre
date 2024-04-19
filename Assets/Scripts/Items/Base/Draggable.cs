@@ -48,7 +48,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             durability.gameObject.SetActive(true);
             durability.value = item.RemainingUses;
 
-            var fillArea = durability.transform.FindChild("Fill Area").transform.Find("Fill").GetComponent<Image>();
+            var fillArea = durability.transform.Find("Fill Area").transform.Find("Fill").GetComponent<Image>();
 
             if (durability.value < (0.25f * durability.maxValue))
             {
