@@ -54,9 +54,23 @@ public class InputManager : MonoBehaviour
     {
     }
 
+    public static void EnableMenuInputs(bool value)
+    {
+        if (value)
+        {
+            controls.Player.Disable();
+            controls.Menus.Enable();
+        }
+        else
+        {
+            controls.Player.Enable();
+            controls.Menus.Disable();
+        }
+    }
+
     private void OnEnable()
     {
-        controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>(); 
+        controls.Player.Movement.performed += ctx => mouvementInput = ctx.ReadValue<Vector2>();
         controls.Player.Movement.canceled += ctx => mouvementInput = ctx.ReadValue<Vector2>();
 
         controls.Player.Rotation.performed += ctx => rotationInput = ctx.ReadValue<Vector2>();
@@ -79,12 +93,26 @@ public class InputManager : MonoBehaviour
 
     private void OpenInventory(InputAction.CallbackContext ctx)
     {
-        inventoryMenu?.GetComponent<InventoryUI>().Show();
+        if (MenuHandler.GetMenu<PauseMenuUI>().isActiveAndEnabled)
+            return;
+
+        MenuHandler.GetMenu<InventoryUI>().Show();
     }
 
     private void HideMenus(InputAction.CallbackContext ctx)
     {
-        inventoryMenu?.GetComponent<InventoryUI>().Hide();
-        shopMenu?.GetComponent<ShopUI>().Hide();
+        if (MenuHandler.GetMenu<PauseMenuUI>().isActiveAndEnabled)
+        {
+            MenuHandler.GetMenu<PauseMenuUI>().Hide();
+        }
+        else
+        {
+            if (!MenuHandler.GetMenu<InventoryUI>().isActiveAndEnabled) return;
+
+            InventoryLoader.Save(Player.Instance.inventory);
+
+            MenuHandler.GetMenu<InventoryUI>().Hide();
+            MenuHandler.GetMenu<ShopUI>().Hide();
+        }
     }
 }

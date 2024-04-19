@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InventoryLoader
 {
@@ -17,7 +13,8 @@ public class InventoryLoader
         inventory.items.Clear();
 
         foreach (var slot in inventory.slots)
-            inventory.items.Add(slot.GetItem());
+            if (slot != null)
+                inventory.items.Add(slot.GetItem());
 
         InvFile.Save($"{persistent_data_path}/{inventory.id}{FILE_FORMAT}", inventory);
         Debug.Log($"Saving inventory data to: <b>{persistent_data_path}/{inventory.id}{FILE_FORMAT}</b>");

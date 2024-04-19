@@ -68,7 +68,7 @@ public abstract class Item : MonoBehaviour, IItemBase
     { }
 
     [Obsolete]
-    public virtual void Use()
+    public virtual void Use() // Ne pas utiliser/appeler, les items qui n'ont pas été migrer au nouveau système d'items l'utilisent.
     { }
 
     public virtual void Use(Scenes scene)
@@ -81,25 +81,13 @@ public abstract class Item : MonoBehaviour, IItemBase
     { }
 
     public Slot GetSlot()
-    {
-        if (gameObject.GetComponentInParent<Slot>(true) == null)
-            return null;
-        else
-            return gameObject.GetComponentInParent<Slot>(true);
-    }
+    { return !gameObject.GetComponentInParent<Slot>(true) ? null : gameObject.GetComponentInParent<Slot>(true); }
 
     public int GetSlotID()
-    {
-        if (gameObject.GetComponentInParent<Slot>(true) == null)
-            return -1;
-        else
-            return gameObject.GetComponentInParent<Slot>(true).ID;
-    }
-
+    { return !gameObject.GetComponentInParent<Slot>(true) ? -1 : gameObject.GetComponentInParent<Slot>(true).ID; }
+    
     public int GeneratePrice(int min, int max)
-    {
-        return UnityEngine.Random.Range(min, max);
-    }
+    { return UnityEngine.Random.Range(min, max); }
 
     public bool Purchase(EntityStats player)
     {
@@ -108,7 +96,7 @@ public abstract class Item : MonoBehaviour, IItemBase
         if (Price <= player.Coins)
         {
             player.Coins -= Price;
-            MenuHandler.Instance.GetMenu<InventoryUI>().Refresh();
+            MenuHandler.GetMenu<InventoryUI>().Refresh();
 
             return true;
         }
@@ -134,16 +122,6 @@ public enum Rarety
     RARE,
     EPIC,
     LEGENDARY,
-
-    INVALID = -1,
-    DEBUG = -2
-}
-
-public enum Scenes
-{
-    WORLD,
-    COMBAT,
-    ANY,
 
     INVALID = -1,
     DEBUG = -2

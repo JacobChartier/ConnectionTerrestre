@@ -28,14 +28,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        MenuHandler.Instance.GetMenu<PauseMenuUI>().Hide();
+        MenuHandler.GetMenu<PauseMenuUI>().Hide();
     }
-    private void Close_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => MenuHandler.Instance?.GetMenu<PauseMenuUI>().Hide();
 
-    private void PauseMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => MenuHandler.Instance?.GetMenu<PauseMenuUI>().Show();
+    private void Close_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => MenuHandler.GetMenu<PauseMenuUI>().Hide();
+
+    private void PauseMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) => MenuHandler.GetMenu<PauseMenuUI>().Show();
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        MenuHandler.GetMenu<PauseMenuUI>().Hide();
+
         if (arg0 == SceneManager.GetSceneByName("World"))
             Player.Instance.LoadInventory(true);
         else 
@@ -46,4 +49,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+}
+
+public enum Scenes
+{
+    MAIN_MENU,
+    WORLD,
+    COMBAT,
+    END,
+
+    INVALID = -1,
+    DEBUG = -2
 }

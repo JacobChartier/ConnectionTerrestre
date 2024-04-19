@@ -4,25 +4,17 @@ using UnityEngine;
 
 public class PauseMenuUI : MenuHandler
 {
-    public void Show()
+    public override void Show()
     {
-        gameObject.SetActive(true);
-        CameraManager.Instance.FreezeCamera(true);
-        CameraManager.Instance.EnableFreeCameraMovement(false);
+        base.Show();
 
-        InputManager.controls.Player.Disable();
-        InputManager.controls.Menus.Enable();
         Time.timeScale = 0;
     }
 
-    public void Hide()
+    public override void Hide()
     {
-        Time.timeScale = 1;
-        InputManager.controls.Player.Enable();
-        InputManager.controls.Menus.Disable();
+        base.Hide();
 
-        CameraManager.Instance.FreezeCamera(false);
-        CameraManager.Instance.EnableFreeCameraMovement(true);
-        gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 }

@@ -20,21 +20,13 @@ public class Shop : InteractableObjectBase
     {
         LoadShop();
         CameraManager.Instance?.cameras.Add(shopVCAM);
-
-        for (int i = 0; i < inventory.slots.Length; i++)
-        {
-            //var generatedItem = Inventory.GenerateRandomItem();
-
-            //generatedItem.price = generatedItem.GeneratePrice(5, 15);
-            //inventory.Add(generatedItem);
-        }
     }
 
 
     private void LoadShop()
     {
         inventory.slots = shopMenu.GetComponent<ShopUI>().ShopInventory;
-        inventory.id = $"shop-0{Random.Range(1, 10)}";
+        inventory.id = $"shop-0{Random.Range(1, 4)}";
 
         InventoryLoader.Load(inventory);
     }
@@ -43,10 +35,7 @@ public class Shop : InteractableObjectBase
     {
         shopMenu.GetComponent<ShopUI>().Show();
 
-        CameraManager.Instance?.EnableFreeCameraMovement(false);
         CameraManager.Instance?.SetCamera(shopVCAM);
-
-        CameraManager.Instance?.FreezeCamera(true);
 
         inventoryMenu.gameObject.transform.localPosition = new Vector3(-160, inventoryMenu.transform.localPosition.y, inventoryMenu.transform.localPosition.z);
         inventoryMenu.GetComponent<InventoryUI>().Show();
@@ -64,9 +53,4 @@ public class Shop : InteractableObjectBase
     {
         ContextLabelUI.Instance.ShowContextLabel("E", "Open Shop");
     }
-
-    //public override void HideContextLabel()
-    //{
-    //    label.SetActive(false);
-    //}
 }

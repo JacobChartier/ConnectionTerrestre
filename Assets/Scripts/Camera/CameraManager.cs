@@ -1,7 +1,5 @@
 using Cinemachine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +21,7 @@ public class CameraManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        EnableFreeCameraMovement(true);
+        EnableInteractiveMode(true);
         FreezeCamera(false);
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -31,27 +29,37 @@ public class CameraManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        playerVCam = GameObject.Find("vCam (1st Person View)").GetComponent<CinemachineVirtualCamera>();    // Set player vCam
+        playerVCam = GameObject.Find("vCam (1st Person View)").GetComponent<CinemachineVirtualCamera>();
 
         foreach (var cam in cameras)
-            if (cam == null) cameras.Remove(cam);
+            if (cam == null) 
+                cameras.Remove(cam);
     }
 
-    public void EnableFreeCameraMovement(bool isEnable)
+    private void Update()
     {
+        foreach (var cam in cameras)
+            if (cam == null)
+                cameras.Remove(cam);
+    }
+
+    public static void EnableInteractiveMode(bool isEnable)
+    {
+        Instance.FreezeCamera(isEnable);
+
         if (isEnable)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
-    public void FreezeCamera(bool isFrozen)
+    internal void FreezeCamera(bool isFrozen)
     {
         if (isFrozen)
             playerVCam.GetComponent<CinemachineInputProvider>().enabled = false;
@@ -74,6 +82,9 @@ public class CameraManager : MonoBehaviour
         playerVCam.Priority = 1;
 
         foreach (var camera in cameras)
-            camera.Priority = 0;
+            if (camera == null)
+                cameras.Remove(camera);
+            else
+                camera.Priority = 0;
     }
 }

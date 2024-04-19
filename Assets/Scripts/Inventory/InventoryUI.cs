@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InventoryUI : MenuHandler
 {
@@ -32,31 +33,21 @@ public class InventoryUI : MenuHandler
         this.coins.text = player.Coins.ToString();
     }
 
-    public void Show()
+    public override void Show()
     {
-        InputManager.controls?.Player.Disable();
-        InputManager.controls?.Menus.Enable();
-
-        this.transform.gameObject.SetActive(true);
-
-        CameraManager.Instance?.FreezeCamera(true);
-        CameraManager.Instance?.EnableFreeCameraMovement(false);
+        base.Show();
 
         HeadUpDisplay.Instance?.Hide();
 
         Player.Instance.LoadInventory();
     }
 
-    public void Hide()
+    public override void Hide()
     {
-        InventoryLoader.Save(Player.Instance.inventory);
+        base.Hide();
 
-        InputManager.controls?.Player.Enable();
-        InputManager.controls?.Menus.Disable();
 
-        CameraManager.Instance?.FreezeCamera(false);
         CameraManager.Instance?.ResetCameras();
-        CameraManager.Instance?.EnableFreeCameraMovement(true);
 
         Tooltip.Instance?.Hide();
 
@@ -67,7 +58,8 @@ public class InventoryUI : MenuHandler
         foreach (var slot in Player.Instance.inventory.slots)
         {
             if (slot.name.Contains("Hotbar Slot")) continue;
-            //Player.Instance.inventory.items.Remove(slot.GetItem());
+
+            slot.gameObject.GetComponent<Image>().color = new Color(0.2641509f, 0.2641509f, 0.2641509f, 0.8627451f);
 
             foreach (var item in slot.GetComponentsInChildren<Item>())
             {
@@ -85,6 +77,5 @@ public class InventoryUI : MenuHandler
                 Destroy(item.gameObject);
             }
         }
-        this.transform.gameObject.SetActive(false);
     }
 }

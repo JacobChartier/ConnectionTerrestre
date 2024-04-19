@@ -43,6 +43,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [System.Obsolete]
     private void Update()
     {
+        durability = gameObject.GetComponentInChildren<Image>(true).gameObject.GetComponentInChildren<Slider>(true);
         if (item.IsBreakable)
         {
             durability.gameObject.SetActive(true);

@@ -340,7 +340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &75921719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5392,7 +5392,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 278829852}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -6608,7 +6608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &847190769
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14873,7 +14873,7 @@ MonoBehaviour:
   colorLookAt: {r: 1, g: 0, b: 0, a: 1}
   colorInteraction: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   radius: 5
-  LookAt: 1
+  LookAt: 0
   InteractionRegion: 0
   DEBUG_enter_battle_on_C: 0
 --- !u!4 &1701829360217615271

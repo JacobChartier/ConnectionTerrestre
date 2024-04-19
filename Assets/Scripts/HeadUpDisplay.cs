@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class HeadUpDisplay : MonoBehaviour, IMenuHandler
+public class HeadUpDisplay : MenuHandler
 {
     public static HeadUpDisplay Instance;
 
@@ -14,10 +14,13 @@ public class HeadUpDisplay : MonoBehaviour, IMenuHandler
         if (Instance == null)
             Instance = this;
 
-        UpdateUI();
-
         GameObject.Find("Player").GetComponent<Health>().onGainHealth.AddListener(UpdateUI);
         GameObject.Find("Player").GetComponent<Health>().onLostHealth.AddListener(UpdateUI);
+    }
+
+    private void Start()
+    {
+        UpdateUI();
     }
 
     public void UpdateUI()
@@ -26,8 +29,8 @@ public class HeadUpDisplay : MonoBehaviour, IMenuHandler
         healthText.GetComponent<TMP_Text>().text = $"{GameObject.Find("Player").GetComponent<EntityStats>().Health.Current} / {GameObject.Find("Player").GetComponent<EntityStats>().Health.Max}";
 
         var healthbar = GameObject.Find("Health Bar");
-        healthbar.GetComponent<Slider>().value = GameObject.Find("Player").GetComponent<EntityStats>().Health.Current;
         healthbar.GetComponent<Slider>().maxValue = GameObject.Find("Player").GetComponent<EntityStats>().Health.Max;
+        healthbar.GetComponent<Slider>().value = GameObject.Find("Player").GetComponent<EntityStats>().Health.Current;
     }
 
     private void Update()
@@ -43,12 +46,12 @@ public class HeadUpDisplay : MonoBehaviour, IMenuHandler
         }
     }
 
-    public void Show()
+    public override void Show()
     {
         this.gameObject.SetActive(true);
     }
 
-    public void Hide()
+    public override void Hide()
     {
         this.gameObject.SetActive(false);
     }

@@ -1,22 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuHandler : MonoBehaviour
+public class MenuHandler : MonoBehaviour, IMenuHandler
 {
-    public static MenuHandler Instance { get; private set; }
+    public static T GetMenu<T>() where T : MenuHandler
+    { return FindObjectOfType<T>(true); }
 
-    private void Awake()
+    public virtual void Show()
     {
-        if (Instance == null)
-            Instance = this;
+        gameObject.SetActive(true);
+
+        CameraManager.EnableInteractiveMode(true);
+
+        InputManager.EnableMenuInputs(true);
     }
 
-    public T GetMenu<T>() where T : MenuHandler
+    public virtual void Hide()
     {
-        return FindObjectOfType<T>(true);
+        gameObject.SetActive(false);
+
+        CameraManager.EnableInteractiveMode(false);
+
+        InputManager.EnableMenuInputs(false);
     }
-
-
 }
 

@@ -8,6 +8,7 @@ public class ExempleItem : Item
 
     }
 
+    [System.Obsolete]
     public override void Use()
     {
 

@@ -33,7 +33,6 @@ public class ShopUI : MenuHandler
 
     private void OnEnable()
     {
-        CameraManager.Instance.EnableFreeCameraMovement(false);
     }
 
     private void OnDisable()
@@ -101,23 +100,23 @@ public class ShopUI : MenuHandler
         switch (item.Rarety)
         {
             case Rarety.COMMON:
-                this.rarety.text = "<color=#FFFFFF>Common</color>";
+                this.rarety.text = "<color=#FFFFFF>COMMUN</color>";
                 break;
 
             case Rarety.RARE:
-                this.rarety.text = "<color=#384CFF>Rare</color>";
+                this.rarety.text = "<color=#384CFF>RARE</color>";
                 break;
 
             case Rarety.EPIC:
-                this.rarety.text = "<color=#F83BFF>Epic</color>";
+                this.rarety.text = "<color=#F83BFF>ÉPIQUE</color>";
                 break;
 
             case Rarety.LEGENDARY:
-                this.rarety.text = "<color=#FFD700>Legendary</color>";
+                this.rarety.text = "<color=#FFD700>LÉGENDAIRE</color>";
                 break;
 
             default:
-                this.rarety.text = $"<color=#FFFFFF>R: {item.Rarety}</color>";
+                this.rarety.text = $"<color=#FFFFFF>???</color>";
                 break;
         }
 
@@ -133,15 +132,15 @@ public class ShopUI : MenuHandler
                 break;
 
             case Category.SHIELD:
-                this.category.text = "<color=#853815>Shield</color>";
+                this.category.text = "<color=#853815>Bouclier</color>";
                 break;
 
             case Category.LEAF:
-                this.category.text = "<color=#1C9C02>Clover</color>";
+                this.category.text = "<color=#1C9C02>Feuille</color>";
                 break;
 
             default:
-                this.category.text = $"<color=#FFFFFF>C: {item.Category}</color>";
+                this.category.text = $"<color=#FFFFFF>???</color>";
                 break;
         }
 
@@ -170,26 +169,19 @@ public class ShopUI : MenuHandler
         this.category.text = "";
         this.rarety.text = "";
         this.description.text = "";
-        this.price.text = "<b>0</b>";
+        this.price.text = "";
     }
 
-    public void Show()
+    public override void Show()
     {
-        InputManager.controls?.Player.Disable();
-        InputManager.controls?.Menus.Enable();
+        base.Show();
 
-        CameraManager.Instance?.FreezeCamera(true);
-
-        this.transform.gameObject.SetActive(true);
+        GetMenu<InventoryUI>().Show();
     }
 
-    public void Hide()
+    public override void Hide()
     {
-        InputManager.controls?.Player.Enable();
-        InputManager.controls?.Menus.Disable();
-
-        CameraManager.Instance?.FreezeCamera(false);
-        this.transform.gameObject.SetActive(false);
+        base.Hide();
 
         Tooltip.Instance?.Hide();
 

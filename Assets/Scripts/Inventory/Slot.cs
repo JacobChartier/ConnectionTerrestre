@@ -185,11 +185,11 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler, IPointerE
         switch (item.Rarety)
         {
             case Rarety.LEGENDARY:
-                tooltip += $"<br><color=#FFD700>LEGENDARY</color>";
+                tooltip += $"<br><color=#FFD700>LÉGENDAIRE</color>";
                 break;
 
             case Rarety.EPIC:
-                tooltip += $"<br><color=#F83BFF>EPIC</color>";
+                tooltip += $"<br><color=#F83BFF>ÉPIQUE</color>";
                 break;
 
             case Rarety.RARE:
@@ -197,11 +197,11 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerClickHandler, IPointerE
                 break;
 
             case Rarety.COMMON:
-                tooltip += $"<br><color=#FFFFFF>COMMON</color>";
+                tooltip += $"<br><color=#FFFFFF>COMMUN</color>";
                 break;
 
             default:
-                tooltip += "";
+                tooltip += "<br><color=#505050>???</color>";
                 break;
         }
 
