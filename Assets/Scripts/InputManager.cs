@@ -107,12 +107,13 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+            MenuHandler.GetMenu<ShopUI>().Hide();
+
             if (!MenuHandler.GetMenu<InventoryUI>().isActiveAndEnabled) return;
 
             InventoryLoader.Save(Player.Instance.inventory);
 
             MenuHandler.GetMenu<InventoryUI>().Hide();
-            MenuHandler.GetMenu<ShopUI>().Hide();
         }
     }
 }

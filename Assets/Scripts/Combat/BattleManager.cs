@@ -580,6 +580,8 @@ public class BattleManager : MonoBehaviour
                         BattleInfo.player.Attaques.Add(new InfoAttaque("Le dernier recours", 100, 100, int.MaxValue, (int)(BattleInfo.player.MagicPoint.Max + 1)));
                         break;
                 }
+
+                Tour.ToursCompletes[Tour.current_tour] = true;
             }
         }
 

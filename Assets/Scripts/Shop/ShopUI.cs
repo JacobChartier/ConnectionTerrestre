@@ -100,19 +100,19 @@ public class ShopUI : MenuHandler
         switch (item.Rarety)
         {
             case Rarety.COMMON:
-                this.rarety.text = "<color=#FFFFFF>COMMUN</color>";
+                this.rarety.text = "<color=#FFFFFF>Commun</color>";
                 break;
 
             case Rarety.RARE:
-                this.rarety.text = "<color=#384CFF>RARE</color>";
+                this.rarety.text = "<color=#384CFF>Rare</color>";
                 break;
 
             case Rarety.EPIC:
-                this.rarety.text = "<color=#F83BFF>ÉPIQUE</color>";
+                this.rarety.text = "<color=#F83BFF>Épique</color>";
                 break;
 
             case Rarety.LEGENDARY:
-                this.rarety.text = "<color=#FFD700>LÉGENDAIRE</color>";
+                this.rarety.text = "<color=#FFD700>Légendaire</color>";
                 break;
 
             default:

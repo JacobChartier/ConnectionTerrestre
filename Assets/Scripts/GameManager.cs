@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,9 +22,6 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 
-        InputManager.controls.Player.PauseMenu.performed += PauseMenu_performed;
-
-        InputManager.controls.Menus.Close.performed += Close_performed;
     }
 
     private void Start()
@@ -37,6 +35,10 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        GameObject.Find("MainMenu").GetComponent<Button>().onClick.AddListener(() => Instance.SwitchToMainMenu());
+        InputManager.controls.Player.PauseMenu.performed += PauseMenu_performed;
+        InputManager.controls.Menus.Close.performed += Close_performed;
+
         MenuHandler.GetMenu<PauseMenuUI>().Hide();
 
         if (arg0 == SceneManager.GetSceneByName("World"))

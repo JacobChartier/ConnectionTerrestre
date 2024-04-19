@@ -36,17 +36,17 @@ public class Tour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        current_tour = TOUR_ID;
         if (ToursCompletes[TOUR_ID])
             return;
 
         if (other.name == "Player collision")
         {
-            current_tour = TOUR_ID;
             JoueurDansTour.Invoke();
         }
     }
